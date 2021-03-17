@@ -18,9 +18,8 @@ public class Check
    */
   public static boolean forContains(final String[] haystack, final String needle)
   {
-    for (int i=0; i<haystack.length; i++)
+    for (int i=2; i<haystack.length; i++)
     {
-      // carol comment
       if (haystack[i].endsWith(needle)) return true;
     }
     return false;
