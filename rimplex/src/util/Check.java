@@ -20,6 +20,7 @@ public class Check
   {
     for (int i=0; i<haystack.length; i++)
     {
+      // carol comment
       if (haystack[i].endsWith(needle)) return true;
     }
     return false;
