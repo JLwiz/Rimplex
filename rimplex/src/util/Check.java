@@ -20,7 +20,7 @@ public class Check
   {
     for (int i=0; i<haystack.length; i++)
     {
-      if (haystack[i].equalsIgnoreCase(needle)) return true;
+      if (haystack[i].endsWith(needle)) return true;
     }
     return false;
   }
