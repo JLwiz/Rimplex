@@ -20,7 +20,7 @@ public class Check
   {
     for (int i=2; i<haystack.length; i++)
     {
-      if (haystack[i].endsWith(needle)) return true;
+      if (haystack[i].equals(needle)) return true;
     }
     return false;
   }
