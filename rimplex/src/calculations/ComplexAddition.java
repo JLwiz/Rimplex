@@ -9,7 +9,7 @@ package calculations;
 public class ComplexAddition implements Operations
 {
   /**
-   * Constructor used to call the proper calculate.
+   * Complex Multiplication Constructor.
    */
   public ComplexAddition()
   {
