@@ -79,16 +79,16 @@ public class Equation
     switch(operator)
     {
       case "+":
-        Addtion.calculate(firstOp, secondOp);
+        //ComplexAddtion.calculate(firstOp, secondOp);
         break;
       case "-":
-        Subtraction.calculate(firstOp, secondOp);
+        //ComplexSubtraction.calculate(firstOp, secondOp);
         break;
       case "*":
-        Multiplication.calculate(firstOp, secondOp);
+        //ComplexMultiplication.calculate(firstOp, secondOp);
         break;
       case "÷":
-        Division.calculate(firstOp, secondOp);
+        //ComplexDivision.calculate(firstOp, secondOp);
         break;
       default:
         break;
