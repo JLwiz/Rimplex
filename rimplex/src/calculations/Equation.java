@@ -1,8 +1,7 @@
 package calculations;
 
 /**
- * Holds complex numbers, operator, and will solve the equation
- * using the correct operation.
+ * Holds complex numbers, operator, and will solve the equation using the correct operation.
  * 
  * @author Andrew Fryer
  * @version 1.0 (03/23/2021)
@@ -10,93 +9,97 @@ package calculations;
 public class Equation
 {
 
-  //----------Declarations----------
+  // ----------Declarations----------
   private static Equation single_instance = null;
-  
+
   private ComplexNumber firstOp;
   private ComplexNumber secondOp;
-  
-  private String operator;
-  
-  
-  //----------Constructor----------
+
+  private Operations operator;
+
+  // ----------Constructor----------
   /**
    * Default Constructor.
    */
   public Equation()
-  {} // Default Constructor.
-  
-  //----------Singleton----------
-  
+  {
+  } // Default Constructor.
+
+  // ----------Singleton----------
+
   /**
    * getInstance - Singleton
    */
   public static Equation getInstance()
   {
-    if (single_instance == null) single_instance = new Equation();
+    if (single_instance == null)
+      single_instance = new Equation();
     return single_instance;
   } // getInstance method.
-  
-  //----------Public Methods----------
-  
+
+  // ----------Public Methods----------
+
   /**
    * setFirstOp - Will set the first operand.
    * 
-   * @param op (ComplexNumber)
+   * @param op
+   *          (ComplexNumber)
    */
-  public void setFirstOp(ComplexNumber op)
+  public void setFirstOp(final ComplexNumber op)
   {
     this.firstOp = op;
   } // setFirstOp method.
-  
+
   /**
    * setOperator - Will set the operator.
    * 
-   * @param op (String)
+   * @param op
+   *          (String)
    */
-  public void setOperator(String op)
+  public void setOperator(final String op)
   {
-    this.operator = op;
-  }
-  
-  /**
-   * setSecondOp - Will set the second operand.
-   * 
-   * @param op (ComplexNumber)
-   */
-  public void setSecondOp(ComplexNumber op)
-  {
-    this.secondOp = op;
-  } // setSecondOp method.
-  
-  /**
-   * solve - Will solve the equation.
-   */
-  public ComplexNumber solve()
-  {
-    ComplexNumber result = null;
-    
-    switch(operator)
+    switch (op)
     {
       case "+":
-        //ComplexAddtion.calculate(firstOp, secondOp);
+        operator = new ComplexAddition();
         break;
       case "-":
-        //ComplexSubtraction.calculate(firstOp, secondOp);
+        operator = new ComplexSubtraction();
         break;
       case "*":
-        //ComplexMultiplication.calculate(firstOp, secondOp);
+        operator = new ComplexMultiplication();
         break;
       case "÷":
-        //ComplexDivision.calculate(firstOp, secondOp);
+        operator = new ComplexDivision();
         break;
       default:
         break;
     }
-    
-    this.setFirstOp(result);
-    return result;
-    
+  }
+
+  /**
+   * setSecondOp - Will set the second operand.
+   * 
+   * @param op
+   *          (ComplexNumber)
+   */
+  public void setSecondOp(final ComplexNumber op)
+  {
+    this.secondOp = op;
+  } // setSecondOp method.
+
+  /**
+   * solve - Will solve the equation.
+   * 
+   * @return the calculated equation.
+   */
+  public ComplexNumber solve()
+  {
+    if (operator == null)
+    {
+      return new ComplexNumber(0.0, 0.0);
+    }
+    return operator.calculate(firstOp, secondOp);
   } // solve method.
-  
+
 } // Equation class.
