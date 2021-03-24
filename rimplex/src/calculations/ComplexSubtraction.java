@@ -8,7 +8,6 @@ package calculations;
  */
 public class ComplexSubtraction implements Operations
 {
-
   /**
    * Does ComplexNumber subtraction.
    * 
