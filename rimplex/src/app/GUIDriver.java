@@ -5,6 +5,14 @@ import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * The GUI/Driver to "Drive" our program.  As of version 3/24/2021 only the visual elements are in
+ * place.  Listeners and such need to be added and implemented.
+ * 
+ * @author Benjamin Huber
+ * @version 3/24/2021
+ */
 public class GUIDriver
 {
   public static void main(String[] args) {
