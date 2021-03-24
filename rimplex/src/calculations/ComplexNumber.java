@@ -88,26 +88,9 @@ public class ComplexNumber
     String imaginaryComponent = "";
     String end = "i)";
     
-    // Checking if our components are integers for formatting
-    boolean isInteger = realNumber % 1 == 0;
-    if (isInteger) 
-    {
-      realComponent += standardFormat.format((int)realNumber.doubleValue());
-    } 
-    else 
-    {
-      realComponent += standardFormat.format(realNumber.doubleValue());
-    }
-    
-    isInteger = imaginaryNumber % 1 == 0;
-    if (isInteger)
-    {
-      imaginaryComponent += standardFormat.format((int) imaginaryNumber.doubleValue());
-    }
-    else
-    {
-      imaginaryComponent += standardFormat.format(imaginaryNumber.doubleValue());
-    }
+    // Our handy DecimalFormat object does all the hard work for us
+    realComponent += standardFormat.format(realNumber.doubleValue());
+    imaginaryComponent += standardFormat.format(imaginaryNumber.doubleValue());
     
     // Checking if our imaginary component is not negative to assign our operator
     if (imaginaryNumber >= 0)
