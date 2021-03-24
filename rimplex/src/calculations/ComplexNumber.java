@@ -16,7 +16,7 @@ public class ComplexNumber
   private final Double imaginaryNumber;
 
   /**
-   * Default Constructor for Complex Number
+   * Default Constructor for Complex Number.
    * 
    * @param realNumber
    *          - the real number value of the complex number
