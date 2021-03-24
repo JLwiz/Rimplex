@@ -6,6 +6,6 @@ package calculations;
  */
 public interface Operations {
   
-  public ComplexNumber calculate(ComplexNumber real, ComplexNumber img);
+  public ComplexNumber calculate(ComplexNumber op1, ComplexNumber op2);
 
 }
