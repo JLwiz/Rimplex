@@ -1,5 +1,4 @@
 package calculations;
-import util.ComplexNumber;
 
 /**
  * @author Jacob Lewis

@@ -1,4 +1,4 @@
-package util;
+package calculations;
 
 /**
  * A Object class that stores the values associated with a complex number and contains methods to

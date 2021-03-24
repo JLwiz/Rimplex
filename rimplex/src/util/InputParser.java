@@ -1,5 +1,5 @@
 package util;
-
+import calculations.ComplexNumber;
 /**
  * Utility class that validates and parses input for the ComplexNumber calculator.
  * 

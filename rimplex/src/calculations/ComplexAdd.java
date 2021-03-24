@@ -1,6 +1,5 @@
 package calculations;
 
-import util.ComplexNumber;
 
 public class ComplexAdd implements Operations {
 
