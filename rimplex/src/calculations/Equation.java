@@ -132,7 +132,7 @@ public class Equation
     setFirstOp(result);
     setSecondOp(null);
     setOperator(null);
-    return operator.calculate(firstOp, secondOp);
+    return result;
   } // solve method.
 
 } // Equation class.
