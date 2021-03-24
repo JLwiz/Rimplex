@@ -28,14 +28,16 @@ public class ComplexMultiplication implements Operations
   {
     Double newReal = 0.0;
     Double newImg = 0.0;
-    if (op1 != null && op2 != null)
+    if (op1 != null )
     {
-      newReal += op1.getReal() * op2.getReal();
-      newReal += op1.getImaginary() * op2.getImaginary() * -1;
-      newImg += op1.getReal() * op2.getImaginary();
-      newImg += op1.getImaginary() * op2.getReal();
+      if (op2 != null) 
+      {
+        newReal += op1.getReal() * op2.getReal();
+        newReal += op1.getImaginary() * op2.getImaginary() * -1;
+        newImg += op1.getReal() * op2.getImaginary();
+        newImg += op1.getImaginary() * op2.getReal();
+      }
     } 
-
     return new ComplexNumber(newReal, newImg);
   }
 

@@ -22,6 +22,18 @@ class ComplexMultiplicationTest
     ComplexNumber expected;
     ComplexNumber actual;
 
+    op1 = null;
+    op2 = new ComplexNumber(3.0, -8.0);
+    expected = new ComplexNumber(0.0, 0.0);
+    actual = operator.calculate(op1, op2);
+    testHelper(actual, expected);
+    
+    op1 = new ComplexNumber(3.0, -8.0);
+    op2 = null;
+    expected = new ComplexNumber(0.0, 0.0);
+    actual = operator.calculate(op1, op2);
+    testHelper(actual, expected);
+    
     op1 = new ComplexNumber(0.0, 2.0);
     op2 = new ComplexNumber(3.0, -8.0);
     expected = new ComplexNumber(16.0, 6.0);
