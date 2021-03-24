@@ -1,14 +1,13 @@
 package calculations;
 
 /**
- * ComplexNumber addition class.
+ * ComplexNumber subtraction class.
  * 
  * @author Kenneth Painter
  * @version 03.24.2021
  */
 public class ComplexSubtraction implements Operations
 {
-
   /**
    * Does ComplexNumber subtraction.
    * 
@@ -16,7 +15,7 @@ public class ComplexSubtraction implements Operations
    *          ComplexNumber1
    * @param op2
    *          ComplexNumber2
-   * @return ComplexNumber post addition.
+   * @return ComplexNumber post subtraction.
    */
   @Override
   public ComplexNumber calculate(ComplexNumber op1, ComplexNumber op2)

@@ -73,7 +73,7 @@ public class CalculatorDisplay extends JFrame
     setLocationRelativeTo(null);
     
     setVisible(true);
-    
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   } // default constructor.
   
   
