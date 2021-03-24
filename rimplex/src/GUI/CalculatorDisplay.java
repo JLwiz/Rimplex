@@ -183,10 +183,12 @@ public class CalculatorDisplay extends JFrame
   {
     addition = setButton("add", "+");
     clear = setButton("clear", "C");
+    clear.setBackground(Color.GRAY);
     division = setButton("divide", "÷");
     equals = setButton("equals", "=");
     multiplication = setButton("multiply", "×");
     reset = setButton("reset", "R");
+    reset.setBackground(Color.RED);
     subtraction = setButton("subtract", "–");
     
     display = new JLabel();
