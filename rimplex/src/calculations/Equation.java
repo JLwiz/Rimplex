@@ -28,7 +28,9 @@ public class Equation
   // ----------Singleton----------
 
   /**
-   * getInstance - Singleton
+   * getInstance - Singleton.
+   * 
+   * @return the one and only Equation class.
    */
   public static Equation getInstance()
   {
@@ -38,6 +40,30 @@ public class Equation
   } // getInstance method.
 
   // ----------Public Methods----------
+  
+  /**
+   * operandEmpty - Will return true if the first operand is null,
+   * false if it isn't.
+   * 
+   * @return a boolean representing if the operand is null or not.
+   */
+  public boolean operandEmpty()
+  {
+    if (firstOp == null) return true;
+    return false;
+  } // operandEmpty method.
+  
+  /**
+   * operatorEmpty - Will return true if the first operator is empty,
+   * false if it isn't.
+   * 
+   * @return a boolean representing if the operator is null or not.
+   */
+  public boolean operatorEmpty()
+  {
+    if (operator == null) return true;
+    return false;
+  } // operatorEmpty method.
 
   /**
    * setFirstOp - Will set the first operand.
@@ -95,10 +121,17 @@ public class Equation
    */
   public ComplexNumber solve()
   {
+    ComplexNumber result = new ComplexNumber(0.0, 0.0);
+    
     if (operator == null)
     {
-      return new ComplexNumber(0.0, 0.0);
+      return result;
     }
+    else result = operator.calculate(firstOp, secondOp);
+    
+    setFirstOp(result);
+    setSecondOp(null);
+    setOperator(null);
     return operator.calculate(firstOp, secondOp);
   } // solve method.
 
