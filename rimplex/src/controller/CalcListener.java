@@ -170,16 +170,14 @@ public class CalcListener implements ActionListener, WindowListener
     if (evaluate.operatorEmpty() && text.length() > 0)
     {
       ComplexNumber op1 = parser.parseInput(text);
-      frame.clearDisplay();
+      frame.setDisplay("");
       if (operation.equals(equalsOperator))
       {
-        display.setText(op1.toString() + operation + op1.toString());
-        frame.adjustFont();
+        frame.setDisplay(op1.toString() + operation + op1.toString());
       }
       else
       {
-        display.setText(op1.toString() + operation);
-        frame.adjustFont();
+        frame.setDisplay(op1.toString() + operation);
         evaluate.setOperator(operation);
       }
       evaluate.setFirstOp(op1);
@@ -187,18 +185,16 @@ public class CalcListener implements ActionListener, WindowListener
     }
     else if (!evaluate.operandEmpty() && evaluate.operatorEmpty() && text.length() == 0)
     {
-      frame.clearDisplay();
+      frame.setDisplay("");
       if (operation.equals(equalsOperator))
       {
-        display.setText(
+        frame.setDisplay(
             evaluate.getFirstOp().toString() + operation + evaluate.getFirstOp().toString());
-        frame.adjustFont();
       }
       else
       {
         evaluate.setOperator(operation);
-        display.setText(evaluate.getFirstOp().toString() + operation);
-        frame.adjustFont();
+        frame.setDisplay(evaluate.getFirstOp().toString() + operation);
       }
     }
     else if (!evaluate.operandEmpty() && !evaluate.operatorEmpty() && text.length() > 0)
@@ -208,14 +204,12 @@ public class CalcListener implements ActionListener, WindowListener
       evaluate.solve();
       if (operation.equals(equalsOperator))
       {
-        display.setText(
+        frame.setDisplay(
             display.getText() + op2.toString() + operation + evaluate.getFirstOp().toString());
-        frame.adjustFont();
       }
       else
       {
-        display.setText(display.getText() + op2.toString() + operation);
-        frame.adjustFont();
+        frame.setDisplay(display.getText() + op2.toString() + operation);
         evaluate.setOperator(operation);
       }
       clearInput();
@@ -233,11 +227,10 @@ public class CalcListener implements ActionListener, WindowListener
 
   private void resetDisplay()
   {
-    frame.clearDisplay();
+    frame.setDisplay("");
     evaluate.setFirstOp(null);
     evaluate.setSecondOp(null);
     evaluate.setOperator(null);
-    frame.adjustFont();
   }
 
   @Override

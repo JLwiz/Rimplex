@@ -31,7 +31,7 @@ public class CalculatorDisplay extends JFrame
   // ----------Declarations----------
   private static final long serialVersionUID = 1119406259556735502L;
   private static final int MAXFONTSIZE = 30;
-  private static final int MINFONTSIZE = 20;
+  private static final int MINFONTSIZE = 13;
   private static final String FONT = "Arial";
 
   private static CalculatorDisplay single_instance = null;
@@ -93,25 +93,6 @@ public class CalculatorDisplay extends JFrame
   } // getInstance method.
 
   // ----------Public Methods----------
-  
-  /**
-   * adjustFont - Will adjust the font size of the display field depending
-   * on the amount of characters in the display.
-   */
-  public void adjustFont()
-  {
-    
-    if (display.getText().length() > 23) display.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
-    else display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
-  } // adjustFont method.
-
-  /**
-   * clearDisplay - Will clear the text in the display.
-   */
-  public void clearDisplay()
-  {
-    display.setText("");
-  } // clearDisplay method.
 
   /**
    * clearInputField - Will clear the text in the input field.
@@ -142,7 +123,18 @@ public class CalculatorDisplay extends JFrame
   {
     return inputField;
   }
-
+  
+  /**
+   * setDisplay - Will set the displays test and adjust font if necessary.
+   * 
+   * @param text (String)
+   */
+  public void setDisplay(String text)
+  {
+    display.setText(text);
+    adjustFont();
+  } // setDisplay method.
+  
   /**
    * validStatus - Will change the color of the JPanel based on the the validity of the content in
    * the text field.
@@ -184,6 +176,17 @@ public class CalculatorDisplay extends JFrame
     buttonPanel.add(equals);
 
   } // addComponents method.
+  
+  /**
+   * adjustFont - Will adjust the font size of the display field depending
+   * on the amount of characters in the display.
+   */
+  private void adjustFont()
+  {
+    
+    if (display.getText().length() > 23) display.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
+    else display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
+  } // adjustFont method.
 
   /**
    * createComponents - Will create the components in the GUI.
