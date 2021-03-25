@@ -186,8 +186,14 @@ public class CalcListener implements ActionListener, WindowListener
       ComplexNumber op2 = parser.parseInput(text);
       evaluate.setSecondOp(op2);
       evaluate.solve();
+      if (operation == "=") {
       display.setText(
           display.getText() + op2.toString() + operation + evaluate.getFirstOp().toString());
+      } else {
+        display.setText(
+            display.getText() + op2.toString() + operation);
+        evaluate.setOperator(operation);
+      }
       clearInput();
     }
 
