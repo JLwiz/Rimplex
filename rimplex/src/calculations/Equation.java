@@ -23,6 +23,9 @@ public class Equation
    */
   public Equation()
   {
+    firstOp = null;
+    secondOp = null;
+    operator = null;
   } // Default Constructor.
 
   // ----------Singleton----------
@@ -95,7 +98,8 @@ public class Equation
    */
   public void setOperator(final String op)
   {
-    if (op != null)
+    if (op == null || op.trim().equals("")) operator = null;
+    else
     {
       switch (op)
       {
@@ -112,12 +116,11 @@ public class Equation
           operator = new ComplexDivision();
           break;
         default:
+          operator = null;
           break;
       }
-    } else {
-      operator = null;
     }
-  }
+  } // setOperator method.
 
   /**
    * setSecondOp - Will set the second operand.
@@ -139,7 +142,7 @@ public class Equation
   {
     ComplexNumber result = new ComplexNumber(0.0, 0.0);
 
-    if (operator == null)
+    if (operator == null || firstOp == null || secondOp == null)
     {
       return result;
     }
