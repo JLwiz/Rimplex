@@ -2,113 +2,245 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import GUI.CalculatorDisplay;
+import calculations.ComplexNumber;
+import calculations.Equation;
+import util.InputParser;
 
 /**
- * Listener class to handle events of buttons, events of the JFrame,
- * and other components of the GUI.
+ * Listener class to handle events of buttons, events of the JFrame, and other components of the
+ * GUI.
  * 
- * @author Andrew Fryer
+ * This Work complies with the JMU honor code
+ * 
+ * @author Andrew Fryer, Storm Behrens
  * @version 1.0 (03/23/2021)
  *
  */
 public class CalcListener implements ActionListener, WindowListener
 {
-  
+  private static CalcListener listener;
+  private CalculatorDisplay frame;
+  private Equation evaluate;
+  private InputParser parser;
+
   /**
    * Default Constructor.
    */
-  public CalcListener()
-  {} // Default Constructor.
-  
+  private CalcListener()
+  {
+    evaluate = Equation.getInstance();
+    parser = parser.getInstance();
+
+  } // Default Constructor.
+
+  /**
+   * Determines what actions to do following an action event.
+   */
+
   @Override
-  public void actionPerformed(ActionEvent e)
+  public void actionPerformed(final ActionEvent e)
   {
     JButton button = null;
-    
-    if (e.getSource() instanceof JButton) button = (JButton) e.getSource();
-    
+    frame = CalculatorDisplay.getInstance();
+
+    if (e.getSource() instanceof JButton)
+      button = (JButton) e.getSource();
+
     if (button != null)
     {
-      CalculatorDisplay frame = CalculatorDisplay.getInstance();
       switch (button.getName().toLowerCase())
       {
         case "add":
-          frame.addOperator(button.getLabel());
+          operatorButton(button.getText());
           break;
         case "divide":
-          frame.addOperator(button.getLabel());
+          operatorButton(button.getText());
           break;
         case "multiply":
-          frame.addOperator(button.getLabel());
+          operatorButton(button.getText());
           break;
         case "subtract":
-          frame.addOperator(button.getLabel());
+          operatorButton(button.getText());
           break;
         case "equals":
-          frame.validStatus(true);
+          operatorButton(button.getText());
           break;
         case "clear":
           frame.clearInputField();
           frame.validStatus(false);
           break;
         case "reset":
-          frame.clearDisplay();
+          resetDisplay();
           break;
         default:
           break;
       }
     }
-    
+
   } // actionPerformed method.
-  
-  @Override
-  public void windowClosed(WindowEvent e)
+
+  /**
+   * clears InputField for CalculatorDisplay.
+   */
+
+  private void clearInput()
   {
-    System.exit(0); 
+    frame.clearInputField();
+  }
+
+  /**
+   * gives the instance of the listener.
+   * 
+   * @return CalcListener - the listener
+   */
+
+  public static CalcListener getInstance()
+  {
+    if (listener == null)
+      listener = new CalcListener();
+    return listener;
+  }
+
+  /**
+   * Processes the event for the operation buttons. (add,subtract,multiply,divide,equals)
+   * 
+   * @param operation
+   *          - the operation thats taking place
+   */
+
+  private void operatorButton(final String operation)
+  {
+    JTextField inputField = frame.getInputField();
+    String text;
+    text = inputField.getText();
+    if (text == null)
+      text = "";
+    if (evaluate.operandEmpty() && text.length() == 0)
+    {
+      invalidInput();
+    }
+    else
+    {
+      try
+      {
+        operationsProcessor(text, operation);
+        frame.validStatus(false);
+      }
+      catch (NumberFormatException e)
+      {
+        invalidInput();
+      }
+    }
+  }
+
+  /**
+   * signals that the input is invalid.
+   */
+
+  private void invalidInput()
+  {
+    frame.validStatus(true);
+  }
+
+  /**
+   * Logic processor for performing operations and updating the display.
+   * 
+   * @param text
+   *          - the text from the inputField
+   * @param operation
+   *          - the operation thats taking place
+   * @throws NumberFormatException
+   *           the Input was invalid.
+   */
+
+  private void operationsProcessor(final String text, final String operation)
+      throws NumberFormatException
+  {
+
+    JLabel display = frame.getDisplay();
+
+    if (evaluate.operatorEmpty() && text.length() > 0)
+    {
+      ComplexNumber op1 = parser.parseInput(text);
+      frame.clearDisplay();
+      display.setText(op1.toString() + operation);
+      evaluate.setFirstOp(op1);
+      evaluate.setOperator(operation);
+      clearInput();
+    }
+    else if (!evaluate.operandEmpty() && evaluate.operatorEmpty() && text.length() == 0)
+    {
+      frame.clearDisplay();
+      display.setText(evaluate.getFirstOp().toString() + operation);
+      evaluate.setOperator(operation);
+    }
+    else if (!evaluate.operandEmpty() && !evaluate.operatorEmpty() && text.length() > 0)
+    {
+      ComplexNumber op2 = parser.parseInput(text);
+      evaluate.setSecondOp(op2);
+      evaluate.solve();
+      display.setText(
+          display.getText() + op2.toString() + operation + evaluate.getFirstOp().toString());
+      clearInput();
+    }
+
+  }
+
+  /**
+   * resets the display and the equation class.
+   */
+
+  private void resetDisplay()
+  {
+    frame.clearDisplay();
+    evaluate.setFirstOp(null);
+    evaluate.setSecondOp(null);
+    evaluate.setOperator(null);
+  }
+
+  @Override
+  public void windowClosed(final WindowEvent e)
+  {
+    System.exit(0);
   } // windowClosed method.
-  
-  
-  
-  
-  //----------Unused Implemented Methods----------
-  
-  
-  
-  
-  @Override
-  public void windowOpened(WindowEvent e)
-  {} // unused.
+
+  // ----------Unused Implemented Methods----------
 
   @Override
-  public void windowClosing(WindowEvent e) 
-  {} // unused.
+  public void windowOpened(final WindowEvent e)
+  {
+  } // unused.
 
   @Override
-  public void windowIconified(WindowEvent e)
-  {} // unused.
+  public void windowClosing(final WindowEvent e)
+  {
+  } // unused.
 
   @Override
-  public void windowDeiconified(WindowEvent e)
-  {} // unused.
+  public void windowIconified(final WindowEvent e)
+  {
+  } // unused.
 
   @Override
-  public void windowActivated(WindowEvent e)
-  {} // unused.
+  public void windowDeiconified(final WindowEvent e)
+  {
+  } // unused.
 
   @Override
-  public void windowDeactivated(WindowEvent e)
-  {} // unused.
- 
+  public void windowActivated(final WindowEvent e)
+  {
+  } // unused.
+
+  @Override
+  public void windowDeactivated(final WindowEvent e)
+  {
+  } // unused.
+
 } // CalcListener class.
