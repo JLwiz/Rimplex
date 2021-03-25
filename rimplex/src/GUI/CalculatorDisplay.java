@@ -65,6 +65,7 @@ public class CalculatorDisplay extends JFrame
 
     listener = CalcListener.getInstance();
     createComponents();
+    createMenuBar();
     setComponents();
     setLayouts();
     addComponents();
@@ -130,7 +131,7 @@ public class CalculatorDisplay extends JFrame
    * 
    * @param text (String)
    */
-  public void setDisplay(String text)
+  public void setDisplay(final String text)
   {
     display.setText(text);
     adjustFont();
@@ -157,9 +158,7 @@ public class CalculatorDisplay extends JFrame
    * addComponents - Will add the components to the panel.
    */
   private void addComponents()
-  {
-    createMenuBar();
-    
+  { 
     mainPanel.add(northPanel);
     mainPanel.add(centerPanel);
     mainPanel.add(buttonPanel);
@@ -275,8 +274,9 @@ public class CalculatorDisplay extends JFrame
     JMenu optionsMenu = new JMenu("Options");
     optionsMenu.add(themes);
     
-    ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon.png");
+    ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon2.png");
     JMenuItem history = new JMenuItem("Show History", historyIcon);
+    history.addActionListener(listener);
     ImageIcon importIcon = new ImageIcon("rimplex/src/import-icon.png");
     JMenuItem open = new JMenuItem("Import File", importIcon);   
     ImageIcon saveIcon = new ImageIcon("rimplex/src/save-icon.png");
@@ -290,7 +290,7 @@ public class CalculatorDisplay extends JFrame
     menuBar.add(optionsMenu);
     menuBar.add(fileMenu);
     setJMenuBar(menuBar); 
-    // if you wanna hide the menu bar, set this to false.
+    // If you want to hide the menu bar, set this to false.
     menuBar.setVisible(true);
   }
 } // CalculatorDisplay class.

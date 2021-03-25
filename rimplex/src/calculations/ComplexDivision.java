@@ -17,9 +17,10 @@ public class ComplexDivision implements Operations
   * @return ComplexNumber post division.
   */
   @Override
-  public ComplexNumber calculate(ComplexNumber op1, ComplexNumber op2)
+  public ComplexNumber calculate(final ComplexNumber op1, final ComplexNumber op2)
   {
-    if (op1 == null || op2 == null) {
+    if (op1 == null || op2 == null) 
+    {
       // TODO: Raise some error
       return null;
     }

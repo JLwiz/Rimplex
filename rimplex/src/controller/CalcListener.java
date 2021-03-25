@@ -39,6 +39,7 @@ public class CalcListener implements ActionListener, WindowListener
     parser = parser.getInstance();
 
   } // Default Constructor.
+  
 
   /**
    * Determines what actions to do following an action event.
