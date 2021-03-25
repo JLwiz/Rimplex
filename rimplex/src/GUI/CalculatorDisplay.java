@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -10,6 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -168,6 +172,8 @@ public class CalculatorDisplay extends JFrame
    */
   private void addComponents()
   {
+    createMenuBar();
+    
     mainPanel.add(northPanel);
     mainPanel.add(centerPanel);
     mainPanel.add(buttonPanel);
@@ -175,7 +181,7 @@ public class CalculatorDisplay extends JFrame
     northPanel.add(display);
 
     centerPanel.add(inputField);
-
+    
     buttonPanel.add(reset);
     buttonPanel.add(clear);
     buttonPanel.add(addition);
@@ -226,7 +232,7 @@ public class CalculatorDisplay extends JFrame
     JButton b = new JButton(title);
     b.setName(name);
     b.setBackground(Color.BLACK);
-    b.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+    b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
     b.setForeground(Color.WHITE);
     b.setFont(new Font(FONT, Font.BOLD, 30));
     b.addActionListener(listener);
@@ -240,6 +246,7 @@ public class CalculatorDisplay extends JFrame
   private void setComponents()
   {
     inputField.setFont(new Font(FONT, Font.LAYOUT_RIGHT_TO_LEFT, 30));
+    inputField.setHorizontalAlignment(JTextField.RIGHT);
     inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
     display.setFont(new Font(FONT, Font.BOLD, 30));
@@ -257,5 +264,36 @@ public class CalculatorDisplay extends JFrame
     centerPanel.setLayout(new GridLayout(1, 0));
     buttonPanel.setLayout(new GridLayout(0, 7));
   } // setLayouts method.
-
+  
+  /**
+   * Creates a menu bar for the application.
+   * 
+   * This will be used for implementing themes, history, and saving history.
+   */
+  private void createMenuBar() 
+  {
+    
+    ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
+    JMenuItem themes = new JMenuItem("Themes", themeIcon);
+    JMenu optionsMenu = new JMenu("Options");
+    optionsMenu.add(themes);
+    
+    ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon.png");
+    JMenuItem history = new JMenuItem("Show History", historyIcon);
+    ImageIcon importIcon = new ImageIcon("rimplex/src/import-icon.png");
+    JMenuItem open = new JMenuItem("Import File", importIcon);   
+    ImageIcon saveIcon = new ImageIcon("rimplex/src/save-icon.png");
+    JMenuItem save = new JMenuItem("Save", saveIcon);
+    JMenu fileMenu = new JMenu("File");
+    fileMenu.add(history);
+    fileMenu.add(open);
+    fileMenu.add(save);
+    
+    JMenuBar menuBar = new JMenuBar();
+    menuBar.add(optionsMenu);
+    menuBar.add(fileMenu);
+    setJMenuBar(menuBar); 
+    // if you wanna hide the menu bar, set this to false.
+    menuBar.setVisible(true);
+  }
 } // CalculatorDisplay class.
