@@ -280,7 +280,7 @@ public class CalculatorDisplay extends JFrame
     
     ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon.png");
     JMenuItem history = new JMenuItem("Show History", historyIcon);
-    ImageIcon importIcon = new ImageIcon("rimplex/src/import.png");
+    ImageIcon importIcon = new ImageIcon("rimplex/src/import-icon.png");
     JMenuItem open = new JMenuItem("Import File", importIcon);   
     ImageIcon saveIcon = new ImageIcon("rimplex/src/save-icon.png");
     JMenuItem save = new JMenuItem("Save", saveIcon);

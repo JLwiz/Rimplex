@@ -147,7 +147,9 @@ public class Equation
       return result;
     }
     else
+    {
       result = operator.calculate(firstOp, secondOp);
+    }
 
     setFirstOp(result);
     setSecondOp(null);
