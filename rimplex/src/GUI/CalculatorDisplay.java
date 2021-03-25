@@ -30,6 +30,8 @@ public class CalculatorDisplay extends JFrame
 {
   // ----------Declarations----------
   private static final long serialVersionUID = 1119406259556735502L;
+  private static final int MAXFONTSIZE = 30;
+  private static final int MINFONTSIZE = 20;
   private static final String FONT = "Arial";
 
   private static CalculatorDisplay single_instance = null;
@@ -91,26 +93,17 @@ public class CalculatorDisplay extends JFrame
   } // getInstance method.
 
   // ----------Public Methods----------
-
+  
   /**
-   * addOperator - Will add the operator of the string passed on through the parameter to the
-   * equation in the display.
-   * 
-   * @param op
-   *          (String)
+   * adjustFont - Will adjust the font size of the display field depending
+   * on the amount of characters in the display.
    */
-  public void addOperator(final String op)
+  public void adjustFont()
   {
-    // If we are using operators to add operands.
-    if (inputField.getText().length() > 0 && display.getText().length() == 0) // ***if input parser
-                                                                              // returns true***
-    {
-      display.setText("(" + inputField.getText() + ")" + op);
-      clearInputField();
-      // Equation.getInstance().setOperator(op);
-    }
-
-  } // addOperator method.
+    
+    if (display.getText().length() > 23) display.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
+    else display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
+  } // adjustFont method.
 
   /**
    * clearDisplay - Will clear the text in the display.
@@ -234,7 +227,7 @@ public class CalculatorDisplay extends JFrame
     b.setBackground(Color.BLACK);
     b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
     b.setForeground(Color.WHITE);
-    b.setFont(new Font(FONT, Font.BOLD, 30));
+    b.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     b.addActionListener(listener);
 
     return b;
@@ -245,11 +238,11 @@ public class CalculatorDisplay extends JFrame
    */
   private void setComponents()
   {
-    inputField.setFont(new Font(FONT, Font.LAYOUT_RIGHT_TO_LEFT, 30));
+    inputField.setFont(new Font(FONT, Font.LAYOUT_RIGHT_TO_LEFT, MAXFONTSIZE));
     inputField.setHorizontalAlignment(JTextField.RIGHT);
     inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
-    display.setFont(new Font(FONT, Font.BOLD, 30));
+    display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     display.setBackground(Color.WHITE);
     display.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
   } // setComponents method.

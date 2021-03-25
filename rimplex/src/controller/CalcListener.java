@@ -174,10 +174,12 @@ public class CalcListener implements ActionListener, WindowListener
       if (operation.equals(equalsOperator))
       {
         display.setText(op1.toString() + operation + op1.toString());
+        frame.adjustFont();
       }
       else
       {
         display.setText(op1.toString() + operation);
+        frame.adjustFont();
         evaluate.setOperator(operation);
       }
       evaluate.setFirstOp(op1);
@@ -190,11 +192,13 @@ public class CalcListener implements ActionListener, WindowListener
       {
         display.setText(
             evaluate.getFirstOp().toString() + operation + evaluate.getFirstOp().toString());
+        frame.adjustFont();
       }
       else
       {
         evaluate.setOperator(operation);
         display.setText(evaluate.getFirstOp().toString() + operation);
+        frame.adjustFont();
       }
     }
     else if (!evaluate.operandEmpty() && !evaluate.operatorEmpty() && text.length() > 0)
@@ -206,10 +210,12 @@ public class CalcListener implements ActionListener, WindowListener
       {
         display.setText(
             display.getText() + op2.toString() + operation + evaluate.getFirstOp().toString());
+        frame.adjustFont();
       }
       else
       {
         display.setText(display.getText() + op2.toString() + operation);
+        frame.adjustFont();
         evaluate.setOperator(operation);
       }
       clearInput();
@@ -231,6 +237,7 @@ public class CalcListener implements ActionListener, WindowListener
     evaluate.setFirstOp(null);
     evaluate.setSecondOp(null);
     evaluate.setOperator(null);
+    frame.adjustFont();
   }
 
   @Override
