@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -10,6 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -168,6 +172,8 @@ public class CalculatorDisplay extends JFrame
    */
   private void addComponents()
   {
+    createMenuBar();
+    
     mainPanel.add(northPanel);
     mainPanel.add(centerPanel);
     mainPanel.add(buttonPanel);
@@ -175,7 +181,7 @@ public class CalculatorDisplay extends JFrame
     northPanel.add(display);
 
     centerPanel.add(inputField);
-
+    
     buttonPanel.add(reset);
     buttonPanel.add(clear);
     buttonPanel.add(addition);
@@ -257,5 +263,29 @@ public class CalculatorDisplay extends JFrame
     centerPanel.setLayout(new GridLayout(1, 0));
     buttonPanel.setLayout(new GridLayout(0, 7));
   } // setLayouts method.
+  
+  /**
+   * Creates a menu bar for the application.
+   * 
+   * This will be used for implementing themes, history, and saving history.
+   */
+  private void createMenuBar() 
+  {
+    JMenu optionsMenu = new JMenu("Options");
+    JMenuItem themes = new JMenuItem("Themes");
+    optionsMenu.add(themes);
 
+    JMenu fileMenu = new JMenu("File");
+    JMenuItem open = new JMenuItem("Import File");
+    JMenuItem save = new JMenuItem("Save");
+    fileMenu.add(open);
+    fileMenu.add(save);
+    
+    JMenuBar menuBar = new JMenuBar();
+    menuBar.add(optionsMenu);
+    menuBar.add(fileMenu);
+    setJMenuBar(menuBar); 
+    // if you wanna hide the menu bar, set this to false.
+    menuBar.setVisible(true);
+  }
 } // CalculatorDisplay class.
