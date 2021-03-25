@@ -56,7 +56,7 @@ public class InputParser
     String[] splitInput = input.split("[-+]");
     String negative = "-";
     ComplexNumber number;
-    if (splitInput.length <= 3)
+    if (splitInput.length <= 3 && input.contains("i"))
     {
       if (splitInput.length == 3)
       {
@@ -76,15 +76,12 @@ public class InputParser
       }
       if (splitInput.length == 1)
       {
-        if (input.contains("i"))
-        {
-          imaginaryNumber = Double.parseDouble(input.substring(0, input.length() - 1));
-        }
-        else
-        {
-          realNumber = Double.parseDouble(input);
-        }
+        imaginaryNumber = Double.parseDouble(input.substring(0, input.length() - 1));
       }
+    }
+    else if (splitInput.length == 1)
+    {
+      realNumber = Double.parseDouble(splitInput[0]);
     }
     else
     {
