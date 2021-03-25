@@ -40,28 +40,39 @@ public class Equation
   } // getInstance method.
 
   // ----------Public Methods----------
-  
+
   /**
-   * operandEmpty - Will return true if the first operand is null,
-   * false if it isn't.
+   * getFirstOp - returns the first operand.
+   * 
+   * @return ComplexNumber - the first operand
+   */
+
+  public ComplexNumber getFirstOp()
+  {
+    return firstOp;
+  }
+
+  /**
+   * operandEmpty - Will return true if the first operand is null, false if it isn't.
    * 
    * @return a boolean representing if the operand is null or not.
    */
   public boolean operandEmpty()
   {
-    if (firstOp == null) return true;
+    if (firstOp == null)
+      return true;
     return false;
   } // operandEmpty method.
-  
+
   /**
-   * operatorEmpty - Will return true if the first operator is empty,
-   * false if it isn't.
+   * operatorEmpty - Will return true if the first operator is empty, false if it isn't.
    * 
    * @return a boolean representing if the operator is null or not.
    */
   public boolean operatorEmpty()
   {
-    if (operator == null) return true;
+    if (operator == null)
+      return true;
     return false;
   } // operatorEmpty method.
 
@@ -84,22 +95,27 @@ public class Equation
    */
   public void setOperator(final String op)
   {
-    switch (op)
+    if (op != null)
     {
-      case "+":
-        operator = new ComplexAddition();
-        break;
-      case "-":
-        operator = new ComplexSubtraction();
-        break;
-      case "*":
-        operator = new ComplexMultiplication();
-        break;
-      case "÷":
-        operator = new ComplexDivision();
-        break;
-      default:
-        break;
+      switch (op)
+      {
+        case "+":
+          operator = new ComplexAddition();
+          break;
+        case "-":
+          operator = new ComplexSubtraction();
+          break;
+        case "*":
+          operator = new ComplexMultiplication();
+          break;
+        case "÷":
+          operator = new ComplexDivision();
+          break;
+        default:
+          break;
+      }
+    } else {
+      operator = null;
     }
   }
 
@@ -122,13 +138,14 @@ public class Equation
   public ComplexNumber solve()
   {
     ComplexNumber result = new ComplexNumber(0.0, 0.0);
-    
+
     if (operator == null)
     {
       return result;
     }
-    else result = operator.calculate(firstOp, secondOp);
-    
+    else
+      result = operator.calculate(firstOp, secondOp);
+
     setFirstOp(result);
     setSecondOp(null);
     setOperator(null);

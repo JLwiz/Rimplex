@@ -1,5 +1,7 @@
 package util;
+
 import calculations.ComplexNumber;
+
 /**
  * Utility class that validates and parses input for the ComplexNumber calculator.
  * 
@@ -52,20 +54,25 @@ public class InputParser
     Double realNumber = 0.0;
     Double imaginaryNumber = 0.0;
     String[] splitInput = input.split("[-+]");
+    String negative = "-";
     ComplexNumber number;
     if (splitInput.length <= 3)
     {
       if (splitInput.length == 3)
       {
-        realNumber = Double.parseDouble("-" + splitInput[1]);
+        realNumber = Double.parseDouble(negative + splitInput[1]);
         imaginaryNumber = Double
             .parseDouble(splitInput[2].substring(0, splitInput[2].length() - 1));
       }
       if (splitInput.length == 2)
       {
         realNumber = Double.parseDouble(splitInput[0]);
+        if (input.contains(negative))
+        {
+          splitInput[1] = negative + splitInput[1];
+        }
         imaginaryNumber = Double
-            .parseDouble(splitInput[1].substring(0, splitInput[2].length() - 1));
+            .parseDouble(splitInput[1].substring(0, splitInput[1].length() - 1));
       }
       if (splitInput.length == 1)
       {
