@@ -273,12 +273,16 @@ public class CalculatorDisplay extends JFrame
   private void createMenuBar() 
   {
     JMenu optionsMenu = new JMenu("Options");
-    JMenuItem themes = new JMenuItem("Themes");
+    ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
+    JMenuItem themes = new JMenuItem("Themes", themeIcon);
     optionsMenu.add(themes);
 
     JMenu fileMenu = new JMenu("File");
-    JMenuItem open = new JMenuItem("Import File");
-    JMenuItem save = new JMenuItem("Save");
+    ImageIcon importIcon = new ImageIcon("rimplex/src/import.png");
+    JMenuItem open = new JMenuItem("Import File", importIcon);
+    
+    ImageIcon saveIcon = new ImageIcon("rimplex/src/save-icon.png");
+    JMenuItem save = new JMenuItem("Save", saveIcon);
     fileMenu.add(open);
     fileMenu.add(save);
     
