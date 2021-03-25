@@ -31,7 +31,7 @@ public class CalculatorDisplay extends JFrame
   // ----------Declarations----------
   private static final long serialVersionUID = 1119406259556735502L;
   private static final int MAXFONTSIZE = 30;
-  private static final int MINFONTSIZE = 20;
+  private static final int MINFONTSIZE = 13;
   private static final String FONT = "Arial";
 
   private static CalculatorDisplay single_instance = null;
