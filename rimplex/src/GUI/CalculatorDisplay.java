@@ -30,6 +30,7 @@ public class CalculatorDisplay extends JFrame
 {
   // ----------Declarations----------
   private static final long serialVersionUID = 1119406259556735502L;
+  private static final int MAXCHARSDISPLAYED = 23;
   private static final int MAXFONTSIZE = 30;
   private static final int MINFONTSIZE = 13;
   private static final String FONT = "Arial";
@@ -125,18 +126,19 @@ public class CalculatorDisplay extends JFrame
   {
     return inputField;
   }
-  
+
   /**
    * setDisplay - Will set the displays test and adjust font if necessary.
    * 
-   * @param text (String)
+   * @param text
+   *          (String)
    */
   public void setDisplay(final String text)
   {
     display.setText(text);
     adjustFont();
   } // setDisplay method.
-  
+
   /**
    * validStatus - Will change the color of the JPanel based on the the validity of the content in
    * the text field.
@@ -158,7 +160,7 @@ public class CalculatorDisplay extends JFrame
    * addComponents - Will add the components to the panel.
    */
   private void addComponents()
-  { 
+  {
     mainPanel.add(northPanel);
     mainPanel.add(centerPanel);
     mainPanel.add(buttonPanel);
@@ -166,7 +168,7 @@ public class CalculatorDisplay extends JFrame
     northPanel.add(display);
 
     centerPanel.add(inputField);
-    
+
     buttonPanel.add(reset);
     buttonPanel.add(clear);
     buttonPanel.add(addition);
@@ -176,16 +178,18 @@ public class CalculatorDisplay extends JFrame
     buttonPanel.add(equals);
 
   } // addComponents method.
-  
+
   /**
-   * adjustFont - Will adjust the font size of the display field depending
-   * on the amount of characters in the display.
+   * adjustFont - Will adjust the font size of the display field depending on the amount of
+   * characters in the display.
    */
   private void adjustFont()
   {
-    
-    if (display.getText().length() > 23) display.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
-    else display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
+
+    if (display.getText().length() > MAXCHARSDISPLAYED)
+      display.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
+    else
+      display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
   } // adjustFont method.
 
   /**
@@ -260,36 +264,36 @@ public class CalculatorDisplay extends JFrame
     centerPanel.setLayout(new GridLayout(1, 0));
     buttonPanel.setLayout(new GridLayout(0, 7));
   } // setLayouts method.
-  
+
   /**
    * Creates a menu bar for the application.
    * 
    * This will be used for implementing themes, history, and saving history.
    */
-  private void createMenuBar() 
+  private void createMenuBar()
   {
-    
+
     ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
     JMenuItem themes = new JMenuItem("Themes", themeIcon);
     JMenu optionsMenu = new JMenu("Options");
     optionsMenu.add(themes);
-    
+
     ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon2.png");
     JMenuItem history = new JMenuItem("Show History", historyIcon);
     history.addActionListener(listener);
     ImageIcon importIcon = new ImageIcon("rimplex/src/import-icon.png");
-    JMenuItem open = new JMenuItem("Import File", importIcon);   
+    JMenuItem open = new JMenuItem("Import File", importIcon);
     ImageIcon saveIcon = new ImageIcon("rimplex/src/save-icon.png");
     JMenuItem save = new JMenuItem("Save", saveIcon);
     JMenu fileMenu = new JMenu("File");
     fileMenu.add(history);
     fileMenu.add(open);
     fileMenu.add(save);
-    
+
     JMenuBar menuBar = new JMenuBar();
     menuBar.add(optionsMenu);
     menuBar.add(fileMenu);
-    setJMenuBar(menuBar); 
+    setJMenuBar(menuBar);
     // If you want to hide the menu bar, set this to false.
     menuBar.setVisible(true);
   }
