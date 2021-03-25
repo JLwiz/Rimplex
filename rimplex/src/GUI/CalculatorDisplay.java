@@ -232,7 +232,7 @@ public class CalculatorDisplay extends JFrame
     JButton b = new JButton(title);
     b.setName(name);
     b.setBackground(Color.BLACK);
-    b.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+    b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
     b.setForeground(Color.WHITE);
     b.setFont(new Font(FONT, Font.BOLD, 30));
     b.addActionListener(listener);
@@ -246,6 +246,7 @@ public class CalculatorDisplay extends JFrame
   private void setComponents()
   {
     inputField.setFont(new Font(FONT, Font.LAYOUT_RIGHT_TO_LEFT, 30));
+    inputField.setHorizontalAlignment(JTextField.RIGHT);
     inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
     display.setFont(new Font(FONT, Font.BOLD, 30));
