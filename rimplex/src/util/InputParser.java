@@ -8,13 +8,15 @@ import calculations.ComplexNumber;
  * This work complies with the JMU Honor Code.
  * 
  * @author Storm Behrens
- * @version 03/24/2021
+ * @version 03/25/2021
  */
 
 public class InputParser
 {
   private static InputParser parser = new InputParser();
   private final String validCharacters = "0123456789.+-i";
+  private final String negative = "-";
+  private final String imaginary = "i";
 
   /**
    * Default Constructor for InputParser.
@@ -36,6 +38,59 @@ public class InputParser
   }
 
   /**
+   * Checks the last number in splitInput to format the number depending on it being
+   * negative/positive or real/imaginary.
+   * 
+   * @param input
+   *          - the original input
+   * @param splitInput
+   *          - the input split into individual parts
+   * @return String - the properly formatted last number
+   */
+
+  public String checkLastNum(final String input, final String[] splitInput)
+  {
+    String last = splitInput[splitInput.length - 1];
+    if (last.contains(imaginary))
+    {
+      if (last.length() == 1)
+      {
+        if (splitInput.length == 2 && input.contains(negative))
+        {
+          last = negative + 1.0 + last;
+        }
+        else if (input.lastIndexOf(negative) > 0)
+        {
+          last = negative + 1.0 + last;
+        }
+        else
+        {
+          last = 1.0 + last;
+        }
+      }
+      else
+      {
+        if (splitInput.length == 2 && input.contains(negative))
+        {
+          last = negative + last;
+        }
+        else if (input.lastIndexOf(negative) > 0)
+        {
+          last = negative + last;
+        }
+      }
+    }
+    else
+    {
+      if (splitInput.length == 2 && input.contains(negative))
+      {
+        last = negative + last;
+      }
+    }
+    return last;
+  }
+
+  /**
    * parses an input and returns the resulting ComplexNumber.
    * 
    * @param input
@@ -54,10 +109,14 @@ public class InputParser
     Double realNumber = 0.0;
     Double imaginaryNumber = 0.0;
     String[] splitInput = input.split("[-+]");
-    String negative = "-";
     ComplexNumber number;
-    if (splitInput.length <= 3 && input.contains("i"))
+    splitInput[splitInput.length - 1] = checkLastNum(input, splitInput);
+    if (splitInput.length <= 3 && input.contains(imaginary))
     {
+      if (splitInput[splitInput.length - 1].length() == 1)
+      {
+        splitInput[splitInput.length - 1] = 1 + splitInput[splitInput.length - 1];
+      }
       if (splitInput.length == 3)
       {
         realNumber = Double.parseDouble(negative + splitInput[1]);
@@ -66,36 +125,25 @@ public class InputParser
       }
       if (splitInput.length == 2)
       {
+        if (splitInput[0] == null || splitInput[0].isBlank())
+        {
+          splitInput[0] = "0";
+        }
         realNumber = Double.parseDouble(splitInput[0]);
-        if (input.contains(negative))
-        {
-          splitInput[1] = negative + splitInput[1];
-        }
-        if (splitInput[1].length() == 1)
-        {
-          imaginaryNumber = 1.0;
-        }
-        else
-        {
-          imaginaryNumber = Double
-              .parseDouble(splitInput[1].substring(0, splitInput[1].length() - 1));
-        }
+
+        imaginaryNumber = Double
+            .parseDouble(splitInput[1].substring(0, splitInput[1].length() - 1));
+
       }
       if (splitInput.length == 1)
       {
-        if (splitInput[0].length() == 1)
-        {
-          imaginaryNumber = 1.0;
-        }
-        else
-        {
-          imaginaryNumber = Double.parseDouble(input.substring(0, input.length() - 1));
-        }
+        imaginaryNumber = Double
+            .parseDouble(splitInput[0].substring(0, splitInput[0].length() - 1));
       }
     }
-    else if (splitInput.length == 1)
+    else if (splitInput.length <= 2)
     {
-      realNumber = Double.parseDouble(splitInput[0]);
+      realNumber = Double.parseDouble(input);
     }
     else
     {
