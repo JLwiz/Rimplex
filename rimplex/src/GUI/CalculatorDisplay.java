@@ -68,8 +68,9 @@ public class CalculatorDisplay extends JFrame
     setComponents();
     setLayouts();
     addComponents();
-    ImageIcon img = new ImageIcon("rimplex/src/logoRimplex.png");
+    ImageIcon img = new ImageIcon("rimplex/src/iconRimplex.png");
     setIconImage(img.getImage());
+    setTitle("Rimplex");
     getRootPane().setBorder(BorderFactory.createLoweredBevelBorder());
     setContentPane(mainPanel);
     setLocationRelativeTo(null);
