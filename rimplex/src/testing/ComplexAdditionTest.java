@@ -11,7 +11,7 @@ import calculations.Operations;
 class ComplexAdditionTest
 {
   @Test
-  void multiplicationCalculateTest()
+  void additionCalculateTest()
   {
     Operations operator = new ComplexAddition();
     ComplexNumber op1;
@@ -51,7 +51,7 @@ class ComplexAdditionTest
   }
 
   @Test
-  void multiplicationRandomTesting()
+  void additionRandomTesting()
   {
     Double[] values = new Double[4];
     for (int i = 0; i < values.length; i++)

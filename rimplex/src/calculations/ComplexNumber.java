@@ -1,5 +1,7 @@
 package calculations;
 
+import java.text.DecimalFormat;
+
 /**
  * A Object class that stores the values associated with a complex number and contains methods to
  * get those values.
@@ -76,17 +78,26 @@ public class ComplexNumber
   @Override
   public String toString()
   {
-    String complexString = "";
-    String complexEnd = "i)";
-    complexString = "(" + realNumber;
-    if (imaginaryNumber < 0)
+    // Creating our "format" objects
+    DecimalFormat standardFormat = new DecimalFormat("#.#######");
+    
+    // Initializing our "String Components".
+    String start = "(";
+    String realComponent = "";
+    String operator = "";
+    String imaginaryComponent = "";
+    String end = "i)";
+    
+    // Our handy DecimalFormat object does all the hard work for us
+    realComponent += standardFormat.format(realNumber.doubleValue());
+    imaginaryComponent += standardFormat.format(imaginaryNumber.doubleValue());
+    
+    // Checking if our imaginary component is not negative to assign our operator
+    if (imaginaryNumber >= 0)
     {
-      complexString += imaginaryNumber + complexEnd;
+      operator += "+";
     }
-    else
-    {
-      complexString += "+" + imaginaryNumber + complexEnd;
-    }
-    return complexString;
+    
+    return start + realComponent + operator + imaginaryComponent + end;
   }
 }
