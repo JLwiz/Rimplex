@@ -122,7 +122,7 @@ public class CalcListener implements ActionListener, WindowListener
     text = inputField.getText();
     if (text == null)
       text = "";
-    if (evaluate.operandEmpty() && text.length() == 0)
+    if ((evaluate.operandEmpty() || !evaluate.operatorEmpty()) && text.length() == 0)
     {
       invalidInput();
     }
@@ -165,28 +165,44 @@ public class CalcListener implements ActionListener, WindowListener
   {
 
     JLabel display = frame.getDisplay();
+    String equalsOperator = "=";
 
     if (evaluate.operatorEmpty() && text.length() > 0)
     {
       ComplexNumber op1 = parser.parseInput(text);
       frame.clearDisplay();
-      display.setText(op1.toString() + operation);
+      if (operation.equals(equalsOperator))
+      {
+        display.setText(op1.toString() + operation + op1.toString());
+      }
+      else
+      {
+        display.setText(op1.toString() + operation);
+        evaluate.setOperator(operation);
+      }
       evaluate.setFirstOp(op1);
-      evaluate.setOperator(operation);
       clearInput();
     }
     else if (!evaluate.operandEmpty() && evaluate.operatorEmpty() && text.length() == 0)
     {
       frame.clearDisplay();
-      display.setText(evaluate.getFirstOp().toString() + operation);
-      evaluate.setOperator(operation);
+      if (operation.equals(equalsOperator))
+      {
+        display.setText(
+            evaluate.getFirstOp().toString() + operation + evaluate.getFirstOp().toString());
+      }
+      else
+      {
+        evaluate.setOperator(operation);
+        display.setText(evaluate.getFirstOp().toString() + operation);
+      }
     }
     else if (!evaluate.operandEmpty() && !evaluate.operatorEmpty() && text.length() > 0)
     {
       ComplexNumber op2 = parser.parseInput(text);
       evaluate.setSecondOp(op2);
       evaluate.solve();
-      if (operation.equals("="))
+      if (operation.equals(equalsOperator))
       {
         display.setText(
             display.getText() + op2.toString() + operation + evaluate.getFirstOp().toString());
@@ -197,6 +213,10 @@ public class CalcListener implements ActionListener, WindowListener
         evaluate.setOperator(operation);
       }
       clearInput();
+    }
+    else
+    {
+      invalidInput();
     }
 
   }

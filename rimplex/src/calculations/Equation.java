@@ -105,7 +105,7 @@ public class Equation
         case "-":
           operator = new ComplexSubtraction();
           break;
-        case "*":
+        case "×":
           operator = new ComplexMultiplication();
           break;
         case "÷":
