@@ -71,12 +71,26 @@ public class InputParser
         {
           splitInput[1] = negative + splitInput[1];
         }
-        imaginaryNumber = Double
-            .parseDouble(splitInput[1].substring(0, splitInput[1].length() - 1));
+        if (splitInput[1].length() == 1)
+        {
+          imaginaryNumber = 1.0;
+        }
+        else
+        {
+          imaginaryNumber = Double
+              .parseDouble(splitInput[1].substring(0, splitInput[1].length() - 1));
+        }
       }
       if (splitInput.length == 1)
       {
-        imaginaryNumber = Double.parseDouble(input.substring(0, input.length() - 1));
+        if (splitInput[0].length() == 1)
+        {
+          imaginaryNumber = 1.0;
+        }
+        else
+        {
+          imaginaryNumber = Double.parseDouble(input.substring(0, input.length() - 1));
+        }
       }
     }
     else if (splitInput.length == 1)
