@@ -35,8 +35,8 @@ class ComplexDivisionTest
     
     op1 = new ComplexNumber(0.0, 2.0);
     op2 = new ComplexNumber(3.0, -8.0);
-    expected = new ComplexNumber(0.21917808219178,
-                                 -0.082191780821918);
+    expected = new ComplexNumber(-0.21917808219178,
+                                  0.082191780821918);
     actual = operator.calculate(op1, op2);
     testHelper(actual, expected);
 
@@ -48,16 +48,24 @@ class ComplexDivisionTest
 
     op1 = new ComplexNumber(0.0, 2.0);
     op2 = new ComplexNumber(3.0, 8.0);
-    expected = new ComplexNumber(-0.21917808219178,
-                                 -0.082191780821918);
+    expected = new ComplexNumber(0.21917808219178,
+                                 0.082191780821918);
+    actual = operator.calculate(op1, op2);
+    testHelper(actual, expected);
+    
+    
+    op1 = new ComplexNumber(4.2, 6.1);
+    op2 = new ComplexNumber(7.2, 10.5);
+    expected = new ComplexNumber(0.58171386266889,
+                                 -0.0011104941699056);
     actual = operator.calculate(op1, op2);
     testHelper(actual, expected);
   }
 
   @Test
-  void divisionRandomTesting()
+  void divisionRandomTest()
   {
-    Double[] values = new Double[20];
+    Double[] values = new Double[50];
     for (int i = 0; i < values.length; i++)
     {
       values[i] = 100 * Math.random();
@@ -75,8 +83,6 @@ class ComplexDivisionTest
                   (op2Real * op2Real + op2Imag * op2Imag);
     Double img = (op1Imag * op2Real - op1Real * op2Imag) /
                  (op2Real * op2Real + op2Imag * op2Imag);
-    real *= -1;
-    img *= -1;
     
     Operations operator = new ComplexDivision();
     ComplexNumber expected = new ComplexNumber(real, img);
