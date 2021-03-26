@@ -182,6 +182,7 @@ public class NewParser
               {
                 n = multi.calculate(parseInput(in.substring(0, i + 1)),
                     parseInput(in.substring(i + 2)));
+                break; // stops multiple regression calls
               }
               else if (in.charAt(i + 1) == '(') // requires separate check for input such as
                                                 // '2(1+1i)'
