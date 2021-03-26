@@ -8,15 +8,14 @@ package calculations;
  */
 public class ComplexDivision implements Operations
 {
-  /**
-   * Does ComplexNumber division.
-   * 
-   * @param op1
-   *          ComplexNumber1
-   * @param op2
-   *          ComplexNumber2
-   * @return ComplexNumber post division.
-   */
+  /** Does ComplexNumber division.
+  * 
+  * @param op1
+  *          ComplexNumber1
+  * @param op2
+  *          ComplexNumber2
+  * @return ComplexNumber post division.
+  */
   @Override
   public ComplexNumber calculate(final ComplexNumber op1, final ComplexNumber op2)
   {
