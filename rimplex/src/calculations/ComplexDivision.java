@@ -8,18 +8,20 @@ package calculations;
  */
 public class ComplexDivision implements Operations
 {
-  /** Does ComplexNumber division.
-  * 
-  * @param op1
-  *          ComplexNumber1
-  * @param op2
-  *          ComplexNumber2
-  * @return ComplexNumber post division.
-  */
+  /**
+   * Does ComplexNumber division.
+   * 
+   * @param op1
+   *          ComplexNumber1
+   * @param op2
+   *          ComplexNumber2
+   * @return ComplexNumber post division.
+   */
   @Override
   public ComplexNumber calculate(final ComplexNumber op1, final ComplexNumber op2)
   {
-    if (// op1 == null ||
+    if (// op1 == null || Probably shouldn't let null numerators go through, but will have to do for
+        // now.
         op2 == null || (op2.getReal() == 0.0 && op2.getImaginary() == 0.0))
     {
       // TODO: Raise ArithmeticException
@@ -43,9 +45,6 @@ public class ComplexDivision implements Operations
         / (op2Real * op2Real + op2Imag * op2Imag);
     Double resultImag = (op1Imag * op2Real - op1Real * op2Imag)
         / (op2Real * op2Real + op2Imag * op2Imag);
-
-    resultReal *= -1;
-    resultImag *= -1;
 
     return new ComplexNumber(resultReal, resultImag);
   }
