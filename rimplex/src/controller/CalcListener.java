@@ -12,6 +12,7 @@ import GUI.CalculatorDisplay;
 import calculations.ComplexNumber;
 import calculations.Equation;
 import util.InputParser;
+import util.NewParser;
 
 /**
  * Listener class to handle events of buttons, events of the JFrame, and other components of the
@@ -28,7 +29,7 @@ public class CalcListener implements ActionListener, WindowListener
   private static CalcListener listener;
   private CalculatorDisplay frame;
   private Equation evaluate;
-  private InputParser parser;
+  private NewParser parser;
 
   /**
    * Default Constructor.
@@ -39,7 +40,6 @@ public class CalcListener implements ActionListener, WindowListener
     parser = parser.getInstance();
 
   } // Default Constructor.
-  
 
   /**
    * Determines what actions to do following an action event.
@@ -110,6 +110,113 @@ public class CalcListener implements ActionListener, WindowListener
   }
 
   /**
+   * formats input text for display.
+   * 
+   * Should not modify input in a way that would change parse result
+   * 
+   * @param input
+   *          - the initial input
+   * @return String - the formatted input
+   */
+
+  private String formatInput(final String input)
+  {
+    String text = input;
+    String leftParen = "(";
+    String rightParen = ")";
+    if (!text.endsWith(rightParen) || !text.startsWith(leftParen))
+    {
+      text = leftParen + text + rightParen;
+    }
+    return text;
+  }
+
+  /**
+   * signals that the input is invalid.
+   */
+
+  private void invalidInput()
+  {
+    frame.validStatus(true);
+  }
+
+  /**
+   * Logic processor for performing operations and updating the display.
+   * 
+   * @param input
+   *          - the text from the inputField
+   * @param operation
+   *          - the operation thats taking place
+   * @throws NumberFormatException
+   *           the Input was invalid.
+   */
+
+  private void operationsProcessor(final String input, final String operation)
+      throws NumberFormatException
+  {
+
+    JLabel display = frame.getDisplay();
+    String text = input;
+    if (input != null && !input.isEmpty())
+    {
+      text = formatInput(input);
+    }
+    String equalsOperator = "=";
+
+    if (evaluate.operatorEmpty() && text.length() > 0)
+    {
+      ComplexNumber op1 = parser.parseInput(text);
+      frame.setDisplay("");
+      if (operation.equals(equalsOperator))
+      {
+        frame.setDisplay(text + operation + op1.toString());
+      }
+      else
+      {
+        frame.setDisplay(text + operation);
+        evaluate.setOperator(operation);
+      }
+      evaluate.setFirstOp(op1);
+      clearInput();
+    }
+    else if (!evaluate.operandEmpty() && evaluate.operatorEmpty() && text.length() == 0)
+    {
+      frame.setDisplay("");
+      if (operation.equals(equalsOperator))
+      {
+        frame.setDisplay(
+            evaluate.getFirstOp().toString() + operation + evaluate.getFirstOp().toString());
+      }
+      else
+      {
+        evaluate.setOperator(operation);
+        frame.setDisplay(evaluate.getFirstOp().toString() + operation);
+      }
+    }
+    else if (!evaluate.operandEmpty() && !evaluate.operatorEmpty() && text.length() > 0)
+    {
+      ComplexNumber op2 = parser.parseInput(text);
+      evaluate.setSecondOp(op2);
+      evaluate.solve();
+      if (operation.equals(equalsOperator))
+      {
+        frame.setDisplay(display.getText() + text + operation + evaluate.getFirstOp().toString());
+      }
+      else
+      {
+        frame.setDisplay(display.getText() + text + operation);
+        evaluate.setOperator(operation);
+      }
+      clearInput();
+    }
+    else
+    {
+      invalidInput();
+    }
+
+  }
+
+  /**
    * Processes the event for the operation buttons. (add,subtract,multiply,divide,equals)
    * 
    * @param operation
@@ -139,87 +246,6 @@ public class CalcListener implements ActionListener, WindowListener
         invalidInput();
       }
     }
-  }
-
-  /**
-   * signals that the input is invalid.
-   */
-
-  private void invalidInput()
-  {
-    frame.validStatus(true);
-  }
-
-  /**
-   * Logic processor for performing operations and updating the display.
-   * 
-   * @param text
-   *          - the text from the inputField
-   * @param operation
-   *          - the operation thats taking place
-   * @throws NumberFormatException
-   *           the Input was invalid.
-   */
-
-  private void operationsProcessor(final String text, final String operation)
-      throws NumberFormatException
-  {
-
-    JLabel display = frame.getDisplay();
-    String equalsOperator = "=";
-
-    if (evaluate.operatorEmpty() && text.length() > 0)
-    {
-      ComplexNumber op1 = parser.parseInput(text);
-      frame.setDisplay("");
-      if (operation.equals(equalsOperator))
-      {
-        frame.setDisplay(op1.toString() + operation + op1.toString());
-      }
-      else
-      {
-        frame.setDisplay(op1.toString() + operation);
-        evaluate.setOperator(operation);
-      }
-      evaluate.setFirstOp(op1);
-      clearInput();
-    }
-    else if (!evaluate.operandEmpty() && evaluate.operatorEmpty() && text.length() == 0)
-    {
-      frame.setDisplay("");
-      if (operation.equals(equalsOperator))
-      {
-        frame.setDisplay(
-            evaluate.getFirstOp().toString() + operation + evaluate.getFirstOp().toString());
-      }
-      else
-      {
-        evaluate.setOperator(operation);
-        frame.setDisplay(evaluate.getFirstOp().toString() + operation);
-      }
-    }
-    else if (!evaluate.operandEmpty() && !evaluate.operatorEmpty() && text.length() > 0)
-    {
-      ComplexNumber op2 = parser.parseInput(text);
-      evaluate.setSecondOp(op2);
-      evaluate.solve();
-      if (operation.equals(equalsOperator))
-      {
-        frame.setDisplay(
-            display.getText() + op2.toString() + operation + evaluate.getFirstOp().toString());
-      }
-      else
-      {
-        frame.setDisplay(display.getText() + op2.toString() + operation);
-        evaluate.setOperator(operation);
-      }
-      clearInput();
-    }
-    else
-    {
-      invalidInput();
-    }
-
   }
 
   /**
