@@ -21,7 +21,7 @@ import util.NewParser;
  * This Work complies with the JMU honor code
  * 
  * @author Andrew Fryer, Storm Behrens
- * @version 1.0 (03/23/2021)
+ * @version 1.0 (03/26/2021)
  *
  */
 public class CalcListener implements ActionListener, WindowListener
@@ -204,7 +204,7 @@ public class CalcListener implements ActionListener, WindowListener
       }
       else
       {
-        frame.setDisplay(display.getText() + text + operation);
+        frame.setDisplay(evaluate.getFirstOp().toString() + operation);
         evaluate.setOperator(operation);
       }
       clearInput();
