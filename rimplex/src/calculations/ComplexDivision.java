@@ -23,7 +23,7 @@ public class ComplexDivision implements Operations
         op2 == null ||
        (op2.getReal() == 0.0 && op2.getImaginary() == 0.0)) 
     {
-      // TODO: Raise some error
+      // TODO: Raise ArithmeticException
       // This is a stupid way to handle a 0 denominator. Discuss with team.
       return new ComplexNumber(0.0, 0.0);
     }
