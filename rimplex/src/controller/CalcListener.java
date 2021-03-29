@@ -165,6 +165,7 @@ public class CalcListener implements ActionListener, WindowListener
     if (evaluate.operatorEmpty() && text.length() > 0)
     {
       ComplexNumber op1 = parser.parseInput(text);
+      validComplexNumber(op1);
       frame.setDisplay("");
       if (operation.equals(equalsOperator))
       {
@@ -195,6 +196,7 @@ public class CalcListener implements ActionListener, WindowListener
     else if (!evaluate.operandEmpty() && !evaluate.operatorEmpty() && text.length() > 0)
     {
       ComplexNumber op2 = parser.parseInput(text);
+      validComplexNumber(op2);
       evaluate.setSecondOp(op2);
       evaluate.solve();
       if (operation.equals(equalsOperator))
@@ -264,6 +266,22 @@ public class CalcListener implements ActionListener, WindowListener
   {
     System.exit(0);
   } // windowClosed method.
+  
+  /**
+   * checks if the inputed complex number has both a real and imaginary number
+   * @param n - the complex number to check
+   * @return boolean - whether the complex number is valid
+   * @throws NumberFormatException -
+   *           the Input was invalid.
+   */
+  
+  private boolean validComplexNumber(ComplexNumber n) throws NumberFormatException {
+    boolean valid = true;
+    if (n.getReal() == 0 || n.getImaginary() == 0) {
+      throw new NumberFormatException();
+    }
+    return valid;
+  }
 
   // ----------Unused Implemented Methods----------
 
