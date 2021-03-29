@@ -9,7 +9,6 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -148,7 +147,8 @@ public class CalculatorDisplay extends JFrame
    */
   public void invalidStatus(final boolean invalid)
   {
-    if (invalid) {
+    if (invalid)
+    {
       inputField.setBorder(BorderFactory.createLineBorder(Color.red, 2));
       JOptionPane.showMessageDialog(this, "There was an error");
     }
