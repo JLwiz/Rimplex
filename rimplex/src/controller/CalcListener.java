@@ -75,7 +75,7 @@ public class CalcListener implements ActionListener, WindowListener
           break;
         case "clear":
           frame.clearInputField();
-          frame.validStatus(false);
+          frame.invalidStatus(false);
           break;
         case "reset":
           resetDisplay();
@@ -137,7 +137,7 @@ public class CalcListener implements ActionListener, WindowListener
 
   private void invalidInput()
   {
-    frame.validStatus(true);
+    frame.invalidStatus(true);
   }
 
   /**
@@ -239,7 +239,7 @@ public class CalcListener implements ActionListener, WindowListener
       try
       {
         operationsProcessor(text, operation);
-        frame.validStatus(false);
+        frame.invalidStatus(false);
       }
       catch (NumberFormatException e)
       {

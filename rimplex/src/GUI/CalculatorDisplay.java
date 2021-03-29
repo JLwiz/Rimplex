@@ -9,11 +9,13 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -73,7 +75,7 @@ public class CalculatorDisplay extends JFrame
     setIconImage(img.getImage());
     setTitle("Rimplex");
     getRootPane().setBorder(BorderFactory.createLoweredBevelBorder());
-    setContentPane(mainPanel);
+    getContentPane().add(mainPanel);
     setLocationRelativeTo(null);
 
     setVisible(true);
@@ -138,18 +140,22 @@ public class CalculatorDisplay extends JFrame
   } // setDisplay method.
   
   /**
-   * validStatus - Will change the color of the JPanel based on the the validity of the content in
+   * invalidStatus - Will change the color of the JPanel based on the the validity of the content in
    * the text field.
    * 
-   * @param valid
+   * @param invalid true if there is an error present, otherwise false.
    *          (boolean)
    */
-  public void validStatus(final boolean valid)
+  public void invalidStatus(final boolean invalid)
   {
-    if (valid)
+    if (invalid) {
       inputField.setBorder(BorderFactory.createLineBorder(Color.red, 2));
+      JOptionPane.showMessageDialog(this, "There was an error");
+    }
     else
+    {
       inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+    }
   } // validStatus method.
 
   // ----------Private Methods---------

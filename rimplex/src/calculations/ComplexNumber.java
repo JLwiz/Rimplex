@@ -74,7 +74,6 @@ public class ComplexNumber
    * 
    * @return String - the text for the complex number
    */
-
   @Override
   public String toString()
   {
