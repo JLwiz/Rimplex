@@ -146,11 +146,11 @@ public class CalculatorDisplay extends JFrame
    * @param invalid true if there is an error present, otherwise false.
    *          (boolean)
    */
-  public void invalidStatus(final boolean invalid)
+  public void invalidStatus(final boolean invalid, final String message)
   {
     if (invalid) {
       inputField.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-      JOptionPane.showMessageDialog(this, "There was an error");
+      JOptionPane.showMessageDialog(this, message);
     }
     else
     {
