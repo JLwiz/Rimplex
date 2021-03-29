@@ -74,7 +74,7 @@ public class CalcListener implements ActionListener, WindowListener
           break;
         case "clear":
           frame.clearInputField();
-          frame.invalidStatus(false, "no");
+          frame.invalidStatus(false, "no Error");
           break;
         case "reset":
           resetDisplay();
@@ -266,18 +266,22 @@ public class CalcListener implements ActionListener, WindowListener
   {
     System.exit(0);
   } // windowClosed method.
-  
+
   /**
-   * checks if the inputed complex number has both a real and imaginary number
-   * @param n - the complex number to check
+   * checks if the inputed complex number has both a real and imaginary number.
+   * 
+   * @param n
+   *          - the complex number to check
    * @return boolean - whether the complex number is valid
-   * @throws NumberFormatException -
-   *           the Input was invalid.
+   * @throws NumberFormatException
+   *           - the Input was invalid.
    */
-  
-  private boolean validComplexNumber(ComplexNumber n) throws NumberFormatException {
+
+  private boolean validComplexNumber(final ComplexNumber n) throws NumberFormatException
+  {
     boolean valid = true;
-    if (n.getReal() == 0 || n.getImaginary() == 0) {
+    if (n.getReal() == 0 || n.getImaginary() == 0)
+    {
       throw new NumberFormatException();
     }
     return valid;
