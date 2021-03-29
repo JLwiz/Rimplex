@@ -12,7 +12,6 @@ import GUI.CalculatorDisplay;
 import calculations.ComplexNumber;
 import calculations.Equation;
 import util.InputParser;
-import util.NewParser;
 
 /**
  * Listener class to handle events of buttons, events of the JFrame, and other components of the
@@ -29,7 +28,7 @@ public class CalcListener implements ActionListener, WindowListener
   private static CalcListener listener;
   private CalculatorDisplay frame;
   private Equation evaluate;
-  private NewParser parser;
+  private InputParser parser;
 
   /**
    * Default Constructor.

@@ -1,6 +1,10 @@
 package util;
 
+import calculations.ComplexAddition;
+import calculations.ComplexDivision;
+import calculations.ComplexMultiplication;
 import calculations.ComplexNumber;
+import calculations.ComplexSubtraction;
 
 /**
  * Utility class that validates and parses input for the ComplexNumber calculator.
@@ -8,15 +12,22 @@ import calculations.ComplexNumber;
  * This work complies with the JMU Honor Code.
  * 
  * @author Storm Behrens
- * @version 03/25/2021
+ * @version 03/26/2021
  */
 
 public class InputParser
 {
   private static InputParser parser = new InputParser();
-  private final String validCharacters = "0123456789.+-i";
+  private final String validCharacters = "0123456789.+-i*/()";
   private final String negative = "-";
   private final String imaginary = "i";
+  private final String plus = "+";
+  private final String multiply = "*";
+  private final String divide = "/";
+  private ComplexAddition add = new ComplexAddition();
+  private ComplexSubtraction sub = new ComplexSubtraction();
+  private ComplexMultiplication multi = new ComplexMultiplication();
+  private ComplexDivision div = new ComplexDivision();
 
   /**
    * Default Constructor for InputParser.
@@ -24,6 +35,33 @@ public class InputParser
 
   private InputParser()
   {
+  }
+
+  /**
+   * Formats imaginary numbers to allow for proper parsing.
+   * 
+   * @param input
+   *          - the input to format
+   * @return String - the formatted input
+   */
+
+  public String formatImaginary(final String input)
+  {
+    String text = input;
+    String defaultNum = "1.0";
+    if (text.contains(imaginary))
+    {
+      if (text.length() == 1)
+      {
+        text = defaultNum + text;
+      }
+      else if (text.length() == 2 && text.contains(negative))
+      {
+        text = negative + defaultNum + imaginary;
+      }
+    }
+
+    return text;
   }
 
   /**
@@ -38,60 +76,58 @@ public class InputParser
   }
 
   /**
-   * Checks the last number in splitInput to format the number depending on it being
-   * negative/positive or real/imaginary.
+   * method to check if input has parentheses.
    * 
    * @param input
-   *          - the original input
-   * @param splitInput
-   *          - the input split into individual parts
-   * @return String - the properly formatted last number
+   *          - input to check
+   * @return boolean - if the input has parentheses
    */
 
-  public String checkLastNum(final String input, final String[] splitInput)
+  private boolean hasParentheses(final String input)
   {
-    String last = splitInput[splitInput.length - 1];
-    if (last.contains(imaginary))
+    return (input.contains(")") || input.contains("("));
+  }
+
+  /**
+   * parses a piece of the input and returns a complex number.
+   * 
+   * @param input
+   *          - the input to parse
+   * @return ComplexNumber - the resulting complex number
+   * @throws NumberFormatException
+   *           - if the input is invalid
+   */
+
+  private ComplexNumber parseComplexNum(final String input) throws NumberFormatException
+  {
+    if (input == null || input.length() == 0 || !validInput(input))
     {
-      if (last.length() == 1)
-      {
-        if (splitInput.length == 2 && input.contains(negative))
-        {
-          last = negative + 1.0 + last;
-        }
-        else if (input.lastIndexOf(negative) > 0)
-        {
-          last = negative + 1.0 + last;
-        }
-        else
-        {
-          last = 1.0 + last;
-        }
-      }
-      else
-      {
-        if (splitInput.length == 2 && input.contains(negative))
-        {
-          last = negative + last;
-        }
-        else if (input.lastIndexOf(negative) > 0)
-        {
-          last = negative + last;
-        }
-      }
+      throw new NumberFormatException();
+    }
+    Double realNumber = 0.0;
+    Double imaginaryNumber = 0.0;
+    ComplexNumber number;
+    String text = input;
+    text = formatImaginary(text);
+    if (text.contains(imaginary))
+    {
+      imaginaryNumber = Double.parseDouble(text.substring(0, text.length() - 1));
     }
     else
     {
-      if (splitInput.length == 2 && input.contains(negative))
-      {
-        last = negative + last;
-      }
+      realNumber = Double.parseDouble(text);
     }
-    return last;
+    number = new ComplexNumber(realNumber, imaginaryNumber);
+    return number;
+
   }
 
   /**
    * parses an input and returns the resulting ComplexNumber.
+   * 
+   * This method reverses the order of operations for regression (regresses on "+,-" before "*,/")
+   * This is so expressions linked through multiplication or division are properly isolated and
+   * solved before including it with the rest of the equation.
    * 
    * @param input
    *          - the input to parse
@@ -106,52 +142,154 @@ public class InputParser
     {
       throw new NumberFormatException();
     }
-    Double realNumber = 0.0;
-    Double imaginaryNumber = 0.0;
-    String[] splitInput = input.split("[-+]");
-    ComplexNumber number;
-    splitInput[splitInput.length - 1] = checkLastNum(input, splitInput);
-    if (splitInput.length <= 3 && input.contains(imaginary))
+    ComplexNumber n = null;
+    String in = input.replaceAll("--", "");
+    if (hasParentheses(in) && validParentheses(in))
     {
-      if (splitInput[splitInput.length - 1].length() == 1)
+      for (int j = 0; j < 2; j++) // This loop is to allow for order of operations.
       {
-        splitInput[splitInput.length - 1] = 1 + splitInput[splitInput.length - 1];
-      }
-      if (splitInput.length == 3)
-      {
-        realNumber = Double.parseDouble(negative + splitInput[1]);
-        imaginaryNumber = Double
-            .parseDouble(splitInput[2].substring(0, splitInput[2].length() - 1));
-      }
-      if (splitInput.length == 2)
-      {
-        if (splitInput[0] == null || splitInput[0].isBlank())
+        int leftP = 0;
+        int rightP = 0;
+        for (int i = 0; i < in.length(); i++) // This loop split input with multiple parentheses
+                                              // apart
         {
-          splitInput[0] = "0";
+          if (in.charAt(i) == '(')
+          {
+            leftP++;
+          }
+          if (in.charAt(i) == ')')
+          {
+            rightP++;
+          }
+          if (leftP == rightP && i < in.length() - 1)
+          {
+            if (j == 0) // first set of operations
+            {
+              if (in.charAt(i + 1) == '+')
+              {
+                n = add.calculate(parseInput(in.substring(0, i + 1)),
+                    parseInput(in.substring(i + 2)));
+              }
+              else if (in.charAt(i + 1) == '-')
+              {
+                n = sub.calculate(parseInput(in.substring(0, i + 1)),
+                    parseInput(in.substring(i + 2)));
+              }
+            }
+            else if (j == 1) // second set of operations
+            {
+              if (in.charAt(i + 1) == '*')
+              {
+                n = multi.calculate(parseInput(in.substring(0, i + 1)),
+                    parseInput(in.substring(i + 2)));
+                break; // stops multiple regression calls
+              }
+              else if (in.charAt(i + 1) == '(') // requires separate check for input such as
+                                                // '2(1+1i)'
+              {
+                n = multi.calculate(parseInput(in.substring(0, i + 1)),
+                    parseInput(in.substring(i + 1)));
+              }
+              else if (in.charAt(i + 1) == '/')
+              {
+                n = div.calculate(parseInput(in.substring(0, i + 1)),
+                    parseInput(in.substring(i + 2)));
+              }
+            }
+          }
+          else if (i == in.length() - 1 && j == 1)
+          {
+            if (n != null)
+              break; // stops multiple regression calls
+            n = parseInput(in.substring(1, in.length() - 1));
+          }
         }
-        realNumber = Double.parseDouble(splitInput[0]);
-
-        imaginaryNumber = Double
-            .parseDouble(splitInput[1].substring(0, splitInput[1].length() - 1));
-
-      }
-      if (splitInput.length == 1)
-      {
-        imaginaryNumber = Double
-            .parseDouble(splitInput[0].substring(0, splitInput[0].length() - 1));
+        if (n != null)
+          break; // stops multiple regression calls
       }
     }
-    else if (splitInput.length <= 2)
+    else if (!hasParentheses(in)) // allows input without parentheses and allows regression
     {
-      realNumber = Double.parseDouble(input);
+      n = parseNoParen(in);
     }
     else
     {
       throw new NumberFormatException();
     }
-    number = new ComplexNumber(realNumber, imaginaryNumber);
-    return number;
+    return n;
+  }
 
+  /**
+   * handles Parsing of input with no Parentheses.
+   * 
+   * this method is more for organization than functionality
+   * 
+   * @param input
+   *          - the input to parse
+   * @return ComplexNumber - the resulting complex number
+   * @throws NumberFormatException
+   *           - if the input is invalid
+   */
+
+  private ComplexNumber parseNoParen(final String input) throws NumberFormatException
+  {
+    if (input == null || input.length() == 0 || !validInput(input))
+    {
+      throw new NumberFormatException();
+    }
+    String in = input;
+    ComplexNumber n = null;
+    if (in.contains(plus))
+    {
+      String[] list = in.split("\\+");
+      n = parseInput(list[0]);
+      for (int i = 1; i < list.length; i++)
+      {
+        n = add.calculate(n, parseNoParen(list[i]));
+      }
+    }
+    else if (in.contains(negative)) // requires special checks to account for negative numbers
+    {
+      String[] list = in.split(negative);
+      int i = 1;
+      if (list[0] == null || list[0].isBlank()) // checks if first number is negative
+      {
+        n = parseComplexNum(negative + list[1]);
+        i = 2; // sets value of i to 2 so that the first number isn't counted twice
+      }
+      else
+      {
+        n = parseInput(list[0]);
+      }
+      for (; i < list.length; i++)
+      {
+        n = sub.calculate(n, parseNoParen(list[i]));
+      }
+    }
+    else if (in.contains(multiply))
+    {
+      String[] list = in.split("\\*");
+      n = parseInput(list[0]);
+      for (int i = 1; i < list.length; i++)
+      {
+        n = multi.calculate(n, parseNoParen(list[i]));
+      }
+    }
+    else if (in.contains(divide))
+    {
+      String[] list = in.split(divide);
+      n = parseInput(list[0]);
+      for (int i = 1; i < list.length; i++)
+      {
+        n = div.calculate(n, parseNoParen(list[i]));
+      }
+    }
+    else
+    {
+      n = parseComplexNum(in);
+    }
+
+    return n;
   }
 
   /**
@@ -166,6 +304,15 @@ public class InputParser
   {
     boolean isValid = true;
     char[] inputChars = input.toCharArray();
+    if (input.endsWith(plus) || input.endsWith(negative) || input.endsWith(multiply)
+        || input.endsWith(divide))
+    {
+      isValid = false;
+    }
+    else if (input.startsWith(plus) || input.startsWith(multiply) || input.startsWith(divide))
+    {
+      isValid = false;
+    }
     for (char i : inputChars)
     {
       if (validCharacters.lastIndexOf(i) == -1)
@@ -174,5 +321,38 @@ public class InputParser
       }
     }
     return isValid;
+  }
+
+  /**
+   * checks if Parentheses are set up properly.
+   * 
+   * @param input
+   *          - the input to check
+   * @return boolean - if the Parentheses are valid
+   */
+
+  private boolean validParentheses(final String input)
+  {
+    boolean valid = true;
+    int leftP = 0;
+    int rightP = 0;
+    for (int i = 0; i < input.length(); i++)
+    {
+      if (input.charAt(i) == '(')
+      {
+        leftP++;
+      }
+      if (input.charAt(i) == ')')
+      {
+        rightP++;
+      }
+      if (rightP > leftP)
+      {
+        valid = false;
+      }
+    }
+    if (leftP != rightP)
+      valid = false;
+    return valid;
   }
 }
