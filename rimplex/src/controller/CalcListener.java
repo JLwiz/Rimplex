@@ -165,7 +165,7 @@ public class CalcListener implements ActionListener, WindowListener
     if (evaluate.operatorEmpty() && text.length() > 0)
     {
       ComplexNumber op1 = parser.parseInput(text);
-      validComplexNumber(op1);
+      validComplexNumber(op1, text);
       frame.setDisplay("");
       if (operation.equals(equalsOperator))
       {
@@ -196,7 +196,7 @@ public class CalcListener implements ActionListener, WindowListener
     else if (!evaluate.operandEmpty() && !evaluate.operatorEmpty() && text.length() > 0)
     {
       ComplexNumber op2 = parser.parseInput(text);
-      validComplexNumber(op2);
+      validComplexNumber(op2, text);
       evaluate.setSecondOp(op2);
       evaluate.solve();
       if (operation.equals(equalsOperator))
@@ -272,15 +272,20 @@ public class CalcListener implements ActionListener, WindowListener
    * 
    * @param n
    *          - the complex number to check
+   * @param text
+   *          - checks the text for correct format
    * @return boolean - whether the complex number is valid
    * @throws NumberFormatException
    *           - the Input was invalid.
    */
 
-  private boolean validComplexNumber(final ComplexNumber n) throws NumberFormatException
+  private boolean validComplexNumber(final ComplexNumber n, final String text)
+      throws NumberFormatException
   {
     boolean valid = true;
-    if (n.getReal() == 0 || n.getImaginary() == 0)
+    if ((n.getReal() == 0 && (!text.contains("0+") && !text.contains("0-")))
+        || (n.getImaginary() == 0 && !text.contains("0i"))) // does a check to make sure the input
+                                                            // is not just a real/imaginary number
     {
       throw new NumberFormatException();
     }
