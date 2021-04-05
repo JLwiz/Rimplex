@@ -8,12 +8,6 @@ package calculations;
  */
 public class ComplexAddition implements Operations
 {
-  /**
-   * Complex Multiplication Constructor.
-   */
-  public ComplexAddition()
-  {
-  }
 
   /**
    * Does ComplexNumber addition.
