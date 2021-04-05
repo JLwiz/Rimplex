@@ -123,9 +123,19 @@ public class CalcListener implements ActionListener, WindowListener
     String text = input;
     String leftParen = "(";
     String rightParen = ")";
+    String iPlus = "+i";
+    String iMinus = "-i";
+    String iParen = "(i";
+    String imaginary = "i";
     if (!text.endsWith(rightParen) || !text.startsWith(leftParen))
     {
       text = leftParen + text + rightParen;
+    }
+    if (text.contains(iPlus) || text.contains(iMinus) || text.contains(iParen))
+    {
+      text = text.replace(iParen, "(1" + imaginary);
+      text = text.replace(iPlus, "+1" + imaginary);
+      text = text.replace(iMinus, "-1" + imaginary);
     }
     return text;
   }
