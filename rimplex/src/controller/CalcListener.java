@@ -73,7 +73,7 @@ public class CalcListener implements ActionListener, WindowListener
           operatorButton(button.getText());
           break;
         case "clear":
-          frame.clearInputField();
+          clearInput();
           frame.invalidStatus(false, "no Error");
           break;
         case "reset":

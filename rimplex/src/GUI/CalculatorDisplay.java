@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.border.EtchedBorder;
 
 import controller.CalcListener;
@@ -34,6 +35,7 @@ public class CalculatorDisplay extends JFrame
   private static final int MAXFONTSIZE = 30;
   private static final int MINFONTSIZE = 13;
   private static final String FONT = "Arial";
+  private static final String ITALICI = "<i>i</i>";
 
   private static CalculatorDisplay single_instance = null;
   private CalcListener listener;
@@ -134,7 +136,12 @@ public class CalculatorDisplay extends JFrame
    */
   public void setDisplay(final String text)
   {
-    display.setText(text);
+    String temp = text.replaceAll("<html>", "");
+    temp = temp.replaceAll("</html>", "");
+    temp = temp.replaceAll("<i>", "");
+    temp = temp.replaceAll("</i>", "");
+    temp = "<html>" + temp + "</html>";
+    display.setText(temp.replaceAll("i", ITALICI));
     adjustFont();
   } // setDisplay method.
   
