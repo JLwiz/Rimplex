@@ -111,7 +111,7 @@ public class CalcListener implements ActionListener, WindowListener
   /**
    * formats input text for display.
    * 
-   * Should not modify input in a way that would change parse result
+   * **Should not modify input in a way that would change parse result**
    * 
    * @param input
    *          - the initial input
