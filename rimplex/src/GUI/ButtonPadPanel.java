@@ -9,6 +9,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controller.CalcListener;
+
 public class ButtonPadPanel extends JPanel
 {
   /**
@@ -20,12 +22,13 @@ public class ButtonPadPanel extends JPanel
   private static final int MAXFONTSIZE = 30;
 //  private static final int MINFONTSIZE = 13;
   private static final String FONT = "Arial";
-
+  private CalcListener listener;
   /**
    * The default constructor for our ButtonPadPanel.
    */
   public ButtonPadPanel()
   {
+    listener = CalcListener.getInstance();
     setLayout(layout);
     addUtilitiesBar(0, 0);
     addNumberButtons(0, 1);
@@ -38,7 +41,7 @@ public class ButtonPadPanel extends JPanel
    * Column" takes up 1 horizontal space and 5 vertical space on the GridBag.
    * 
    * @param leftEdge the left edge of the "Miscellaneous Column"
-   * @param topEdge the top edge of the "Miscellaneus Column"
+   * @param topEdge the top edge of the "Miscellaneous Column"
    */
   private void addMiscColumn(final int leftEdge, final int topEdge) 
   {
@@ -215,6 +218,7 @@ public class ButtonPadPanel extends JPanel
     b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
     b.setForeground(Color.WHITE);
     b.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
+    b.addActionListener(listener);
     return b;
   }
 }
