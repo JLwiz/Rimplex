@@ -30,8 +30,45 @@ public class ButtonPadPanel extends JPanel
     addUtilitiesBar(0, 0);
     addNumberButtons(0, 1);
     addOperationsColumn(3, 0);
+    addMiscColumn(4, 0);
   }
 
+  /**
+   * Adds the "Miscellaneous Column" to the button pad.  It should be noted that the "Miscellaneous
+   * Column" takes up 1 horizontal space and 5 vertical space on the GridBag.
+   * 
+   * @param leftEdge the left edge of the "Miscellaneous Column"
+   * @param topEdge the top edge of the "Miscellaneus Column"
+   */
+  private void addMiscColumn(final int leftEdge, final int topEdge) 
+  {
+    numpad.gridx = leftEdge;
+    numpad.gridy = topEdge;
+    numpad.fill = GridBagConstraints.BOTH;
+    numpad.weightx = 1;
+    numpad.weighty = 1;
+    numpad.gridwidth = 1;
+    numpad.gridheight = 1;
+    
+    JButton resetButton = createButton("R", "reset");
+    add(resetButton, numpad);
+    
+    numpad.gridy = topEdge + 1;
+    JButton inverseButton = createButton("Inv", "inverse");
+    add(inverseButton, numpad);
+    
+    numpad.gridy = topEdge + 2;
+    JButton openParenthasesButton = createButton("(", "open parenthases");
+    add(openParenthasesButton, numpad);
+    
+    numpad.gridy = topEdge + 3;
+    JButton closedParenthasesButton = createButton(")", "closed parenthases");
+    add(closedParenthasesButton, numpad);
+    
+    numpad.gridy = topEdge + 4;
+    JButton decimalButton = createButton(".", "decimal");
+    add(decimalButton, numpad);
+  }
   /**
    * Creates and adds the "Number pad" to the JPanel. Should be noted that the number pad takes up 3
    * horizontal space and 4 vertical space in a rectangle on the GridBag.
@@ -99,6 +136,12 @@ public class ButtonPadPanel extends JPanel
     add(iButton, numpad);
   }
   
+  /**
+   * Adds the "Operations Column" to the button pad.  It should be noted that the "Operations 
+   * Column" takes up 1 horizontal space and 5 vertical space on the GridBag.
+   * @param leftEdge
+   * @param topEdge
+   */
   private void addOperationsColumn(final int leftEdge, final int topEdge) {
     numpad.gridx = leftEdge;
     numpad.gridy = topEdge;
@@ -130,7 +173,7 @@ public class ButtonPadPanel extends JPanel
   
   /**
    * Creates and adds the "Utilities bar" to the JPanel.  Should be noted that the "Utilities Bar"
-   * takes up 3 horizontal space in a rectangle on the GridBag.
+   * takes up 3 horizontal space and 1 vertical space on the GridBag.
    * 
    * @param leftEdge the left edge coordinate of the "Utilities Bar"
    * @param topEdge the top edge coordinate of the "Utilities Bar"
@@ -145,8 +188,8 @@ public class ButtonPadPanel extends JPanel
     numpad.gridwidth = 1;
     numpad.gridheight = 1;
     
-    JButton inverseButton = createButton("±", "inverse");
-    add(inverseButton, numpad);
+    JButton signButton = createButton("±", "sign");
+    add(signButton, numpad);
     
     numpad.gridx = leftEdge + 1;
     JButton clearButton = createButton("C", "clear");
