@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
  * 
  * This work complies with the JMU Honor Code.
  * 
- * @author Storm Behrens
+ * @author Storm Behrens, Benjamin Huber
  * @version 03/24/2021
  */
 
