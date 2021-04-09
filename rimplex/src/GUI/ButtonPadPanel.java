@@ -154,19 +154,19 @@ public class ButtonPadPanel extends JPanel
     numpad.gridwidth = 1;
     numpad.gridheight = 1;
     
-    JButton additionButton = createButton("+", "addition");
+    JButton additionButton = createButton("+", "add");
     add(additionButton, numpad);
     
     numpad.gridy = topEdge + 1;
-    JButton subtractionButton = createButton("-", "subtraction");
+    JButton subtractionButton = createButton("-", "subtract");
     add(subtractionButton, numpad);
     
     numpad.gridy = topEdge + 2;
-    JButton multiplicationButton = createButton("×", "multiplication");
+    JButton multiplicationButton = createButton("×", "multiply");
     add(multiplicationButton, numpad);
     
     numpad.gridy = topEdge + 3;
-    JButton divisionButton = createButton("÷", "division");
+    JButton divisionButton = createButton("÷", "divide");
     add(divisionButton, numpad);
     
     numpad.gridy = topEdge + 4;
