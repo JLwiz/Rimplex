@@ -135,7 +135,7 @@ public class ButtonPadPanel extends JPanel
     numpad.gridx = leftEdge + 2;
     numpad.gridy = topEdge + 3;
     numpad.gridwidth = 1;
-    JButton iButton = createButton("i", "i");
+    JButton iButton = createButton("<html><i>i</i></html>", "i");
     add(iButton, numpad);
   }
   
