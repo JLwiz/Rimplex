@@ -34,15 +34,21 @@ class ComplexLogarithmTest
       operator.calculate(null);
     });
     
-    // Makes a weird imaginary and real number for log of zero.
+    // Evaluates to undefined
     ComplexNumber zeroOp = new ComplexNumber(0.0, 0.0);
     Assertions.assertThrows(NumberFormatException.class, () -> 
     {
       operator.calculate(zeroOp);
     });
-
+    
+    ComplexNumber twoOp = new ComplexNumber(1.0, 1.0);
+    Assertions.assertThrows(NumberFormatException.class, () -> 
+    {
+      operator.calculate(twoOp, twoOp);
+    });
+    
     op = new ComplexNumber(3.0, -8.0);
-    expected = new ComplexNumber(2.1452297205741955, -1.2120256565243244);
+    expected = new ComplexNumber(2.145, -1.212);
     // 2.1452297-1.2120257i
     actual = operator.calculate(op);
     testHelper(actual, expected);
