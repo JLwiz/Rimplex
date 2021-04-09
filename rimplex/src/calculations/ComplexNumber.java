@@ -45,7 +45,26 @@ public class ComplexNumber
       this.imaginaryNumber = imaginaryNumber;
     }
   }
-
+  
+  /**
+   * Gets the conjugate of a complex number.
+   * @return ComplxNumber conjugate;
+   */
+  public ComplexNumber conjugate() 
+  {
+    return new ComplexNumber(realNumber, imaginaryNumber * -1.0);
+  }
+  
+  /**
+   * Gets the inverse of a complex number.
+   * @return ComplxNumber conjugate;
+   */
+  public ComplexNumber inverse() 
+  {
+    return new ComplexNumber(realNumber * -1.0, imaginaryNumber * -1.0);
+  }
+  
+  
   /**
    * get method for the real number.
    * 
