@@ -6,7 +6,8 @@ package calculations;
  * @author Jacob Lewis
  * @version 04.05.2021
  */
-public class ComplexLogarithm implements Operations {
+public class ComplexLogarithm implements Operations 
+{
   /*
    * ln(z) = ? z = a + bi r = sqrt(a^2 + b^2) theta = arctan(b/a) a+bi = r*cos(theta) + r*sin(theta)
    * = r(cos(theta) + i * sin(theta)) = (re)^(i(theta)
