@@ -79,7 +79,7 @@ public class CalcListener implements ActionListener, WindowListener
         case "reset":
           resetDisplay();
           break;
-        case "sign":
+        case "inverse":
           if (evaluate.operatorEmpty()) 
           {
             if (evaluate.getFirstOp() == null) 
@@ -96,8 +96,8 @@ public class CalcListener implements ActionListener, WindowListener
           break;
         case "backspace":
           break;
-//        case "sign":
-//          break;
+        case "sign":
+          break;
         default:
           break;
       }
