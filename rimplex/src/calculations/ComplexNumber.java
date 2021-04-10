@@ -64,12 +64,10 @@ public class ComplexNumber
     Double newReal = realNumber;
     Double newImg = imaginaryNumber;
     newReal *= -1.0;
-    if (newImg != 0.0) 
-    {
-      newImg *= -1.0;
-    } 
+    newImg *= -1.0;
     
-    return new ComplexNumber((double) newReal, (double) newImg);
+    
+    return new ComplexNumber( newReal, newImg);
   }
   
   
@@ -119,11 +117,17 @@ public class ComplexNumber
     imaginaryComponent += standardFormat.format(imaginaryNumber.doubleValue());
     
     // Checking if our imaginary component is not negative to assign our operator
-    if (imaginaryNumber >= 0)
+    if (imaginaryNumber >= 0.0)
     {
       operator += "+";
+      
+    }
+    String back = start + realComponent + operator + imaginaryComponent + end;
+    if (imaginaryNumber.toString().charAt(0) == '-' && imaginaryNumber == 0)
+    {
+      back = start + realComponent + "-" + "0" + end;
     }
     
-    return start + realComponent + operator + imaginaryComponent + end;
+    return back;
   }
 }
