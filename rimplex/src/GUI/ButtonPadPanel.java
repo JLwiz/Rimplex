@@ -208,7 +208,7 @@ public class ButtonPadPanel extends JPanel
    * 
    * @param title the text to display on the Button
    * @param name 
-   * @return
+   * @return JButton
    */
   private JButton createButton(final String title, final String name)
   {

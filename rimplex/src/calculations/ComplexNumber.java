@@ -60,8 +60,16 @@ public class ComplexNumber
    * @return ComplxNumber conjugate;
    */
   public ComplexNumber inverse() 
-  {
-    return new ComplexNumber(realNumber * -1.0, imaginaryNumber * -1.0);
+  { 
+    Double newReal = realNumber;
+    Double newImg = imaginaryNumber;
+    newReal *= -1.0;
+    if (newImg != 0.0) 
+    {
+      newImg *= -1.0;
+    } 
+    
+    return new ComplexNumber((double) newReal, (double) newImg);
   }
   
   

@@ -80,10 +80,19 @@ public class CalcListener implements ActionListener, WindowListener
           resetDisplay();
           break;
         case "sign":
+          if (evaluate.operatorEmpty()) 
+          {
+            if (evaluate.getFirstOp() == null) 
+            {
+              operatorButton(button.getText());
+            } else 
+            {
+              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+            }
+          }
           break;
         case "backspace":
           break;
-
         default:
           break;
       }
@@ -184,6 +193,11 @@ public class CalcListener implements ActionListener, WindowListener
       if (operation.equals(equalsOperator))
       {
         frame.setDisplay(text + operation + op1.toString());
+      }else if (operation.equals("±"))
+      {
+        ComplexNumber inv = op1.inverse();
+        op1 = inv;
+        frame.setDisplay(inv.toString());
       }
       else
       {
