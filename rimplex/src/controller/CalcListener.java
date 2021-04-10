@@ -79,6 +79,11 @@ public class CalcListener implements ActionListener, WindowListener
         case "reset":
           resetDisplay();
           break;
+        case "sign":
+          break;
+        case "backspace":
+          break;
+
         default:
           break;
       }
