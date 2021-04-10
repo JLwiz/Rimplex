@@ -89,6 +89,9 @@ public class CalcListener implements ActionListener, WindowListener
             {
               operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
             }
+          } else 
+          {
+            frame.invalidStatus(true, "Can't Inverse.");
           }
           break;
         case "backspace":
