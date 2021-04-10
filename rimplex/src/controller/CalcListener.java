@@ -207,7 +207,8 @@ public class CalcListener implements ActionListener, WindowListener
       {
         frame.setDisplay(text + operation + op1.toString());
       }
-      else if (operation.equals("±"))
+      // put the inverse sign here when the button is added.
+      else if (operation.equals("inverse"))
       {
         ComplexNumber inv = op1.inverse();
         op1 = inv;

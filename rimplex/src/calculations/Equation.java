@@ -156,5 +156,5 @@ public class Equation
     setOperator(null);
     return result;
   } // solve method.
-
+  
 } // Equation class.
