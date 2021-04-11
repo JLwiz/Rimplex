@@ -98,6 +98,9 @@ public class CalcListener implements ActionListener, WindowListener
           break;
         case "sign":
           break;
+        case "logarithm":
+          operatorButton(button.getText());
+          break;
         default:
           break;
       }
