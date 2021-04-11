@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,26 +15,53 @@ import controller.*;
 public class ButtonPadPanel extends JPanel
 {
   /**
-   * Generated serialID
+   * Generated serialID.
    */
   private static final long serialVersionUID = 3687720860105566166L;
+  private static final int MAXFONTSIZE = 30;
+  private static final String FONT = "Arial";
+  private static ButtonPadPanel single_instance = null;
+  
   private GridBagLayout layout = new GridBagLayout();
   private GridBagConstraints numpad = new GridBagConstraints();
-  private static final int MAXFONTSIZE = 30;
-//  private static final int MINFONTSIZE = 13;
-  private static final String FONT = "Arial";
   private CalcListener listener;
+  
+  private HashMap<String, JButton> buttonMap;
+  
   /**
    * The default constructor for our ButtonPadPanel.
    */
-  public ButtonPadPanel()
+  private ButtonPadPanel()
   {
     listener = CalcListener.getInstance();
+    buttonMap = new HashMap<>();
     setLayout(layout);
     addUtilitiesBar(0, 0);
     addNumberButtons(0, 1);
     addOperationsColumn(3, 0);
     addMiscColumns(4, 0);
+  } // constructor.
+  
+  /**
+   * Singleton for ButtonPadPanel Object.
+   * 
+   * @return the one and only ButtonPadPanel object.
+   */
+  public static ButtonPadPanel getInstance()
+  {
+    if (single_instance == null)
+      single_instance = new ButtonPadPanel();
+    return single_instance;
+  }
+  
+  /**
+   * pressButton - Will press the button whos ID is passed through.
+   * 
+   * @param buttonID (String)
+   */
+  public void pressButton (final String buttonID)
+  {
+    buttonMap.get(buttonID).doClick();
   }
 
   /**
@@ -240,6 +268,8 @@ public class ButtonPadPanel extends JPanel
     b.setForeground(Color.WHITE);
     b.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     b.addActionListener(listener);
+    buttonMap.put(name, b);
+    
     return b;
   }
 }

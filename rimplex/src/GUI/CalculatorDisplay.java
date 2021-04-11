@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.FocusListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -72,10 +73,12 @@ public class CalculatorDisplay extends JFrame
     setSize(new Dimension(500, 500));
 
     listener = CalcListener.getInstance();
+    addKeyListener(listener);
     createComponents();
     createMenuBar();
     setComponents();
     setLayouts();
+    setFocusable(true);
     addComponents();
     ImageIcon img = new ImageIcon("rimplex/src/iconRimplex.png");
     setIconImage(img.getImage());
@@ -195,7 +198,7 @@ public class CalculatorDisplay extends JFrame
     
     constraints.gridy = 2;
     constraints.weighty = 1;
-    mainPanel.add(new ButtonPadPanel(), constraints);
+    mainPanel.add(ButtonPadPanel.getInstance(), constraints);
 
     northPanel.add(display);
 
@@ -217,7 +220,6 @@ public class CalculatorDisplay extends JFrame
    */
   private void adjustFont()
   {
-    
     if (display.getText().length() > 23) display.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
     else display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
   } // adjustFont method.
@@ -227,48 +229,14 @@ public class CalculatorDisplay extends JFrame
    */
   private void createComponents()
   {
-//    addition = setButton("add", "+");
-//    clear = setButton("clear", "C");
-//    clear.setBackground(Color.GRAY);
-//    division = setButton("divide", "÷");
-//    equals = setButton("equals", "=");
-//    multiplication = setButton("multiply", "×");
-//    reset = setButton("reset", "R");
-//    reset.setBackground(Color.RED);
-//    subtraction = setButton("subtract", "-");
-
     display = new JLabel();
 
-//    buttonPanel = new JPanel();
     mainPanel = new JPanel();
     northPanel = new JPanel();
     centerPanel = new JPanel();
 
     inputField = new JTextField();
   } // createComponents method.
-
-  /**
-   * setButton - Will create a button object and return it.
-   * 
-   * @param name
-   *          (String)
-   * @param title
-   *          (String)
-   * 
-   * @return a button object with set attributes.
-   */
-  private JButton setButton(final String name, final String title)
-  {
-    JButton b = new JButton(title);
-    b.setName(name);
-    b.setBackground(Color.BLACK);
-    b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-    b.setForeground(Color.WHITE);
-    b.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
-    b.addActionListener(listener);
-
-    return b;
-  } // setButton method.
 
   /**
    * setComponents - Will set the components correctly.
@@ -278,10 +246,13 @@ public class CalculatorDisplay extends JFrame
     inputField.setFont(new Font(FONT, Font.LAYOUT_RIGHT_TO_LEFT, MAXFONTSIZE));
     inputField.setHorizontalAlignment(JTextField.RIGHT);
     inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+    inputField.addKeyListener(listener);
 
     display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     display.setBackground(Color.WHITE);
     display.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+    display.setFocusable(true);
+    display.addKeyListener(listener);
   } // setComponents method.
 
   /**
@@ -292,7 +263,6 @@ public class CalculatorDisplay extends JFrame
     mainPanel.setLayout(layout);
     northPanel.setLayout(new GridLayout(1, 0));
     centerPanel.setLayout(new GridLayout(1, 0));
-//    buttonPanel.setLayout(new GridLayout(0, 7));
   } // setLayouts method.
   
   /**
