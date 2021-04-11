@@ -23,9 +23,9 @@ public class ComplexNumber
   /**
    * Default Constructor for Complex Number.
    * 
-   * @param realNumber
+   * @param realNumber (Scalar)
    *          - the real number value of the complex number
-   * @param imaginaryNumber
+   * @param imaginaryNumber (vector)
    *          - the imaginary number value of the complex number
    */
 
@@ -176,7 +176,8 @@ public class ComplexNumber
    */
   private String reduceFraction(final int num, final int den)
   {
-    int greatestCommonDem = BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue(); // greatest
+    int greatestCommonDem 
+        = BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue(); // greatest
     // common
     // divisor
     int[] reducedFraction = {num / greatestCommonDem, den / greatestCommonDem};
