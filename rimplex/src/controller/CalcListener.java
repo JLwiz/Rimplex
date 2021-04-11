@@ -165,6 +165,21 @@ public class CalcListener implements ActionListener, WindowListener
             frame.invalidStatus(true, "Can't Take Logarithm.");
           }
           break;
+        case "conjugate":
+          if (evaluate.operatorEmpty()) 
+          {
+            if (evaluate.getFirstOp() == null) 
+            {
+              operatorButton(button.getText());
+            } else 
+            {
+              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+            }
+          } else 
+          {
+            frame.invalidStatus(true, "Can't Conjugate.");
+          }
+          break;
         default:
           break;
       }
@@ -275,7 +290,8 @@ public class CalcListener implements ActionListener, WindowListener
         ComplexNumber inv = op1.inverse();
         op1 = inv;
         frame.setDisplay(inv.toString());
-      } else if (operation.equals("log")) 
+      } 
+      else if (operation.equals("log")) 
       {
         evaluate.setOperator("log");
         evaluate.setFirstOp(op1);
@@ -283,6 +299,12 @@ public class CalcListener implements ActionListener, WindowListener
         op1 = evaluate.solve();
         str += "=" + op1.toString();
         frame.setDisplay(str);    
+      } 
+      else if (operation.equals("Con")) 
+      {
+        ComplexNumber conj = op1.conjugate();
+        op1 = conj;
+        frame.setDisplay(op1.toString());
       }
       else
       {
