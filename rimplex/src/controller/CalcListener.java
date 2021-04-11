@@ -2,16 +2,19 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
 import calculations.ComplexNumber;
 import calculations.Equation;
-import calculations.Operations;
 import util.InputParser;
 
 /**
@@ -24,7 +27,8 @@ import util.InputParser;
  * @version 1.0 (03/26/2021)
  *
  */
-public class CalcListener implements ActionListener, WindowListener
+public class CalcListener implements ActionListener, KeyListener,
+                              WindowListener
 {
   private static CalcListener listener;
   private CalculatorDisplay frame;
@@ -173,6 +177,41 @@ public class CalcListener implements ActionListener, WindowListener
 
   } // actionPerformed method.
 
+  /**
+   * keyPressed - Will perform the correct action of the key
+   * pressed.
+   * 
+   * @param e (KeyEvent)
+   */
+  @Override
+  public void keyPressed(final KeyEvent e)
+  {
+    ButtonPadPanel pad = ButtonPadPanel.getInstance();
+    int code = e.getKeyCode();
+    
+    switch (code)
+    {
+      case 10: // enter
+        pad.pressButton("equals");
+        break;
+      case 45: // - minus
+        // does nothing
+        break;
+      case 56: // * mulitply
+        // does nothing
+        break;
+      case 61: // + add
+        // does nothing
+        break;
+      case 111: // / divide
+        // does nothing
+        break;
+      default: // a key was pressed that we don't allow
+        break;
+    }
+    
+  } // keyPressed method.
+  
   /**
    * append - Will add a character to the end of the display.
    * 
@@ -461,6 +500,16 @@ public class CalcListener implements ActionListener, WindowListener
 
   @Override
   public void windowDeactivated(final WindowEvent e)
+  {
+  } // unused.
+
+  @Override
+  public void keyTyped(KeyEvent e)
+  {
+  } // unused.
+
+  @Override
+  public void keyReleased(KeyEvent e)
   {
   } // unused.
 
