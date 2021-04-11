@@ -9,7 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.CalcListener;
+import controller.*;
 
 public class ButtonPadPanel extends JPanel
 {
@@ -33,7 +33,7 @@ public class ButtonPadPanel extends JPanel
     addUtilitiesBar(0, 0);
     addNumberButtons(0, 1);
     addOperationsColumn(3, 0);
-    addMiscColumn(4, 0);
+    addMiscColumns(4, 0);
   }
 
   /**
@@ -43,7 +43,7 @@ public class ButtonPadPanel extends JPanel
    * @param leftEdge the left edge of the "Miscellaneous Column"
    * @param topEdge the top edge of the "Miscellaneous Column"
    */
-  private void addMiscColumn(final int leftEdge, final int topEdge) 
+  private void addMiscColumns(final int leftEdge, final int topEdge) 
   {
     numpad.gridx = leftEdge;
     numpad.gridy = topEdge;
@@ -71,6 +71,27 @@ public class ButtonPadPanel extends JPanel
     numpad.gridy = topEdge + 4;
     JButton decimalButton = createButton(".", "decimal");
     add(decimalButton, numpad);
+    
+    numpad.gridx = leftEdge + 1;
+    numpad.gridy = topEdge;
+    JButton modeButton = createButton("Mode", "mode");
+    add(modeButton, numpad);
+    
+    numpad.gridy = topEdge + 1;
+    JButton conjugateButton = createButton("Con", "conjugate");
+    add(conjugateButton, numpad);
+    
+    numpad.gridy = topEdge + 2;
+    JButton logButton = createButton("log", "logarithm");
+    add(logButton, numpad);
+    
+    numpad.gridy = topEdge + 3;
+    JButton expButton = createButton("exp", "exponent");
+    add(expButton, numpad);
+    
+    numpad.gridy = topEdge + 4;
+    JButton sqrtButton = createButton("sqrt", "exponent");
+    add(sqrtButton, numpad);
   }
   /**
    * Creates and adds the "Number pad" to the JPanel. Should be noted that the number pad takes up 3

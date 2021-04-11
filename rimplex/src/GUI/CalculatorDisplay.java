@@ -141,14 +141,19 @@ public class CalculatorDisplay extends JFrame
    */
   public void setDisplay(final String text)
   {
-    String temp = text.replaceAll("<html>", "");
-    temp = temp.replaceAll("</html>", "");
-    temp = temp.replaceAll("<i>", "");
-    temp = temp.replaceAll("</i>", "");
-    temp = "<html>" + temp + "</html>";
-    display.setText(temp.replaceAll("i", ITALICI));
+    display.setText(replaceI(text));
     adjustFont();
   } // setDisplay method.
+  
+  /**
+   * setInput - Will set the input text.
+   * 
+   * @param text (String)
+   */
+  public void setInput(final String text)
+  {
+    inputField.setText(text);
+  }
   
   /**
    * invalidStatus - Will change the color of the JPanel based on the the validity of the content in
@@ -321,5 +326,22 @@ public class CalculatorDisplay extends JFrame
     setJMenuBar(menuBar); 
     // If you want to hide the menu bar, set this to false.
     menuBar.setVisible(false);
+  }
+  
+  /**
+   * replaceI - Will replace all normal i's with italics.
+   * 
+   * @param text (String)
+   * @return a string with italic i's
+   */
+  private String replaceI(final String text)
+  {
+    String temp = text.replaceAll("<html>", "");
+    temp = temp.replaceAll("</html>", "");
+    temp = temp.replaceAll("<i>", "");
+    temp = temp.replaceAll("</i>", "");
+    temp = "<html>" + temp + "</html>";
+    
+    return temp.replaceAll("i", ITALICI);
   }
 } // CalculatorDisplay class.

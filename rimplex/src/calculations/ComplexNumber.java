@@ -69,12 +69,9 @@ public class ComplexNumber
     Double newReal = realNumber;
     Double newImg = imaginaryNumber;
     newReal *= -1.0;
-    if (newImg != 0.0)
-    {
-      newImg *= -1.0;
-    }
+    newImg *= -1.0;
 
-    return new ComplexNumber((double) newReal, (double) newImg);
+    return new ComplexNumber(newReal, newImg);
   }
 
   /**
@@ -141,8 +138,7 @@ public class ComplexNumber
     else
     {
       den = BigDecimal.TEN.pow(numParts[1].length());
-      num = 
-          (new BigDecimal(numParts[0]).multiply(den)).add(new BigDecimal(numParts[1]));
+      num = (new BigDecimal(numParts[0]).multiply(den)).add(new BigDecimal(numParts[1]));
     }
     return reduceFraction(num.intValue(), den.intValue());
 
@@ -180,8 +176,7 @@ public class ComplexNumber
    */
   private String reduceFraction(final int num, final int den)
   {
-    int greatestCommonDem = 
-        BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue(); // greatest
+    int greatestCommonDem = BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue(); // greatest
     // common
     // divisor
     int[] reducedFraction = {num / greatestCommonDem, den / greatestCommonDem};
@@ -226,11 +221,17 @@ public class ComplexNumber
     String end = "i)";
 
     // Checking if our imaginary component is not negative to assign our operator
-    if (imaginaryNumber >= 0)
+    if (imaginaryNumber >= 0.0)
     {
       operator += "+";
+      
     }
-
-    return start + real + operator + imaginary + end;
+    String back = start + real + operator + imaginary + end;
+    if (imaginaryNumber.toString().charAt(0) == '-' && imaginaryNumber == 0)
+    {
+      back = start + real + "-" + "0" + end;
+    }
+    
+    return back;
   }
 }
