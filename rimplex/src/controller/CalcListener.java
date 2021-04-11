@@ -30,6 +30,8 @@ public class CalcListener implements ActionListener, WindowListener
   private CalculatorDisplay frame;
   private Equation evaluate;
   private InputParser parser;
+  private final String leftParen = "(";
+  private final String rightParen = ")";
 
   /**
    * Default Constructor.
@@ -40,7 +42,7 @@ public class CalcListener implements ActionListener, WindowListener
     parser = parser.getInstance();
 
   } // Default Constructor.
-  
+
   /**
    * gives the instance of the listener.
    * 
@@ -71,17 +73,12 @@ public class CalcListener implements ActionListener, WindowListener
     {
       switch (button.getName().toLowerCase())
       {
-        case "add":
-          operatorButton(button.getText());
-          break;
+        case "add":// Multiple buttons that go down the same path can be condensed in such
+                   // statements
         case "divide":
-          operatorButton(button.getText());
-          break;
         case "multiply":
-          operatorButton(button.getText());
-          break;
         case "subtract":
-          operatorButton(button.getText());
+          operationsSwitch(button.getText());
           break;
         case "equals":
           operatorButton(button.getText());
@@ -94,88 +91,77 @@ public class CalcListener implements ActionListener, WindowListener
           resetDisplay();
           break;
         case "inverse":
-          if (evaluate.operatorEmpty()) 
+          if (evaluate.operatorEmpty())
           {
-            if (evaluate.getFirstOp() == null) 
+            if (evaluate.getFirstOp() == null)
             {
               operatorButton(button.getText());
-            } else 
+            }
+            else
             {
               operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
             }
-          } else 
+          }
+          else
           {
             frame.invalidStatus(true, "Can't Inverse.");
           }
           break;
         case "backspace":
           String text = frame.getInputField().getText();
-          if (text.length() > 0) frame.setInput(text.substring(0, text.length() - 1));
+          if (text.length() > 0)
+            frame.setInput(text.substring(0, text.length() - 1));
           break;
         case "sign":
           break;
-        case "decimal":
-          append(".");
-          break;
         case "i":
-          append("i");
+          append('i');
           break;
-        case "0":
-          append("0");
-          break;
+        case "0":// these cases can also be condensed like this.
         case "1":
-          append("1");
-          break;
         case "2":
-          append("2");
-          break;
         case "3":
-          append("3");
-          break;
         case "4":
-          append("4");
-          break;
         case "5":
-          append("5");
-          break;
         case "6":
-          append("6");
-          break;
         case "7":
-          append("7");
-          break;
         case "8":
-          append("8");
-          break;
         case "9":
-          append("9");
+        case "decimal":
+        case "open parenthases":
+        case "closed parenthases":
+          append(button.getText().charAt(0));
           break;
         case "logarithm":
-          if (evaluate.operatorEmpty()) 
+          if (evaluate.operatorEmpty())
           {
-            if (evaluate.getFirstOp() == null) 
+            if (evaluate.getFirstOp() == null)
             {
               operatorButton(button.getText());
-            } else 
+            }
+            else
             {
               operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
             }
-          } else 
+          }
+          else
           {
             frame.invalidStatus(true, "Can't Take Logarithm.");
           }
           break;
         case "conjugate":
-          if (evaluate.operatorEmpty()) 
+          if (evaluate.operatorEmpty())
           {
-            if (evaluate.getFirstOp() == null) 
+            if (evaluate.getFirstOp() == null)
             {
               operatorButton(button.getText());
-            } else 
+            }
+            else
             {
               operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
             }
-          } else 
+          }
+          else
           {
             frame.invalidStatus(true, "Can't Conjugate.");
           }
@@ -186,18 +172,17 @@ public class CalcListener implements ActionListener, WindowListener
     }
 
   } // actionPerformed method.
-  
+
   /**
    * append - Will add a character to the end of the display.
    * 
    * @param addition
-   *            ( String )
+   *          ( String )
    */
-  private void append(String addition)
+  private void append(final char addition)
   {
     frame.setInput(frame.getInputField().getText() + addition);
   } // append method.
-  
 
   /**
    * clears InputField for CalculatorDisplay.
@@ -219,12 +204,10 @@ public class CalcListener implements ActionListener, WindowListener
   private String formatInput(final String input)
   {
     String text = input;
-    String leftParen = "(";
-    String rightParen = ")";
     String iPlus = "+i";
     String iMinus = "-i";
     String iParen = "(i";
-    String imaginary = "i";
+    char imaginary = 'i';
     if (!text.endsWith(rightParen) || !text.startsWith(leftParen))
     {
       text = leftParen + text + rightParen;
@@ -267,14 +250,16 @@ public class CalcListener implements ActionListener, WindowListener
       text = formatInput(input);
     }
     String equalsOperator = "=";
+    String logOperator = "log";
 
     if (evaluate.operatorEmpty() && text.length() > 0)
     {
       ComplexNumber op1;
-      if (evaluate.getFirstOp() == null) 
+      if (evaluate.getFirstOp() == null)
       {
         op1 = parser.parseInput(text);
-      } else 
+      }
+      else
       {
         op1 = evaluate.getFirstOp();
       }
@@ -290,17 +275,17 @@ public class CalcListener implements ActionListener, WindowListener
         ComplexNumber inv = op1.inverse();
         op1 = inv;
         frame.setDisplay(inv.toString());
-      } 
-      else if (operation.equals("log")) 
+      }
+      else if (operation.equals(logOperator))
       {
-        evaluate.setOperator("log");
+        evaluate.setOperator(logOperator);
         evaluate.setFirstOp(op1);
-        String str = "log" + op1.toString();
+        String str = logOperator + op1.toString();
         op1 = evaluate.solve();
-        str += "=" + op1.toString();
-        frame.setDisplay(str);    
-      } 
-      else if (operation.equals("Con")) 
+        str += equalsOperator + op1.toString();
+        frame.setDisplay(str);
+      }
+      else if (operation.equals("Con"))
       {
         ComplexNumber conj = op1.conjugate();
         op1 = conj;
@@ -352,6 +337,26 @@ public class CalcListener implements ActionListener, WindowListener
   }
 
   /**
+   * checks if their are open parenthesis and acts with the operator accordingly. if the parenthesis
+   * are open it appends the operator to the text, else it performs the operation.
+   * 
+   * @param operation
+   *          - the operator to act on
+   */
+
+  private void operationsSwitch(final String operation)
+  {
+    if (openParenCheck())
+    {
+      append(operation.charAt(0));
+    }
+    else
+    {
+      operatorButton(operation);
+    }
+  }
+
+  /**
    * Processes the event for the operation buttons. (add,subtract,multiply,divide,equals)
    * 
    * @param operation
@@ -381,6 +386,33 @@ public class CalcListener implements ActionListener, WindowListener
         invalidInput();
       }
     }
+  }
+
+  /**
+   * returns if the textfield has unclosed parenthesis. true if their are more left paren then right
+   * paren, returns false otherwise.
+   * 
+   * @return boolean - if there are open parenthesis
+   */
+
+  private boolean openParenCheck()
+  {
+    int openParen = 0;
+    int closedParen = 0;
+    String text = frame.getInputField().getText();
+    for (int i = 0; i < text.length(); i++)
+    {
+      if (text.charAt(i) == '(')
+      {
+        openParen++;
+      }
+      if (text.charAt(i) == ')')
+      {
+        closedParen++;
+      }
+    }
+
+    return (openParen != closedParen);
   }
 
   /**
