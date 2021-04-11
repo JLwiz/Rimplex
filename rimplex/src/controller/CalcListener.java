@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import GUI.CalculatorDisplay;
 import calculations.ComplexNumber;
 import calculations.Equation;
+import calculations.Operations;
 import util.InputParser;
 
 /**
@@ -150,7 +151,19 @@ public class CalcListener implements ActionListener, WindowListener
           append("9");
           break;
         case "logarithm":
-          operatorButton(button.getText());
+          if (evaluate.operatorEmpty()) 
+          {
+            if (evaluate.getFirstOp() == null) 
+            {
+              operatorButton(button.getText());
+            } else 
+            {
+              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+            }
+          } else 
+          {
+            frame.invalidStatus(true, "Can't Take Logarithm.");
+          }
           break;
         default:
           break;
@@ -262,6 +275,14 @@ public class CalcListener implements ActionListener, WindowListener
         ComplexNumber inv = op1.inverse();
         op1 = inv;
         frame.setDisplay(inv.toString());
+      } else if (operation.equals("log")) 
+      {
+        evaluate.setOperator("log");
+        evaluate.setFirstOp(op1);
+        String str = "log" + op1.toString();
+        op1 = evaluate.solve();
+        str += "=" + op1.toString();
+        frame.setDisplay(str);    
       }
       else
       {
