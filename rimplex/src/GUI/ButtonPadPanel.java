@@ -28,6 +28,8 @@ public class ButtonPadPanel extends JPanel
   
   private HashMap<String, JButton> buttonMap;
   
+  private JButton modeButton = createButton("DEC", "mode");
+  
   /**
    * The default constructor for our ButtonPadPanel.
    */
@@ -102,7 +104,7 @@ public class ButtonPadPanel extends JPanel
     
     numpad.gridx = leftEdge + 1;
     numpad.gridy = topEdge;
-    JButton modeButton = createButton("Mode", "mode");
+    
     add(modeButton, numpad);
     
     numpad.gridy = topEdge + 1;
@@ -272,5 +274,13 @@ public class ButtonPadPanel extends JPanel
     buttonMap.put(name, b);
     
     return b;
+  }
+  
+  public void updateMode(final boolean isFraction) {
+    if (isFraction) {
+      modeButton.setText("FRAC");
+    } else {
+      modeButton.setText("DEC");
+    }
   }
 }
