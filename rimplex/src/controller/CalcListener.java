@@ -184,85 +184,74 @@ public class CalcListener implements ActionListener, KeyListener,
    * @param e (KeyEvent)
    */
   @Override
-  public void keyPressed(final KeyEvent e)
+  public void keyTyped(final KeyEvent e)
   {
     ButtonPadPanel pad = ButtonPadPanel.getInstance();
-    int code = e.getKeyCode();
+    int code = e.getKeyChar();
+    
+    Object source = e.getSource();
     
     switch (code)
     {
-      //case 8:
-        // gotta figure this out - backspace.
+      case 8:
+        pad.pressButton("backspace");
+        break;
       case 10: // enter
         pad.pressButton("equals");
         break;
+      case 40:
+        pad.pressButton("open parenthases");
+        break;
+      case 41:
+        pad.pressButton("closed parenthases");
+        break;
+      case 42:
+        pad.pressButton("multiply");
+        break;
+      case 43: // + add
+        pad.pressButton("add");
+        break;
       case 45: // - minus
         pad.pressButton("subtract");
-        append('b');
         break;
       case 46:
         pad.pressButton("decimal");
-        append('b');
+        break;
+      case 47:
+        pad.pressButton("divide");
         break;
       case 48:
         pad.pressButton("0");
-        append('b');
         break;
       case 49:
         pad.pressButton("1");
-        append('b');
         break;
       case 50:
         pad.pressButton("2");
-        append('b');
         break;
       case 51:
         pad.pressButton("3");
-        append('b');
         break;
       case 52:
         pad.pressButton("4");
-        append('b');
         break;
       case 53:
         pad.pressButton("5");
-        append('b');
         break;
       case 54:
         pad.pressButton("6");
-        append('b');
         break;
       case 55:
         pad.pressButton("7");
-        append('b');
         break;
       case 56:
         pad.pressButton("8");
-        append('b');
         break;
       case 57:
         pad.pressButton("9");
-        append('b');
         break;
-      case 61: // + add
-        pad.pressButton("add");
-        append('b');
-        break;
-      case 73:
+      case 105:
         pad.pressButton("i");
-        append('b');
-        break;
-      case 111: // / divide
-        pad.pressButton("divide");
-        append('b');
-        break;
-      case 519:
-        pad.pressButton("left parenthesis");
-        append('b');
-        break;
-      case 522:
-        pad.pressButton("right parenthesis");
-        append('b');
         break;
       default: // a key was pressed that we don't allow
         break;
@@ -474,7 +463,7 @@ public class CalcListener implements ActionListener, KeyListener,
 
   private void operatorButton(final String operation)
   {
-    JTextField inputField = frame.getInputField();
+    JLabel inputField = frame.getInputField();
     String text;
     text = inputField.getText();
     if (text == null)
@@ -574,7 +563,7 @@ public class CalcListener implements ActionListener, KeyListener,
   } // unused.
 
   @Override
-  public void keyTyped(KeyEvent e)
+  public void keyPressed(KeyEvent e)
   {
   } // unused.
 

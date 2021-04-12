@@ -45,23 +45,13 @@ public class CalculatorDisplay extends JFrame
 
   private GridBagLayout layout = new GridBagLayout();
   private GridBagConstraints constraints = new GridBagConstraints();
-  
-  private JButton addition;
-  private JButton clear;
-  private JButton division;
-  private JButton equals;
-  private JButton multiplication;
-  private JButton reset;
-  private JButton subtraction;
 
   private JLabel display;
+  private JLabel inputField;
 
-//  private JPanel buttonPanel;
   private JPanel centerPanel;
   private JPanel mainPanel;
   private JPanel northPanel;
-
-  private JTextField inputField;
 
   // ----------Constructor----------
 
@@ -73,12 +63,10 @@ public class CalculatorDisplay extends JFrame
     setSize(new Dimension(500, 500));
 
     listener = CalcListener.getInstance();
-    addKeyListener(listener);
     createComponents();
     createMenuBar();
     setComponents();
     setLayouts();
-    setFocusable(true);
     addComponents();
     ImageIcon img = new ImageIcon("rimplex/src/iconRimplex.png");
     setIconImage(img.getImage());
@@ -132,7 +120,7 @@ public class CalculatorDisplay extends JFrame
    * @return JTextField - the inputField
    */
 
-  public JTextField getInputField()
+  public JLabel getInputField()
   {
     return inputField;
   }
@@ -188,29 +176,22 @@ public class CalculatorDisplay extends JFrame
     constraints.gridx = 0;
     constraints.gridy = 0;
     constraints.weightx = 1;
-    constraints.weighty = 0.5;
-    constraints.fill = GridBagConstraints.BOTH;
+    constraints.fill = GridBagConstraints.HORIZONTAL;
     mainPanel.add(northPanel, constraints);
     
     constraints.weighty = 0.3;
     constraints.gridy = 1;
+    constraints.ipady = 0;
     mainPanel.add(centerPanel, constraints);
     
     constraints.gridy = 2;
     constraints.weighty = 1;
+    constraints.ipady = 75;
     mainPanel.add(ButtonPadPanel.getInstance(), constraints);
 
     northPanel.add(display);
 
     centerPanel.add(inputField);
-    
-//    buttonPanel.add(reset);
-//    buttonPanel.add(clear);
-//    buttonPanel.add(addition);
-//    buttonPanel.add(subtraction);
-//    buttonPanel.add(multiplication);
-//    buttonPanel.add(division);
-//    buttonPanel.add(equals);
 
   } // addComponents method.
   
@@ -235,7 +216,7 @@ public class CalculatorDisplay extends JFrame
     northPanel = new JPanel();
     centerPanel = new JPanel();
 
-    inputField = new JTextField();
+    inputField = new JLabel();
   } // createComponents method.
 
   /**
@@ -251,8 +232,6 @@ public class CalculatorDisplay extends JFrame
     display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     display.setBackground(Color.WHITE);
     display.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-    display.setFocusable(true);
-    display.addKeyListener(listener);
   } // setComponents method.
 
   /**
