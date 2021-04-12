@@ -268,6 +268,7 @@ public class ButtonPadPanel extends JPanel
     b.setForeground(Color.WHITE);
     b.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     b.addActionListener(listener);
+    b.addKeyListener(listener);
     buttonMap.put(name, b);
     
     return b;

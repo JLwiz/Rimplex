@@ -9,8 +9,6 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-
 import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
 import calculations.ComplexNumber;
@@ -116,9 +114,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           }
           break;
         case "backspace":
-          String text = frame.getInputField().getText();
-          if (text.length() > 0)
-            frame.setInput(text.substring(0, text.length() - 1));
+          append('b');
           break;
         case "sign":
           signChange();
@@ -144,8 +140,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         case "logarithm":
           if (evaluate.operatorEmpty())
           {
-            if (evaluate.getFirstOp() == null
-                || (frame.getInputField() != null && frame.getInputField().equals("")))
+            String field = frame.getInputField().getText();
+            if (evaluate.getFirstOp() == null || frame.getInputField() != null 
+                && !frame.getInputField().getText().equals(""))
             {
               operatorButton(button.getText());
             }
@@ -190,27 +187,74 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
    *          (KeyEvent)
    */
   @Override
-  public void keyPressed(final KeyEvent e)
+  public void keyTyped(final KeyEvent e)
   {
     ButtonPadPanel pad = ButtonPadPanel.getInstance();
-    int code = e.getKeyCode();
-
+    int code = e.getKeyChar();
+    
+    Object source = e.getSource();
+    
     switch (code)
     {
+      case 8:
+        pad.pressButton("backspace");
+        break;
       case 10: // enter
         pad.pressButton("equals");
         break;
+      case 40:
+        pad.pressButton("open parenthases");
+        break;
+      case 41:
+        pad.pressButton("closed parenthases");
+        break;
+      case 42:
+        pad.pressButton("multiply");
+        break;
+      case 43: // + add
+        pad.pressButton("add");
+        break;
       case 45: // - minus
-        // does nothing
+        pad.pressButton("subtract");
         break;
-      case 56: // * mulitply
-        // does nothing
+      case 46:
+        pad.pressButton("decimal");
         break;
-      case 61: // + add
-        // does nothing
+      case 47:
+        pad.pressButton("divide");
         break;
-      case 111: // / divide
-        // does nothing
+      case 48:
+        pad.pressButton("0");
+        break;
+      case 49:
+        pad.pressButton("1");
+        break;
+      case 50:
+        pad.pressButton("2");
+        break;
+      case 51:
+        pad.pressButton("3");
+        break;
+      case 52:
+        pad.pressButton("4");
+        break;
+      case 53:
+        pad.pressButton("5");
+        break;
+      case 54:
+        pad.pressButton("6");
+        break;
+      case 55:
+        pad.pressButton("7");
+        break;
+      case 56:
+        pad.pressButton("8");
+        break;
+      case 57:
+        pad.pressButton("9");
+        break;
+      case 105:
+        pad.pressButton("i");
         break;
       default: // a key was pressed that we don't allow
         break;
@@ -226,7 +270,14 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
    */
   private void append(final char addition)
   {
-    frame.setInput(frame.getInputField().getText() + addition);
+    String text = frame.getInputField().getText();
+    if (addition != 'b')
+    {
+      frame.setInput(text + addition);
+      return;
+    }
+    if (text.length() > 0)
+      frame.setInput(text.substring(0, text.length() - 1));
   } // append method.
 
   /**
@@ -386,7 +437,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       else if (operation.equals(logOperator))
       {
         evaluate.setFirstOp(null);
-        if (op1 != null && input != null)
+        if (op1 != null || (input != null && input.isEmpty())) 
         {
           op1 = parser.parseInput(text);
         }
@@ -478,7 +529,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   private void operatorButton(final String operation)
   {
-    JTextField inputField = frame.getInputField();
+    JLabel inputField = frame.getInputField();
     String text;
     text = inputField.getText();
     if (text == null)
@@ -610,7 +661,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   } // unused.
 
   @Override
-  public void keyTyped(final KeyEvent e)
+  public void keyPressed(final KeyEvent e)
   {
   } // unused.
 

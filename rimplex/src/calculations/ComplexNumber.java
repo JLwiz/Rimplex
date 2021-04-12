@@ -66,12 +66,17 @@ public class ComplexNumber
    */
   public ComplexNumber inverse()
   {
-    Double newReal = realNumber;
-    Double newImg = imaginaryNumber;
-    newReal *= -1.0;
-    newImg *= -1.0;
-
-    return new ComplexNumber(newReal, newImg);
+    ComplexMultiplication multi = new ComplexMultiplication();
+    ComplexDivision div = new ComplexDivision();
+    ComplexNumber one = new ComplexNumber(1.0, 0.0);
+    // 1 / z
+    ComplexNumber[] zPre = new ComplexNumber[]{one, this};
+    // conj(z) / conj(z)
+    ComplexNumber[] zRat = new ComplexNumber[]{conjugate(), conjugate()};
+    ComplexNumber z = div.calculate(zPre);
+    ComplexNumber rat = div.calculate(zRat);
+    ComplexNumber back = multi.calculate(new ComplexNumber[]{z, rat});
+    return back;
   }
 
   /**

@@ -45,23 +45,13 @@ public class CalculatorDisplay extends JFrame
 
   private GridBagLayout layout = new GridBagLayout();
   private GridBagConstraints constraints = new GridBagConstraints();
-  
-  private JButton addition;
-  private JButton clear;
-  private JButton division;
-  private JButton equals;
-  private JButton multiplication;
-  private JButton reset;
-  private JButton subtraction;
 
   private JLabel display;
+  private JLabel inputField;
 
-//  private JPanel buttonPanel;
   private JPanel centerPanel;
   private JPanel mainPanel;
   private JPanel northPanel;
-
-  private JTextField inputField;
 
   // ----------Constructor----------
 
@@ -73,12 +63,10 @@ public class CalculatorDisplay extends JFrame
     setSize(new Dimension(500, 500));
 
     listener = CalcListener.getInstance();
-    addKeyListener(listener);
     createComponents();
     createMenuBar();
     setComponents();
     setLayouts();
-    setFocusable(true);
     addComponents();
     ImageIcon img = new ImageIcon("rimplex/src/iconRimplex.png");
     setIconImage(img.getImage());
@@ -132,7 +120,7 @@ public class CalculatorDisplay extends JFrame
    * @return JTextField - the inputField
    */
 
-  public JTextField getInputField()
+  public JLabel getInputField()
   {
     return inputField;
   }
@@ -145,7 +133,7 @@ public class CalculatorDisplay extends JFrame
   public void setDisplay(final String text)
   {
     display.setText(replaceI(text));
-    adjustFont();
+    adjustFont(display);
   } // setDisplay method.
   
   /**
@@ -156,6 +144,7 @@ public class CalculatorDisplay extends JFrame
   public void setInput(final String text)
   {
     inputField.setText(text);
+    adjustFont(inputField);
   }
   
   /**
@@ -187,41 +176,34 @@ public class CalculatorDisplay extends JFrame
   { 
     constraints.gridx = 0;
     constraints.gridy = 0;
+    constraints.weighty = 0.3;
     constraints.weightx = 1;
-    constraints.weighty = 0.5;
     constraints.fill = GridBagConstraints.BOTH;
     mainPanel.add(northPanel, constraints);
     
-    constraints.weighty = 0.3;
-    constraints.gridy = 1;
-    mainPanel.add(centerPanel, constraints);
+//    constraints.weighty = 0.3;
+//    constraints.gridy = 5;
+//    mainPanel.add(centerPanel, constraints);
     
-    constraints.gridy = 2;
+//    constraints.gridy = 10;
+    constraints.gridy = 1;
     constraints.weighty = 1;
     mainPanel.add(ButtonPadPanel.getInstance(), constraints);
-
+    northPanel.setMinimumSize(new Dimension(50, 50));
+    northPanel.setPreferredSize(new Dimension(50, 50));
+    northPanel.setMaximumSize(new Dimension(50, 50));
     northPanel.add(display);
-
-    centerPanel.add(inputField);
-    
-//    buttonPanel.add(reset);
-//    buttonPanel.add(clear);
-//    buttonPanel.add(addition);
-//    buttonPanel.add(subtraction);
-//    buttonPanel.add(multiplication);
-//    buttonPanel.add(division);
-//    buttonPanel.add(equals);
-
+    northPanel.add(inputField);
   } // addComponents method.
   
   /**
    * adjustFont - Will adjust the font size of the display field depending
    * on the amount of characters in the display.
    */
-  private void adjustFont()
+  private void adjustFont(final JLabel label)
   {
-    if (display.getText().length() > 23) display.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
-    else display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
+    if (label.getText().length() > 23) label.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
+    else label.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
   } // adjustFont method.
 
   /**
@@ -235,7 +217,7 @@ public class CalculatorDisplay extends JFrame
     northPanel = new JPanel();
     centerPanel = new JPanel();
 
-    inputField = new JTextField();
+    inputField = new JLabel();
   } // createComponents method.
 
   /**
@@ -246,13 +228,12 @@ public class CalculatorDisplay extends JFrame
     inputField.setFont(new Font(FONT, Font.LAYOUT_RIGHT_TO_LEFT, MAXFONTSIZE));
     inputField.setHorizontalAlignment(JTextField.RIGHT);
     inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-    inputField.addKeyListener(listener);
+    inputField.setVisible(true);
 
     display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     display.setBackground(Color.WHITE);
     display.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-    display.setFocusable(true);
-    display.addKeyListener(listener);
+    display.setVisible(true);
   } // setComponents method.
 
   /**
@@ -261,7 +242,7 @@ public class CalculatorDisplay extends JFrame
   private void setLayouts()
   {
     mainPanel.setLayout(layout);
-    northPanel.setLayout(new GridLayout(1, 0));
+    northPanel.setLayout(new GridLayout(2, 1));
     centerPanel.setLayout(new GridLayout(1, 0));
   } // setLayouts method.
   
@@ -273,10 +254,10 @@ public class CalculatorDisplay extends JFrame
   private void createMenuBar() 
   {
     
-    ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
-    JMenuItem themes = new JMenuItem("Themes", themeIcon);
-    JMenu optionsMenu = new JMenu("Options");
-    optionsMenu.add(themes);
+//    ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
+//    JMenuItem themes = new JMenuItem("Themes", themeIcon);
+//    JMenu optionsMenu = new JMenu("Options");
+//    optionsMenu.add(themes);
     
     ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon.png");
     JMenuItem history = new JMenuItem("Show History", historyIcon);
@@ -287,15 +268,18 @@ public class CalculatorDisplay extends JFrame
     JMenuItem save = new JMenuItem("Save", saveIcon);
     JMenu fileMenu = new JMenu("File");
     fileMenu.add(history);
-    fileMenu.add(open);
-    fileMenu.add(save);
+    
+    JMenuItem plot = new JMenuItem("Plot");
+    fileMenu.add(plot);
+//    fileMenu.add(open);
+//    fileMenu.add(save);
     
     JMenuBar menuBar = new JMenuBar();
-    menuBar.add(optionsMenu);
+//    menuBar.add(optionsMenu);
     menuBar.add(fileMenu);
     setJMenuBar(menuBar); 
     // If you want to hide the menu bar, set this to false.
-    menuBar.setVisible(false);
+    menuBar.setVisible(true);
   }
   
   /**

@@ -43,7 +43,16 @@ class ComplexNumberTest
     assertEquals("(7-2i)", delta.toString());
     assertEquals("(11.0001+0.00001i)", echo.toString());
   }
-
+  
+  @Test
+  void inverseTest() 
+  {
+    ComplexNumber op = new ComplexNumber(2.0, 3.0);
+    ComplexNumber actual = op.inverse();
+    ComplexNumber expected = new ComplexNumber(2.0/13.0, -3.0/13.0);
+    assertEquals(actual.getReal(), expected.getReal(), 0.001);
+  }
+  
   @Test // TODO COME UP WITH A WAY TO RANDOM TEST OUR TOSTRING
   void ComplexNumberRandomTests()
   {
