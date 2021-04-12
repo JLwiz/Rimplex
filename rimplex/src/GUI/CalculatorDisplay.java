@@ -295,7 +295,7 @@ public class CalculatorDisplay extends JFrame
     menuBar.add(fileMenu);
     setJMenuBar(menuBar); 
     // If you want to hide the menu bar, set this to false.
-    menuBar.setVisible(false);
+    menuBar.setVisible(true);
   }
   
   /**
