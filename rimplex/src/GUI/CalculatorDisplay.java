@@ -133,7 +133,7 @@ public class CalculatorDisplay extends JFrame
   public void setDisplay(final String text)
   {
     display.setText(replaceI(text));
-    adjustFont();
+    adjustFont(display);
   } // setDisplay method.
   
   /**
@@ -144,6 +144,7 @@ public class CalculatorDisplay extends JFrame
   public void setInput(final String text)
   {
     inputField.setText(text);
+    adjustFont(inputField);
   }
   
   /**
@@ -175,34 +176,34 @@ public class CalculatorDisplay extends JFrame
   { 
     constraints.gridx = 0;
     constraints.gridy = 0;
+    constraints.weighty = 0.3;
     constraints.weightx = 1;
-    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.fill = GridBagConstraints.BOTH;
     mainPanel.add(northPanel, constraints);
     
-    constraints.weighty = 0.3;
-    constraints.gridy = 1;
-    constraints.ipady = 0;
-    mainPanel.add(centerPanel, constraints);
+//    constraints.weighty = 0.3;
+//    constraints.gridy = 5;
+//    mainPanel.add(centerPanel, constraints);
     
-    constraints.gridy = 2;
+//    constraints.gridy = 10;
+    constraints.gridy = 1;
     constraints.weighty = 1;
-    constraints.ipady = 75;
     mainPanel.add(ButtonPadPanel.getInstance(), constraints);
-
+    northPanel.setMinimumSize(new Dimension(50, 50));
+    northPanel.setPreferredSize(new Dimension(50, 50));
+    northPanel.setMaximumSize(new Dimension(50, 50));
     northPanel.add(display);
-
-    centerPanel.add(inputField);
-
+    northPanel.add(inputField);
   } // addComponents method.
   
   /**
    * adjustFont - Will adjust the font size of the display field depending
    * on the amount of characters in the display.
    */
-  private void adjustFont()
+  private void adjustFont(final JLabel label)
   {
-    if (display.getText().length() > 23) display.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
-    else display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
+    if (label.getText().length() > 23) label.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
+    else label.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
   } // adjustFont method.
 
   /**
@@ -227,11 +228,12 @@ public class CalculatorDisplay extends JFrame
     inputField.setFont(new Font(FONT, Font.LAYOUT_RIGHT_TO_LEFT, MAXFONTSIZE));
     inputField.setHorizontalAlignment(JTextField.RIGHT);
     inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-    inputField.addKeyListener(listener);
+    inputField.setVisible(true);
 
     display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     display.setBackground(Color.WHITE);
     display.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+    display.setVisible(true);
   } // setComponents method.
 
   /**
@@ -240,7 +242,7 @@ public class CalculatorDisplay extends JFrame
   private void setLayouts()
   {
     mainPanel.setLayout(layout);
-    northPanel.setLayout(new GridLayout(1, 0));
+    northPanel.setLayout(new GridLayout(2, 1));
     centerPanel.setLayout(new GridLayout(1, 0));
   } // setLayouts method.
   
