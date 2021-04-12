@@ -19,12 +19,15 @@ import java.awt.font.*;
 public class InputParser
 {
   private static InputParser parser = new InputParser();
-  private final String validCharacters = "0123456789.+-i*/()";
+  private final String validCharacters = "0123456789.+-i×÷()n"; // n is required for negative
+                                                                // multiple/divisors
   private final String negative = "-";
   private final String imaginary = "i";
   private final String plus = "+";
-  private final String multiply = "*";
-  private final String divide = "/";
+  private final String multiply = "×";
+  private final String divide = "÷";
+  private final String negDivide = "÷n";
+  private final String negMultiply = "×n";
   private ComplexAddition add = new ComplexAddition();
   private ComplexSubtraction sub = new ComplexSubtraction();
   private ComplexMultiplication multi = new ComplexMultiplication();
@@ -179,7 +182,7 @@ public class InputParser
             }
             else if (j == 1) // second set of operations
             {
-              if (in.charAt(i + 1) == '*')
+              if (in.charAt(i + 1) == '×')
               {
                 n = multi.calculate(parseInput(in.substring(0, i + 1)),
                     parseInput(in.substring(i + 2)));
@@ -191,7 +194,7 @@ public class InputParser
                 n = multi.calculate(parseInput(in.substring(0, i + 1)),
                     parseInput(in.substring(i + 1)));
               }
-              else if (in.charAt(i + 1) == '/')
+              else if (in.charAt(i + 1) == '÷')
               {
                 n = div.calculate(parseInput(in.substring(0, i + 1)),
                     parseInput(in.substring(i + 2)));
@@ -243,15 +246,18 @@ public class InputParser
     if (in.contains(plus))
     {
       String[] list = in.split("\\+");
-      n = parseInput(list[0]);
+      n = parseNoParen(list[0]);
       for (int i = 1; i < list.length; i++)
       {
         n = add.calculate(n, parseNoParen(list[i]));
       }
     }
-    else if (in.contains(negative)) // requires special checks to account for negative numbers
+    else if (in.contains(negative) && in.lastIndexOf(negative) > 0) // requires special checks to
+                                                                    // account for negative numbers
     {
-      String[] list = in.split(negative);
+      String text = in.replaceAll(multiply + negative, negMultiply);
+      text = text.replaceAll(divide + negative, negDivide);
+      String[] list = text.split(negative);
       int i = 1;
       if (list[0] == null || list[0].isBlank()) // checks if first number is negative
       {
@@ -260,7 +266,8 @@ public class InputParser
       }
       else
       {
-        n = parseInput(list[0]);
+        System.out.println(list[0]);
+        n = parseNoParen(list[0]);
       }
       for (; i < list.length; i++)
       {
@@ -269,8 +276,9 @@ public class InputParser
     }
     else if (in.contains(multiply))
     {
-      String[] list = in.split("\\*");
-      n = parseInput(list[0]);
+      String text = in.replaceAll(negMultiply, multiply + negative);
+      String[] list = text.split(multiply);
+      n = parseNoParen(list[0]);
       for (int i = 1; i < list.length; i++)
       {
         n = multi.calculate(n, parseNoParen(list[i]));
@@ -278,8 +286,9 @@ public class InputParser
     }
     else if (in.contains(divide))
     {
-      String[] list = in.split(divide);
-      n = parseInput(list[0]);
+      String text = in.replaceAll(negDivide, divide + negative);
+      String[] list = text.split(divide);
+      n = parseNoParen(list[0]);
       for (int i = 1; i < list.length; i++)
       {
         n = div.calculate(n, parseNoParen(list[i]));
