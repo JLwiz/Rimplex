@@ -104,7 +104,7 @@ public class ButtonPadPanel extends JPanel
     
     numpad.gridx = leftEdge + 1;
     numpad.gridy = topEdge;
-    JButton modeButton = createButton("DEC", "mode");
+    modeButton = createButton("DEC", "mode");
     add(modeButton, numpad);
     
     numpad.gridy = topEdge + 1;
