@@ -258,8 +258,8 @@ public class ButtonPadPanel extends JPanel
    * Butchered from "CalculatorDisplay.java", thank you Andrew.
    * 
    * @param title the text to display on the Button
-   * @param name 
-   * @return JButton
+   * @param name the internal name for switch cases
+   * @return JButton the created button
    */
   private JButton createButton(final String title, final String name)
   {
@@ -276,6 +276,11 @@ public class ButtonPadPanel extends JPanel
     return b;
   }
   
+  /**
+   * For use in updating the display of the calculator to correctly display what mode its in.
+   * 
+   * @param isFraction whether or not the calculator is in fractional mode.
+   */
   public void updateMode(final boolean isFraction) {
     if (isFraction) {
       modeButton.setText("FRAC");
