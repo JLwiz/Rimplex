@@ -137,8 +137,9 @@ public class CalcListener implements ActionListener, KeyListener,
         case "logarithm":
           if (evaluate.operatorEmpty())
           {
-            if (evaluate.getFirstOp() == null || (frame.getInputField() != null 
-                && frame.getInputField().equals("")))
+            String field = frame.getInputField().getText();
+            if (evaluate.getFirstOp() == null || frame.getInputField() != null 
+                && !frame.getInputField().getText().equals(""))
             {
               operatorButton(button.getText());
             }
@@ -382,7 +383,7 @@ public class CalcListener implements ActionListener, KeyListener,
       else if (operation.equals(logOperator))
       {
         evaluate.setFirstOp(null);
-        if (op1 != null && input != null) 
+        if (op1 != null || (input != null && input.isEmpty())) 
         {
           op1 = parser.parseInput(text);
         }
