@@ -64,5 +64,6 @@ public class ComplexMultiplication implements Operations
     return new ComplexNumber(newReal, newImg);
     
   }
+  
 
 }
