@@ -28,7 +28,7 @@ public class ButtonPadPanel extends JPanel
   
   private HashMap<String, JButton> buttonMap;
   
-  private JButton modeButton = createButton("DEC", "mode");
+  private JButton modeButton;
   
   /**
    * The default constructor for our ButtonPadPanel.
@@ -104,7 +104,7 @@ public class ButtonPadPanel extends JPanel
     
     numpad.gridx = leftEdge + 1;
     numpad.gridy = topEdge;
-    
+    JButton modeButton = createButton("DEC", "mode");
     add(modeButton, numpad);
     
     numpad.gridy = topEdge + 1;
