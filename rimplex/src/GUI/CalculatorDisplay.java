@@ -273,10 +273,10 @@ public class CalculatorDisplay extends JFrame
   private void createMenuBar() 
   {
     
-    ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
-    JMenuItem themes = new JMenuItem("Themes", themeIcon);
-    JMenu optionsMenu = new JMenu("Options");
-    optionsMenu.add(themes);
+//    ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
+//    JMenuItem themes = new JMenuItem("Themes", themeIcon);
+//    JMenu optionsMenu = new JMenu("Options");
+//    optionsMenu.add(themes);
     
     ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon.png");
     JMenuItem history = new JMenuItem("Show History", historyIcon);
@@ -287,15 +287,18 @@ public class CalculatorDisplay extends JFrame
     JMenuItem save = new JMenuItem("Save", saveIcon);
     JMenu fileMenu = new JMenu("File");
     fileMenu.add(history);
-    fileMenu.add(open);
-    fileMenu.add(save);
+    
+    JMenuItem plot = new JMenuItem("Plot");
+    fileMenu.add(plot);
+//    fileMenu.add(open);
+//    fileMenu.add(save);
     
     JMenuBar menuBar = new JMenuBar();
-    menuBar.add(optionsMenu);
+//    menuBar.add(optionsMenu);
     menuBar.add(fileMenu);
     setJMenuBar(menuBar); 
     // If you want to hide the menu bar, set this to false.
-    menuBar.setVisible(false);
+    menuBar.setVisible(true);
   }
   
   /**
