@@ -4,7 +4,10 @@ import java.awt.Color;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.FocusListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -40,6 +43,9 @@ public class CalculatorDisplay extends JFrame
   private static CalculatorDisplay single_instance = null;
   private CalcListener listener;
 
+  private GridBagLayout layout = new GridBagLayout();
+  private GridBagConstraints constraints = new GridBagConstraints();
+  
   private JButton addition;
   private JButton clear;
   private JButton division;
@@ -50,7 +56,7 @@ public class CalculatorDisplay extends JFrame
 
   private JLabel display;
 
-  private JPanel buttonPanel;
+//  private JPanel buttonPanel;
   private JPanel centerPanel;
   private JPanel mainPanel;
   private JPanel northPanel;
@@ -64,13 +70,15 @@ public class CalculatorDisplay extends JFrame
    */
   public CalculatorDisplay()
   {
-    setSize(new Dimension(400, 300));
+    setSize(new Dimension(500, 500));
 
     listener = CalcListener.getInstance();
+    addKeyListener(listener);
     createComponents();
     createMenuBar();
     setComponents();
     setLayouts();
+    setFocusable(true);
     addComponents();
     ImageIcon img = new ImageIcon("rimplex/src/iconRimplex.png");
     setIconImage(img.getImage());
@@ -136,14 +144,19 @@ public class CalculatorDisplay extends JFrame
    */
   public void setDisplay(final String text)
   {
-    String temp = text.replaceAll("<html>", "");
-    temp = temp.replaceAll("</html>", "");
-    temp = temp.replaceAll("<i>", "");
-    temp = temp.replaceAll("</i>", "");
-    temp = "<html>" + temp + "</html>";
-    display.setText(temp.replaceAll("i", ITALICI));
+    display.setText(replaceI(text));
     adjustFont();
   } // setDisplay method.
+  
+  /**
+   * setInput - Will set the input text.
+   * 
+   * @param text (String)
+   */
+  public void setInput(final String text)
+  {
+    inputField.setText(text);
+  }
   
   /**
    * invalidStatus - Will change the color of the JPanel based on the the validity of the content in
@@ -172,21 +185,32 @@ public class CalculatorDisplay extends JFrame
    */
   private void addComponents()
   { 
-    mainPanel.add(northPanel);
-    mainPanel.add(centerPanel);
-    mainPanel.add(buttonPanel);
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.weightx = 1;
+    constraints.weighty = 0.5;
+    constraints.fill = GridBagConstraints.BOTH;
+    mainPanel.add(northPanel, constraints);
+    
+    constraints.weighty = 0.3;
+    constraints.gridy = 1;
+    mainPanel.add(centerPanel, constraints);
+    
+    constraints.gridy = 2;
+    constraints.weighty = 1;
+    mainPanel.add(ButtonPadPanel.getInstance(), constraints);
 
     northPanel.add(display);
 
     centerPanel.add(inputField);
     
-    buttonPanel.add(reset);
-    buttonPanel.add(clear);
-    buttonPanel.add(addition);
-    buttonPanel.add(subtraction);
-    buttonPanel.add(multiplication);
-    buttonPanel.add(division);
-    buttonPanel.add(equals);
+//    buttonPanel.add(reset);
+//    buttonPanel.add(clear);
+//    buttonPanel.add(addition);
+//    buttonPanel.add(subtraction);
+//    buttonPanel.add(multiplication);
+//    buttonPanel.add(division);
+//    buttonPanel.add(equals);
 
   } // addComponents method.
   
@@ -196,7 +220,6 @@ public class CalculatorDisplay extends JFrame
    */
   private void adjustFont()
   {
-    
     if (display.getText().length() > 23) display.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
     else display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
   } // adjustFont method.
@@ -206,48 +229,14 @@ public class CalculatorDisplay extends JFrame
    */
   private void createComponents()
   {
-    addition = setButton("add", "+");
-    clear = setButton("clear", "C");
-    clear.setBackground(Color.GRAY);
-    division = setButton("divide", "÷");
-    equals = setButton("equals", "=");
-    multiplication = setButton("multiply", "×");
-    reset = setButton("reset", "R");
-    reset.setBackground(Color.RED);
-    subtraction = setButton("subtract", "-");
-
     display = new JLabel();
 
-    buttonPanel = new JPanel();
     mainPanel = new JPanel();
     northPanel = new JPanel();
     centerPanel = new JPanel();
 
     inputField = new JTextField();
   } // createComponents method.
-
-  /**
-   * setButton - Will create a button object and return it.
-   * 
-   * @param name
-   *          (String)
-   * @param title
-   *          (String)
-   * 
-   * @return a button object with set attributes.
-   */
-  private JButton setButton(final String name, final String title)
-  {
-    JButton b = new JButton(title);
-    b.setName(name);
-    b.setBackground(Color.BLACK);
-    b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-    b.setForeground(Color.WHITE);
-    b.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
-    b.addActionListener(listener);
-
-    return b;
-  } // setButton method.
 
   /**
    * setComponents - Will set the components correctly.
@@ -257,10 +246,13 @@ public class CalculatorDisplay extends JFrame
     inputField.setFont(new Font(FONT, Font.LAYOUT_RIGHT_TO_LEFT, MAXFONTSIZE));
     inputField.setHorizontalAlignment(JTextField.RIGHT);
     inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+    inputField.addKeyListener(listener);
 
     display.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     display.setBackground(Color.WHITE);
     display.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+    display.setFocusable(true);
+    display.addKeyListener(listener);
   } // setComponents method.
 
   /**
@@ -268,10 +260,9 @@ public class CalculatorDisplay extends JFrame
    */
   private void setLayouts()
   {
-    mainPanel.setLayout(new GridLayout(3, 0));
+    mainPanel.setLayout(layout);
     northPanel.setLayout(new GridLayout(1, 0));
     centerPanel.setLayout(new GridLayout(1, 0));
-    buttonPanel.setLayout(new GridLayout(0, 7));
   } // setLayouts method.
   
   /**
@@ -304,6 +295,23 @@ public class CalculatorDisplay extends JFrame
     menuBar.add(fileMenu);
     setJMenuBar(menuBar); 
     // If you want to hide the menu bar, set this to false.
-    menuBar.setVisible(true);
+    menuBar.setVisible(false);
+  }
+  
+  /**
+   * replaceI - Will replace all normal i's with italics.
+   * 
+   * @param text (String)
+   * @return a string with italic i's
+   */
+  private String replaceI(final String text)
+  {
+    String temp = text.replaceAll("<html>", "");
+    temp = temp.replaceAll("</html>", "");
+    temp = temp.replaceAll("<i>", "");
+    temp = temp.replaceAll("</i>", "");
+    temp = "<html>" + temp + "</html>";
+    
+    return temp.replaceAll("i", ITALICI);
   }
 } // CalculatorDisplay class.

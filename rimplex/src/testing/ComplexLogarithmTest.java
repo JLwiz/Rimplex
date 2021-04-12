@@ -1,6 +1,7 @@
 package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import calculations.ComplexLogarithm;
 import calculations.ComplexNumber;
@@ -23,33 +24,45 @@ class ComplexLogarithmTest
     ComplexNumber expected;
     ComplexNumber actual;
 
-    op = null;
-    expected = new ComplexNumber(0.0, 0.0);
-    actual = operator.calculate(op);
-    testHelper(actual, expected);
+    ComplexNumber nullOp = null;
+    Assertions.assertThrows(NumberFormatException.class, () -> 
+    {
+      operator.calculate(nullOp);
+    });
+    Assertions.assertThrows(NumberFormatException.class, () -> 
+    {
+      operator.calculate(null);
+    });
+    
+    // Evaluates to undefined
+    ComplexNumber zeroOp = new ComplexNumber(0.0, 0.0);
+    Assertions.assertThrows(NumberFormatException.class, () -> 
+    {
+      operator.calculate(zeroOp);
+    });
+    
+    ComplexNumber twoOp = new ComplexNumber(1.0, 1.0);
+    Assertions.assertThrows(NumberFormatException.class, () -> 
+    {
+      operator.calculate(twoOp, twoOp);
+    });
     
     op = new ComplexNumber(3.0, -8.0);
-    expected = new ComplexNumber(2.1452297205741955, -1.2120256565243244);
+    expected = new ComplexNumber(2.145, -1.212);
     // 2.1452297-1.2120257i
     actual = operator.calculate(op);
     testHelper(actual, expected);
     
     op = new ComplexNumber(0.0, 2.0);
-    expected = new ComplexNumber(0.6931471805599453, 1.5707963267948966);
+    expected = new ComplexNumber(0.693, 1.570);
     // 0.6931472+1.5707963i
     actual = operator.calculate(op);
     testHelper(actual, expected);
-    
-    // Makes a weird imaginary and real number for log of zero.
-    op = new ComplexNumber(0.0, 0.0);
-    expected = new ComplexNumber(0.0, 0.0);
-    actual = operator.calculate(op);
-//    testHelper(actual, expected);
 
-    op = new ComplexNumber(0.0, 2.0);
-    expected = new ComplexNumber(-16.0, 6.0);
+    op = new ComplexNumber(24.0, 72.0);
+    expected = new ComplexNumber(4.329, 1.249);
     actual = operator.calculate(op);
-//    testHelper(actual, expected);
+    testHelper(actual, expected);
   }
 
   @Test
@@ -63,12 +76,12 @@ class ComplexLogarithmTest
     ComplexNumber op = new ComplexNumber(values[0], values[1]);
     Double real = values[0];
     Double img = values[1];
-    Double newReal = (1/2) * Math.log((real * real) + (img * img));
+    Double newReal = (1.0/2.0) * Math.log((real * real) + (img * img));
     Double newImg = Math.atan(img/real);
     Operations operator = new ComplexLogarithm();
     ComplexNumber expected = new ComplexNumber(newReal, newImg);
-    ComplexNumber actual = operator.calculate(op, null);
-//    testHelper(actual, expected);
+    ComplexNumber actual = operator.calculate(op);
+    testHelper(actual, expected);
   }
 
   /**
@@ -79,8 +92,8 @@ class ComplexLogarithmTest
    */
   public void testHelper(final ComplexNumber actual, final ComplexNumber expected)
   {
-    assertEquals(actual.getReal(), expected.getReal());
-    assertEquals(actual.getImaginary(), expected.getImaginary());
+    assertEquals(actual.getReal(), expected.getReal(), .001);
+    assertEquals(actual.getImaginary(), expected.getImaginary(), .001);
   }
 
 }

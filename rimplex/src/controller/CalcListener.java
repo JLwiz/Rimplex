@@ -2,12 +2,16 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
 import calculations.ComplexNumber;
 import calculations.Equation;
@@ -23,12 +27,15 @@ import util.InputParser;
  * @version 1.0 (03/26/2021)
  *
  */
-public class CalcListener implements ActionListener, WindowListener
+public class CalcListener implements ActionListener, KeyListener,
+                              WindowListener
 {
   private static CalcListener listener;
   private CalculatorDisplay frame;
   private Equation evaluate;
   private InputParser parser;
+  private final String leftParen = "(";
+  private final String rightParen = ")";
 
   /**
    * Default Constructor.
@@ -39,6 +46,19 @@ public class CalcListener implements ActionListener, WindowListener
     parser = parser.getInstance();
 
   } // Default Constructor.
+
+  /**
+   * gives the instance of the listener.
+   * 
+   * @return CalcListener - the listener
+   */
+
+  public static CalcListener getInstance()
+  {
+    if (listener == null)
+      listener = new CalcListener();
+    return listener;
+  }
 
   /**
    * Determines what actions to do following an action event.
@@ -57,17 +77,12 @@ public class CalcListener implements ActionListener, WindowListener
     {
       switch (button.getName().toLowerCase())
       {
-        case "add":
-          operatorButton(button.getText());
-          break;
+        case "add":// Multiple buttons that go down the same path can be condensed in such
+                   // statements
         case "divide":
-          operatorButton(button.getText());
-          break;
         case "multiply":
-          operatorButton(button.getText());
-          break;
         case "subtract":
-          operatorButton(button.getText());
+          operationsSwitch(button.getText());
           break;
         case "equals":
           operatorButton(button.getText());
@@ -79,6 +94,83 @@ public class CalcListener implements ActionListener, WindowListener
         case "reset":
           resetDisplay();
           break;
+        case "inverse":
+          if (evaluate.operatorEmpty())
+          {
+            if (evaluate.getFirstOp() == null)
+            {
+              operatorButton(button.getText());
+            }
+            else
+            {
+              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+            }
+          }
+          else
+          {
+            frame.invalidStatus(true, "Can't Inverse.");
+          }
+          break;
+        case "backspace":
+          String text = frame.getInputField().getText();
+          if (text.length() > 0)
+            frame.setInput(text.substring(0, text.length() - 1));
+          break;
+        case "sign":
+          break;
+        case "i":
+          append('i');
+          break;
+        case "0":// these cases can also be condensed like this.
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+        case "decimal":
+        case "open parenthases":
+        case "closed parenthases":
+          append(button.getText().charAt(0));
+          break;
+        case "logarithm":
+          if (evaluate.operatorEmpty())
+          {
+            if (evaluate.getFirstOp() == null || (frame.getInputField() != null 
+                && frame.getInputField().equals("")))
+            {
+              operatorButton(button.getText());
+            }
+            else
+            {
+              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+            }
+          }
+          else
+          {
+            frame.invalidStatus(true, "Can't Take Logarithm.");
+          }
+          break;
+        case "conjugate":
+          if (evaluate.operatorEmpty())
+          {
+            if (evaluate.getFirstOp() == null)
+            {
+              operatorButton(button.getText());
+            }
+            else
+            {
+              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+            }
+          }
+          else
+          {
+            frame.invalidStatus(true, "Can't Conjugate.");
+          }
+          break;
         default:
           break;
       }
@@ -87,25 +179,57 @@ public class CalcListener implements ActionListener, WindowListener
   } // actionPerformed method.
 
   /**
+   * keyPressed - Will perform the correct action of the key
+   * pressed.
+   * 
+   * @param e (KeyEvent)
+   */
+  @Override
+  public void keyPressed(final KeyEvent e)
+  {
+    ButtonPadPanel pad = ButtonPadPanel.getInstance();
+    int code = e.getKeyCode();
+    
+    switch (code)
+    {
+      case 10: // enter
+        pad.pressButton("equals");
+        break;
+      case 45: // - minus
+        // does nothing
+        break;
+      case 56: // * mulitply
+        // does nothing
+        break;
+      case 61: // + add
+        // does nothing
+        break;
+      case 111: // / divide
+        // does nothing
+        break;
+      default: // a key was pressed that we don't allow
+        break;
+    }
+    
+  } // keyPressed method.
+  
+  /**
+   * append - Will add a character to the end of the display.
+   * 
+   * @param addition
+   *          ( String )
+   */
+  private void append(final char addition)
+  {
+    frame.setInput(frame.getInputField().getText() + addition);
+  } // append method.
+
+  /**
    * clears InputField for CalculatorDisplay.
    */
-
   private void clearInput()
   {
     frame.clearInputField();
-  }
-
-  /**
-   * gives the instance of the listener.
-   * 
-   * @return CalcListener - the listener
-   */
-
-  public static CalcListener getInstance()
-  {
-    if (listener == null)
-      listener = new CalcListener();
-    return listener;
   }
 
   /**
@@ -117,16 +241,13 @@ public class CalcListener implements ActionListener, WindowListener
    *          - the initial input
    * @return String - the formatted input
    */
-
   private String formatInput(final String input)
   {
     String text = input;
-    String leftParen = "(";
-    String rightParen = ")";
     String iPlus = "+i";
     String iMinus = "-i";
     String iParen = "(i";
-    String imaginary = "i";
+    char imaginary = 'i';
     if (!text.endsWith(rightParen) || !text.startsWith(leftParen))
     {
       text = leftParen + text + rightParen;
@@ -143,7 +264,6 @@ public class CalcListener implements ActionListener, WindowListener
   /**
    * signals that the input is invalid.
    */
-
   private void invalidInput()
   {
     frame.invalidStatus(true, "Invalid Input");
@@ -159,7 +279,6 @@ public class CalcListener implements ActionListener, WindowListener
    * @throws NumberFormatException
    *           the Input was invalid.
    */
-
   private void operationsProcessor(final String input, final String operation)
       throws NumberFormatException
   {
@@ -171,14 +290,52 @@ public class CalcListener implements ActionListener, WindowListener
       text = formatInput(input);
     }
     String equalsOperator = "=";
+    String logOperator = "log";
 
     if (evaluate.operatorEmpty() && text.length() > 0)
     {
-      ComplexNumber op1 = parser.parseInput(text);
+      ComplexNumber op1;
+      if (evaluate.getFirstOp() == null)
+      {
+        op1 = parser.parseInput(text);
+      } 
+      else
+      {
+        
+        op1 = evaluate.getFirstOp();
+      }
+
       frame.setDisplay("");
       if (operation.equals(equalsOperator))
       {
         frame.setDisplay(text + operation + op1.toString());
+      }
+      // put the inverse sign here when the button is added.
+      else if (operation.equals("Inv"))
+      {
+        ComplexNumber inv = op1.inverse();
+        op1 = inv;
+        frame.setDisplay(inv.toString());
+      }
+      else if (operation.equals(logOperator))
+      {
+        evaluate.setFirstOp(null);
+        if (op1 != null && input != null) 
+        {
+          op1 = parser.parseInput(text);
+        }
+        evaluate.setFirstOp(op1);
+        evaluate.setOperator(logOperator);
+        String str = logOperator + op1.toString();
+        op1 = evaluate.solve();
+        str += equalsOperator + op1.toString();
+        frame.setDisplay(str);
+      }
+      else if (operation.equals("Con"))
+      {
+        ComplexNumber conj = op1.conjugate();
+        op1 = conj;
+        frame.setDisplay(op1.toString());
       }
       else
       {
@@ -226,6 +383,26 @@ public class CalcListener implements ActionListener, WindowListener
   }
 
   /**
+   * checks if their are open parenthesis and acts with the operator accordingly. if the parenthesis
+   * are open it appends the operator to the text, else it performs the operation.
+   * 
+   * @param operation
+   *          - the operator to act on
+   */
+
+  private void operationsSwitch(final String operation)
+  {
+    if (openParenCheck())
+    {
+      append(operation.charAt(0));
+    }
+    else
+    {
+      operatorButton(operation);
+    }
+  }
+
+  /**
    * Processes the event for the operation buttons. (add,subtract,multiply,divide,equals)
    * 
    * @param operation
@@ -258,9 +435,35 @@ public class CalcListener implements ActionListener, WindowListener
   }
 
   /**
-   * resets the display and the equation class.
+   * returns if the textfield has unclosed parenthesis. true if their are more left paren then right
+   * paren, returns false otherwise.
+   * 
+   * @return boolean - if there are open parenthesis
    */
 
+  private boolean openParenCheck()
+  {
+    int openParen = 0;
+    int closedParen = 0;
+    String text = frame.getInputField().getText();
+    for (int i = 0; i < text.length(); i++)
+    {
+      if (text.charAt(i) == '(')
+      {
+        openParen++;
+      }
+      if (text.charAt(i) == ')')
+      {
+        closedParen++;
+      }
+    }
+
+    return (openParen != closedParen);
+  }
+
+  /**
+   * resets the display and the equation class.
+   */
   private void resetDisplay()
   {
     frame.setDisplay("");
@@ -304,6 +507,16 @@ public class CalcListener implements ActionListener, WindowListener
 
   @Override
   public void windowDeactivated(final WindowEvent e)
+  {
+  } // unused.
+
+  @Override
+  public void keyTyped(KeyEvent e)
+  {
+  } // unused.
+
+  @Override
+  public void keyReleased(KeyEvent e)
   {
   } // unused.
 

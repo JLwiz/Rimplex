@@ -115,6 +115,9 @@ public class Equation
         case "÷":
           operator = new ComplexDivision();
           break;
+        case "log":
+          operator = new ComplexLogarithm();
+          break;
         default:
           operator = null;
           break;
@@ -140,11 +143,19 @@ public class Equation
    */
   public ComplexNumber solve()
   {
+    
     ComplexNumber result = new ComplexNumber(0.0, 0.0);
-
     if (operator == null || firstOp == null || secondOp == null)
     {
-      return result;
+      if (firstOp != null && secondOp == null && operator instanceof ComplexLogarithm) 
+      {
+        result = operator.calculate(firstOp);
+      } 
+      else 
+      {
+        return result;
+      }
+      
     }
     else
     {
@@ -156,5 +167,5 @@ public class Equation
     setOperator(null);
     return result;
   } // solve method.
-
+  
 } // Equation class.
