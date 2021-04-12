@@ -141,8 +141,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           if (evaluate.operatorEmpty())
           {
             String field = frame.getInputField().getText();
-            if (evaluate.getFirstOp() == null || frame.getInputField() != null 
-                && !frame.getInputField().getText().equals(""))
+            if (evaluate.getFirstOp() == null
+                || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
             {
               operatorButton(button.getText());
             }
@@ -191,9 +191,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   {
     ButtonPadPanel pad = ButtonPadPanel.getInstance();
     int code = e.getKeyChar();
-    
+
     Object source = e.getSource();
-    
+
     switch (code)
     {
       case 8:
@@ -437,7 +437,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       else if (operation.equals(logOperator))
       {
         evaluate.setFirstOp(null);
-        if (op1 != null || (input != null && input.isEmpty())) 
+        if (op1 != null || (input != null && input.isEmpty()))
         {
           op1 = parser.parseInput(text);
         }
@@ -512,7 +512,14 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   {
     if (openParenCheck())
     {
-      append(operation.charAt(0));
+      if (operation.charAt(0) == '+' && frame.getInputField().getText().contains("+"))
+      {
+        invalidInput();
+      }
+      else
+      {
+        append(operation.charAt(0));
+      }
     }
     else
     {
@@ -596,11 +603,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     if (frame.getInputField().getText() != null && frame.getInputField().getText().length() != 0)
     {
       text = frame.getInputField().getText();
-      System.out.println(text);
       String neg = "-";
       text = text.replaceAll(neg, neg + neg);
       text = text.replaceAll("\\+", neg);
-      System.out.println(text + "2.0");
       text = text.replaceAll(neg + neg, "+");
       for (int i = 0; i < text.length(); i++)
       {
