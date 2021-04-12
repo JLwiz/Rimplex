@@ -112,9 +112,7 @@ public class CalcListener implements ActionListener, KeyListener,
           }
           break;
         case "backspace":
-          String text = frame.getInputField().getText();
-          if (text.length() > 0)
-            frame.setInput(text.substring(0, text.length() - 1));
+          append('b');
           break;
         case "sign":
           break;
@@ -193,20 +191,78 @@ public class CalcListener implements ActionListener, KeyListener,
     
     switch (code)
     {
+      //case 8:
+        // gotta figure this out - backspace.
       case 10: // enter
         pad.pressButton("equals");
         break;
       case 45: // - minus
-        // does nothing
+        pad.pressButton("subtract");
+        append('b');
         break;
-      case 56: // * mulitply
-        // does nothing
+      case 46:
+        pad.pressButton("decimal");
+        append('b');
+        break;
+      case 48:
+        pad.pressButton("0");
+        append('b');
+        break;
+      case 49:
+        pad.pressButton("1");
+        append('b');
+        break;
+      case 50:
+        pad.pressButton("2");
+        append('b');
+        break;
+      case 51:
+        pad.pressButton("3");
+        append('b');
+        break;
+      case 52:
+        pad.pressButton("4");
+        append('b');
+        break;
+      case 53:
+        pad.pressButton("5");
+        append('b');
+        break;
+      case 54:
+        pad.pressButton("6");
+        append('b');
+        break;
+      case 55:
+        pad.pressButton("7");
+        append('b');
+        break;
+      case 56:
+        pad.pressButton("8");
+        append('b');
+        break;
+      case 57:
+        pad.pressButton("9");
+        append('b');
         break;
       case 61: // + add
-        // does nothing
+        pad.pressButton("add");
+        append('b');
+        break;
+      case 73:
+        pad.pressButton("i");
+        append('b');
         break;
       case 111: // / divide
-        // does nothing
+        pad.pressButton("divide");
+        append('b');
+        break;
+      case 519:
+        pad.pressButton("left parenthesis");
+        append('b');
+        break;
+      case 522:
+        pad.pressButton("right parenthesis");
+        append('b');
         break;
       default: // a key was pressed that we don't allow
         break;
@@ -222,7 +278,13 @@ public class CalcListener implements ActionListener, KeyListener,
    */
   private void append(final char addition)
   {
-    frame.setInput(frame.getInputField().getText() + addition);
+    String text = frame.getInputField().getText();
+    if (addition != 'b')
+    {
+      frame.setInput(text + addition);
+      return;
+    }
+    if (text.length() > 0) frame.setInput(text.substring(0, text.length() - 1));
   } // append method.
 
   /**
