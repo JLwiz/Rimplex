@@ -471,13 +471,13 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       frame.setDisplay("");
       if (operation.equals(equalsOperator))
       {
-        frame.setDisplay(
-            evaluate.getFirstOp().toString() + operation + evaluate.getFirstOp().toString());
+        frame.setDisplay(getComplexText(evaluate.getFirstOp()) + operation
+            + getComplexText(evaluate.getFirstOp()));
       }
       else
       {
         evaluate.setOperator(operation);
-        frame.setDisplay(evaluate.getFirstOp().toString() + operation);
+        frame.setDisplay(getComplexText(evaluate.getFirstOp()) + operation);
       }
     }
     else if (!evaluate.operandEmpty() && !evaluate.operatorEmpty() && text.length() > 0)
