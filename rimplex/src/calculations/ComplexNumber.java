@@ -23,10 +23,10 @@ public class ComplexNumber
   /**
    * Default Constructor for Complex Number.
    * 
-   * @param realNumber (Scalar)
-   *          - the real number value of the complex number
-   * @param imaginaryNumber (vector)
-   *          - the imaginary number value of the complex number
+   * @param realNumber
+   *          (Scalar) - the real number value of the complex number
+   * @param imaginaryNumber
+   *          (vector) - the imaginary number value of the complex number
    */
 
   public ComplexNumber(final Double realNumber, final Double imaginaryNumber)
@@ -70,12 +70,12 @@ public class ComplexNumber
     ComplexDivision div = new ComplexDivision();
     ComplexNumber one = new ComplexNumber(1.0, 0.0);
     // 1 / z
-    ComplexNumber[] zPre = new ComplexNumber[]{one, this};
+    ComplexNumber[] zPre = new ComplexNumber[] {one, this};
     // conj(z) / conj(z)
-    ComplexNumber[] zRat = new ComplexNumber[]{conjugate(), conjugate()};
+    ComplexNumber[] zRat = new ComplexNumber[] {conjugate(), conjugate()};
     ComplexNumber z = div.calculate(zPre);
     ComplexNumber rat = div.calculate(zRat);
-    ComplexNumber back = multi.calculate(new ComplexNumber[]{z, rat});
+    ComplexNumber back = multi.calculate(new ComplexNumber[] {z, rat});
     return back;
   }
 
@@ -181,12 +181,21 @@ public class ComplexNumber
    */
   private String reduceFraction(final int num, final int den)
   {
-    int greatestCommonDem 
-        = BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue(); // greatest
+    String number = "";
+    int greatestCommonDem = 
+        BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue(); // greatest
     // common
     // divisor
     int[] reducedFraction = {num / greatestCommonDem, den / greatestCommonDem};
-    return reducedFraction[0] + "/" + reducedFraction[1];
+    if (num == 0)
+    {
+      number = "0";
+    }
+    else
+    {
+      number = reducedFraction[0] + "/" + reducedFraction[1];
+    }
+    return number;
   }
 
   /**
@@ -230,14 +239,14 @@ public class ComplexNumber
     if (imaginaryNumber >= 0.0)
     {
       operator += "+";
-      
+
     }
     String back = start + real + operator + imaginary + end;
     if (imaginaryNumber.toString().charAt(0) == '-' && imaginaryNumber == 0)
     {
-      back = start + real + "-" + "0" + end;
+      back = start + real + "-" + '0' + end;
     }
-    
+
     return back;
   }
 }

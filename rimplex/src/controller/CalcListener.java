@@ -173,6 +173,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
             frame.invalidStatus(true, "Can't Conjugate.");
           }
           break;
+        case "mode":
+          changeMode();
+          break;
         default:
           break;
       }
@@ -302,6 +305,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     {
       inFractions = true;
     }
+    ButtonPadPanel.getInstance().updateMode(inFractions);
   }
 
   /**
