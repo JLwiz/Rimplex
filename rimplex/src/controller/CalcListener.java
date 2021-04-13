@@ -462,8 +462,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           op1 = parser.parseInput(text);
         }
         ComplexNumber inv = op1.inverse();
+        String str = "1/" + getComplexText(op1) + "=" + getComplexText(inv);
         op1 = inv;
-        frame.setDisplay(getComplexText(inv));
+        frame.setDisplay(str);
       }
       else if (operation.equals(logOperator))
       {
@@ -491,10 +492,11 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         {
           op1 = parser.parseInput(text);
         }
+        String str = "con" + getComplexText(op1) + "=";
         ComplexNumber conj = op1.conjugate();
         op1 = conj;
-        
-        frame.setDisplay(getComplexText(op1));
+        str+=op1;
+        frame.setDisplay(str);
       }
       else
       {
