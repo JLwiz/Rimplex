@@ -111,7 +111,6 @@ public class ComplexNumber
 
   private String getFraction(final Double number)
   {
-
     boolean onlySix = true;
     boolean onlyThree = true;
     String baseThree = "3.0";
@@ -144,6 +143,9 @@ public class ComplexNumber
     {
       den = BigDecimal.TEN.pow(numParts[1].length());
       num = (new BigDecimal(numParts[0]).multiply(den)).add(new BigDecimal(numParts[1]));
+    }
+    if (number < 0) {
+      num = num.negate();
     }
     return reduceFraction(num.intValue(), den.intValue());
 

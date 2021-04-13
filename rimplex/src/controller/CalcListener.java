@@ -514,7 +514,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   private void operationsSwitch(final String operation)
   {
-    if (openParenCheck())
+    if (openParenCheck()
+        || (frame.getInputField().getText().length() == 0 && operation.contentEquals("-")))
     {
       if (operation.charAt(0) == '+' && frame.getInputField().getText().contains("+"))
       {
@@ -608,9 +609,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     {
       text = frame.getInputField().getText();
       String neg = "-";
+      String pos = "\\+";
       text = text.replaceAll(neg, neg + neg);
-      text = text.replaceAll("\\+", neg);
-      text = text.replaceAll(neg + neg, "+");
+      text = text.replaceAll(pos, neg);
+      text = text.replaceAll(neg + neg, pos);
       for (int i = 0; i < text.length(); i++)
       {
         if (isNumber(text.charAt(i)) && i == 0)
