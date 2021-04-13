@@ -96,23 +96,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         case "reset":
           resetDisplay();
           break;
-        case "inverse":
-          if (evaluate.operatorEmpty())
-          {
-            if (evaluate.getFirstOp() == null)
-            {
-              operatorButton(button.getText());
-            }
-            else
-            {
-              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
-            }
-          }
-          else
-          {
-            frame.invalidStatus(true, "Can't Inverse.");
-          }
-          break;
+
         case "backspace":
           append('b');
           break;
@@ -137,10 +121,27 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         case "closed parenthases":
           append(button.getText().charAt(0));
           break;
+        case "inverse":
+          if (evaluate.operatorEmpty())
+          {
+            if (evaluate.getFirstOp() == null
+                || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
+            {
+              operatorButton(button.getText());
+            }
+            else
+            {
+              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+            }
+          }
+          else
+          {
+            frame.invalidStatus(true, "Can't Inverse.");
+          }
+          break;
         case "logarithm":
           if (evaluate.operatorEmpty())
           {
-            String field = frame.getInputField().getText();
             if (evaluate.getFirstOp() == null
                 || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
             {
@@ -159,7 +160,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         case "conjugate":
           if (evaluate.operatorEmpty())
           {
-            if (evaluate.getFirstOp() == null)
+            if (evaluate.getFirstOp() == null
+                || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
             {
               operatorButton(button.getText());
             }
@@ -434,6 +436,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       // put the inverse sign here when the button is added.
       else if (operation.equals("Inv"))
       {
+        if (op1 != null || (input != null && input.isEmpty()))
+        {
+          op1 = parser.parseInput(text);
+        }
         ComplexNumber inv = op1.inverse();
         op1 = inv;
         frame.setDisplay(getComplexText(inv));
@@ -454,8 +460,19 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       }
       else if (operation.equals("Con"))
       {
+        String test = frame.getInputField().getText();
+        if (op1 != null && test.isBlank()) 
+        {
+          ComplexNumber firstOp = evaluate.getFirstOp();
+          op1 = new ComplexNumber(firstOp.getReal(), firstOp.getImaginary());
+        } 
+        else if (op1 != null || (input != null && input.isEmpty()))
+        {
+          op1 = parser.parseInput(text);
+        }
         ComplexNumber conj = op1.conjugate();
         op1 = conj;
+        
         frame.setDisplay(getComplexText(op1));
       }
       else
