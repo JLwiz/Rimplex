@@ -111,6 +111,7 @@ public class ComplexNumber
 
   private String getFraction(final Double number)
   {
+    // requires special checks for numbers the represent 1/3 or 2/3.
     boolean onlySix = true;
     boolean onlyThree = true;
     String baseThree = "3.0";
@@ -144,7 +145,9 @@ public class ComplexNumber
       den = BigDecimal.TEN.pow(numParts[1].length());
       num = (new BigDecimal(numParts[0]).multiply(den)).add(new BigDecimal(numParts[1]));
     }
-    if (number < 0) {
+    if (number < 0 && num.intValue() >= 0)
+    {// checks to make sure negative is applied properly. negative can be lost with numbers < 1 as
+     // the -0 is lost in the split
       num = num.negate();
     }
     return reduceFraction(num.intValue(), den.intValue());
@@ -184,12 +187,10 @@ public class ComplexNumber
   private String reduceFraction(final int num, final int den)
   {
     String number = "";
-    int greatestCommonDem = 
-        BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue(); // greatest
-    // common
-    // divisor
+    int greatestCommonDem = BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue();
+    // greatest common denominator
     int[] reducedFraction = {num / greatestCommonDem, den / greatestCommonDem};
-    if (num == 0)
+    if (num == 0)// prevents 0/1
     {
       number = "0";
     }
