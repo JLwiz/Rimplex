@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,8 +10,11 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+
 import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
+import GUI.HistoryPanel;
 import calculations.ComplexNumber;
 import calculations.Equation;
 import util.InputParser;
@@ -74,6 +78,23 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
     if (e.getSource() instanceof JButton)
       button = (JButton) e.getSource();
+    
+    if (e.getSource() instanceof JMenuItem) 
+    {
+      JMenuItem option = (JMenuItem) e.getSource();
+      if (option.getText().equals("Show History")) {
+        CalculatorDisplay.getInstance().setSize(new Dimension(700, 500));
+        option.setText("Close History");
+        HistoryPanel.getInstance().setVisible(true);
+      } 
+      else 
+      {
+        CalculatorDisplay.getInstance().setSize(new Dimension(500, 500));
+        option.setText("Show History");
+        HistoryPanel.getInstance().setVisible(false);
+      }
+      
+    }
 
     if (button != null)
     {

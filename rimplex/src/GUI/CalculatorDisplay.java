@@ -181,11 +181,6 @@ public class CalculatorDisplay extends JFrame
     constraints.fill = GridBagConstraints.BOTH;
     mainPanel.add(northPanel, constraints);
     
-//    constraints.weighty = 0.3;
-//    constraints.gridy = 5;
-//    mainPanel.add(centerPanel, constraints);
-    
-//    constraints.gridy = 10;
     constraints.gridy = 1;
     constraints.weighty = 1;
     mainPanel.add(ButtonPadPanel.getInstance(), constraints);
@@ -194,6 +189,12 @@ public class CalculatorDisplay extends JFrame
     northPanel.setMaximumSize(new Dimension(50, 50));
     northPanel.add(display);
     northPanel.add(inputField);
+    
+    constraints.gridx = 1;
+    constraints.weightx = .66;
+    constraints.weighty = 1;
+    mainPanel.add(HistoryPanel.getInstance(), constraints);
+    //HistoryPanel.getInstance().setPreferredSize(new Dimension(200, 500));
   } // addComponents method.
   
   /**
