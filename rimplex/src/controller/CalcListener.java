@@ -131,7 +131,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
             }
             else
             {
-              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+              operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
             }
           }
           else
@@ -149,7 +149,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
             }
             else
             {
-              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+              operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
             }
           }
           else
@@ -167,7 +167,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
             }
             else
             {
-              operationsProcessor(evaluate.getFirstOp().toString(), button.getText());
+              operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
             }
           }
           else

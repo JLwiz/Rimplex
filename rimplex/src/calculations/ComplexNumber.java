@@ -194,6 +194,9 @@ public class ComplexNumber
     {
       number = "0";
     }
+    if (reducedFraction[1] == 1) {
+      number = String.valueOf(reducedFraction[0]);
+    }
     else
     {
       number = reducedFraction[0] + "/" + reducedFraction[1];
@@ -218,8 +221,24 @@ public class ComplexNumber
     // Our handy DecimalFormat object does all the hard work for us
     realComponent += standardFormat.format(realNumber.doubleValue());
     imaginaryComponent += standardFormat.format(imaginaryNumber.doubleValue());
+    if (realComponent.indexOf('.') + 10 == realComponent.length())
+    {
+      realComponent = realComponent.substring(0, realComponent.length() - 1);
+    }
 
     return toStringHelper(realComponent, imaginaryComponent);
+  }
+
+  /**
+   * returns the raw complex Number (no decimal formating) String for passing to other functions in
+   * the calculator.
+   * 
+   * @return String - the raw Complex number
+   */
+
+  public String getRawString()
+  {
+    return toStringHelper(Double.toString(realNumber), Double.toString(imaginaryNumber));
   }
 
   /**
