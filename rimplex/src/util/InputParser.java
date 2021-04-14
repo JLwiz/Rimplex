@@ -20,7 +20,7 @@ import java.awt.font.*;
 public class InputParser
 {
   private static InputParser parser = new InputParser();
-  private final String validCharacters = "0123456789.+-i×÷()n"; // n is required for negative
+  private final String validCharacters = "0123456789.+-i×÷()n^"; // n is required for negative
                                                                 // multiple/divisors
   private final String negative = "-";
   private final String imaginary = "i";
@@ -279,7 +279,6 @@ public class InputParser
       }
       else
       {
-        System.out.println(list[0]);
         n = parseNoParen(list[0]);
       }
       for (; i < list.length; i++)
@@ -310,11 +309,11 @@ public class InputParser
     else if (in.contains(exponent))
     {
       String text = in.replaceAll(negExp, exponent + negative);
-      String[] list = text.split(exponent);
+      String[] list = text.split("\\^");
       n = parseNoParen(list[0]);
       for (int i = 1; i < list.length; i++)
       {
-        n = div.calculate(n, parseNoParen(list[i]));
+        n = exp.calculate(n, parseNoParen(list[i]));
       }
     }
     else

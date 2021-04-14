@@ -14,16 +14,15 @@ public class ComplexSquareRoot implements Operations
     ComplexNumber answer = new ComplexNumber(0.0, 0.0);
     ComplexNumber op1;
     ComplexNumber op2;
-    if (op != null && op.length == 2) 
+    if (op != null && op.length == 1) 
     {
       op1 = op[0];
-      op2 = op[1];
     } else 
     {
       return answer;
     }
     
-    if (op1 == null || op2 == null)
+    if (op1 == null)
     {
       // TODO: Raise some error
       return null;
