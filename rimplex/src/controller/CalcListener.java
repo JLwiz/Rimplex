@@ -109,6 +109,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           break;
         case "equals":
           operatorButton(button.getText());
+          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
           break;
         case "clear":
           clearInput();

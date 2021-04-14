@@ -176,13 +176,15 @@ public class CalculatorDisplay extends JFrame
   { 
     constraints.gridx = 0;
     constraints.gridy = 0;
-    constraints.weighty = 0.3;
     constraints.weightx = 1;
+    constraints.weighty = 0.3;
     constraints.fill = GridBagConstraints.BOTH;
     mainPanel.add(northPanel, constraints);
     
+    constraints.gridx = 0;
     constraints.gridy = 1;
-    constraints.weighty = 1;
+    constraints.weighty = .8;
+    constraints.weightx = 1;
     mainPanel.add(ButtonPadPanel.getInstance(), constraints);
     northPanel.setMinimumSize(new Dimension(50, 50));
     northPanel.setPreferredSize(new Dimension(50, 50));
@@ -191,10 +193,42 @@ public class CalculatorDisplay extends JFrame
     northPanel.add(inputField);
     
     constraints.gridx = 1;
-    constraints.weightx = .66;
-    constraints.weighty = 1;
+    constraints.weightx = .3;
     mainPanel.add(HistoryPanel.getInstance(), constraints);
-    //HistoryPanel.getInstance().setPreferredSize(new Dimension(200, 500));
+    
+//    JPanel holder = new JPanel();
+//    holder.setLayout(new GridBagLayout());
+//    
+//    constraints.gridx = 0;
+//    constraints.gridy = 0;
+//    constraints.weightx = .75;
+//    constraints.weighty = 1;
+//    constraints.fill = GridBagConstraints.BOTH;
+//    mainPanel.add(holder, constraints);
+//    
+//    constraints.gridx = 1;
+//    constraints.gridy = 0;
+//    constraints.weightx = .5;
+//    constraints.weighty = 1;
+//    constraints.fill = GridBagConstraints.BOTH;
+//    mainPanel.add(HistoryPanel.getInstance(), constraints);
+//    
+//    constraints.gridx = 0;
+//    constraints.gridy = 0;
+//    constraints.weightx = 1;
+//    constraints.weighty = .4;
+//    constraints.fill = GridBagConstraints.BOTH;
+//    holder.add(northPanel, constraints);
+//    
+//    constraints.gridx = 0;
+//    constraints.gridy = 1;
+//    constraints.weightx = 1;
+//    constraints.weighty = .6;
+//    constraints.fill = GridBagConstraints.BOTH;
+//    holder.add(ButtonPadPanel.getInstance(), constraints);
+    
+    
+    
   } // addComponents method.
   
   /**
