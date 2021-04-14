@@ -193,9 +193,12 @@ public class CalculatorDisplay extends JFrame
     northPanel.add(inputField);
     
     constraints.gridx = 1;
+    constraints.gridy = 0;
+    constraints.gridheight = 2;
     constraints.weightx = .3;
     mainPanel.add(HistoryPanel.getInstance(), constraints);
     
+    constraints.gridheight = 1;
 //    JPanel holder = new JPanel();
 //    holder.setLayout(new GridBagLayout());
 //    
