@@ -16,9 +16,7 @@ public class ComplexSquareRoot implements Operations
     ComplexNumber op2;
     if (op != null && op.length == 1) 
     {
-      // unitary operator
       op1 = op[0];
-//      op2 = op[1];
     } else 
     {
       return answer;
