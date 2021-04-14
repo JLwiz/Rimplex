@@ -83,7 +83,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     {
       JMenuItem option = (JMenuItem) e.getSource();
       if (option.getText().equals("Show History")) {
-        CalculatorDisplay.getInstance().setSize(new Dimension(600, 500));
+        CalculatorDisplay.getInstance().setSize(new Dimension(700, 500));
         option.setText("Hide History");
         HistoryPanel.getInstance().setVisible(true);
       } 

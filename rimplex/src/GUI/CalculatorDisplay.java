@@ -197,38 +197,11 @@ public class CalculatorDisplay extends JFrame
     constraints.gridheight = 2;
     constraints.weightx = .3;
     mainPanel.add(HistoryPanel.getInstance(), constraints);
+    HistoryPanel.getInstance().setMaximumSize(new Dimension(115, 500));
+    HistoryPanel.getInstance().setMinimumSize(new Dimension(115, 500));
+    HistoryPanel.getInstance().setPreferredSize(new Dimension(115, 500));
     
     constraints.gridheight = 1;
-//    JPanel holder = new JPanel();
-//    holder.setLayout(new GridBagLayout());
-//    
-//    constraints.gridx = 0;
-//    constraints.gridy = 0;
-//    constraints.weightx = .75;
-//    constraints.weighty = 1;
-//    constraints.fill = GridBagConstraints.BOTH;
-//    mainPanel.add(holder, constraints);
-//    
-//    constraints.gridx = 1;
-//    constraints.gridy = 0;
-//    constraints.weightx = .5;
-//    constraints.weighty = 1;
-//    constraints.fill = GridBagConstraints.BOTH;
-//    mainPanel.add(HistoryPanel.getInstance(), constraints);
-//    
-//    constraints.gridx = 0;
-//    constraints.gridy = 0;
-//    constraints.weightx = 1;
-//    constraints.weighty = .4;
-//    constraints.fill = GridBagConstraints.BOTH;
-//    holder.add(northPanel, constraints);
-//    
-//    constraints.gridx = 0;
-//    constraints.gridy = 1;
-//    constraints.weightx = 1;
-//    constraints.weighty = .6;
-//    constraints.fill = GridBagConstraints.BOTH;
-//    holder.add(ButtonPadPanel.getInstance(), constraints);
     
     
     
