@@ -40,6 +40,11 @@ class ComplexSquareRootTest
     expected = new ComplexNumber(0.0, 0.0);
     actual = operator.calculate(op1);
     testHelper(actual, expected);
+    
+    op1 = new ComplexNumber(9.0, 0.0);
+    expected = new ComplexNumber(3.0, 0.0);
+    actual = operator.calculate(op1);
+    testHelper(actual, expected);
 
     op1 = new ComplexNumber(0.0, 2.0);
     expected = new ComplexNumber(1.0, 1.0);

@@ -35,6 +35,11 @@ public class ComplexSquareRoot implements Operations
       return new ComplexNumber(0.0, 0.0);
     }
     
+    if (op1.getReal() != 0 && op1.getImaginary() == 0)
+    {
+      return new ComplexNumber(Math.sqrt(op1.getReal()), 0.0);
+    }
+    
     tempReal = (Math.sqrt((complexAbs(op1) + op1.getReal()) / 2));
     tempImag = op1.getImaginary() / Math.abs(op1.getImaginary()) * (Math.sqrt((complexAbs(op1) - op1.getReal()) / 2));
     
