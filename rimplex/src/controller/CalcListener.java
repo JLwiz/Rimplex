@@ -181,6 +181,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           {
             frame.invalidStatus(true, "Can't Take Logarithm.");
           }
+          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
           break;
         case "conjugate":
           if (evaluate.operatorEmpty())
@@ -199,6 +200,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           {
             frame.invalidStatus(true, "Can't Conjugate.");
           }
+          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
           break;
         case "squareroot":
           if (evaluate.operatorEmpty())
@@ -217,6 +219,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           {
             frame.invalidStatus(true, "Can't Take Square Root.");
           }
+          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
           break;
         case "mode":
           changeMode();
