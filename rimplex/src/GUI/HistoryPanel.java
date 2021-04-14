@@ -11,6 +11,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.EtchedBorder;
 
 /**
  * HistoryPanel - A JPanel that will display the history of the
@@ -49,7 +50,7 @@ public class HistoryPanel extends JPanel
   private HistoryPanel()
   {
     setSize(new Dimension(100, 500));
-    setBorder(BorderFactory.createLineBorder(Color.red));
+    setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     
     setLayout(new GridLayout(1, 1));
     createComponents();
