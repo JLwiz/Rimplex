@@ -594,8 +594,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   private void operationsSwitch(final String operation)
   {
-    if (openParenCheck()
-        || (frame.getInputField().getText().length() == 0 && operation.contentEquals("-")))
+    if (openParenCheck() || (frame.getInputField().getText().length() == 0
+        && operation.contentEquals("-") && !evaluate.operatorEmpty()))
     {
       if (operation.charAt(0) == '+' && frame.getInputField().getText().contains("+"))
       {

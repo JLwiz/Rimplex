@@ -269,7 +269,7 @@ public class InputParser
     {
       String text = in.replaceAll(multiply + negative, negMultiply);
       text = text.replaceAll(divide + negative, negDivide);
-      text = text.replaceAll(exponent + negative, negExp);
+      text = text.replaceAll("\\^" + negative, negExp);
       String[] list = text.split(negative);
       int i = 1;
       if (list[0] == null || list[0].isBlank()) // checks if first number is negative
