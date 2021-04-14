@@ -1,13 +1,16 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 /**
  * HistoryPanel - A JPanel that will display the history of the
@@ -26,9 +29,13 @@ public class HistoryPanel extends JPanel
   private static final long serialVersionUID = -6237181401018469549L;
   private static HistoryPanel single_instance = null;
   
-  private JScrollPane scrollList;
+  private DefaultListModel<String> demo;
   
-  private JTextArea historyText;
+  private ArrayList<String> equations;
+  
+  private JList<String> historyText;
+  
+  private JScrollPane scrollList;
   
   
   
@@ -41,9 +48,15 @@ public class HistoryPanel extends JPanel
    */
   private HistoryPanel()
   {
+    setSize(new Dimension(100, 500));
+    setBorder(BorderFactory.createLineBorder(Color.red));
+    
+    setLayout(new GridLayout(1, 1));
     createComponents();
-    setComponenets();
+    setComponents();
     addComponents();    
+    
+    setVisible(false);
   } // constructor.
   
   /**
@@ -63,6 +76,26 @@ public class HistoryPanel extends JPanel
   
   
   
+  /**
+   * addToHistory - Will add an equation and answer to the history.
+   * 
+   * @param saved
+   *          String of the equation.
+   */
+  public void addToHistory(final String saved)
+  {
+    
+    String keep = saved.replaceAll("<html>", "");
+    keep = keep.replaceAll("<i>", "");
+    keep = keep.replaceAll("</html>", "").replaceAll("</i>", "");
+    
+    equations.add(keep);
+    demo.addElement(keep);
+    
+  } // addToHistory method.
+  
+  
+  
   //----------Private Methods----------
   
   
@@ -72,9 +105,7 @@ public class HistoryPanel extends JPanel
    */
   private void addComponents()
   {
-    setLayouts();
     add(scrollList);
-    scrollList.add(historyText);
   } // addComponents method.
   
   /**
@@ -82,34 +113,20 @@ public class HistoryPanel extends JPanel
    */
   private void createComponents()
   {
-    scrollList = new JScrollPane();
-    
-    historyText = new JTextArea();
+    demo = new DefaultListModel<>();
+    equations = new ArrayList<>();
+    historyText = new JList<>(demo);
+    scrollList = new JScrollPane(historyText);
   } // createComponenets method.
   
   /**
    * setComponents - Will set the components attributes.
    */
-  private void setComponenets()
+  private void setComponents()
   {
-    scrollList.setSize(new Dimension(200, 500));
-    
-    historyText.setFont(new Font("Arial", Font.BOLD, 20));
-    historyText.setLineWrap(true);
-    historyText.setWrapStyleWord(true);
-    historyText.setSize(new Dimension(200, 500));
-    
-    setSize(200, 500);
-    setVisible(false);
+    scrollList.setWheelScrollingEnabled(true);
+    historyText.setFont(new Font("Arial", Font.BOLD, 10));
   } // setComponenets method.
-  
-  /**
-   * setLayouts - Will set the layouts of components.
-   */
-  private void setLayouts()
-  {
-    setLayout(new FlowLayout());
-  } // setLayouts method.
   
   
   
