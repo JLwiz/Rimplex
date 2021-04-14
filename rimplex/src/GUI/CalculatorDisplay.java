@@ -281,7 +281,7 @@ public class CalculatorDisplay extends JFrame
     fileMenu.add(history);
     
     JMenuItem plot = new JMenuItem("Plot");
-    fileMenu.add(plot);
+//    fileMenu.add(plot);
 //    fileMenu.add(open);
 //    fileMenu.add(save);
     

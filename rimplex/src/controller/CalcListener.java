@@ -95,10 +95,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         option.setText("Show History");
         HistoryPanel.getInstance().setVisible(false);
       } 
-      else if (option.getText().equals("Plot"))
-      {
-        // code to link **
-      }
+//      else if (option.getText().equals("Plot"))
+//      {
+//      
+//      }
 
     }
 
