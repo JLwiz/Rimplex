@@ -301,6 +301,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       case 57:
         pad.pressButton("9");
         break;
+      case 94:
+        pad.pressButton("exponent");
+        break;
       case 105:
         pad.pressButton("i");
         break;
