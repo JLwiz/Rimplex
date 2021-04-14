@@ -78,22 +78,23 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
     if (e.getSource() instanceof JButton)
       button = (JButton) e.getSource();
-    
-    if (e.getSource() instanceof JMenuItem) 
+
+    if (e.getSource() instanceof JMenuItem)
     {
       JMenuItem option = (JMenuItem) e.getSource();
-      if (option.getText().equals("Show History")) {
+      if (option.getText().equals("Show History"))
+      {
         CalculatorDisplay.getInstance().setSize(new Dimension(600, 500));
         option.setText("Hide History");
         HistoryPanel.getInstance().setVisible(true);
-      } 
-      else 
+      }
+      else
       {
         CalculatorDisplay.getInstance().setSize(new Dimension(500, 500));
         option.setText("Show History");
         HistoryPanel.getInstance().setVisible(false);
       }
-      
+
     }
 
     if (button != null)
@@ -483,11 +484,11 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       else if (operation.equals("Con"))
       {
         String test = frame.getInputField().getText();
-        if (op1 != null && test.isBlank()) 
+        if (op1 != null && test.isBlank())
         {
           ComplexNumber firstOp = evaluate.getFirstOp();
           op1 = new ComplexNumber(firstOp.getReal(), firstOp.getImaginary());
-        } 
+        }
         else if (op1 != null || (input != null && input.isEmpty()))
         {
           op1 = parser.parseInput(text);
@@ -495,7 +496,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         String str = "con" + getComplexText(op1) + "=";
         ComplexNumber conj = op1.conjugate();
         op1 = conj;
-        str+=op1;
+        str += op1;
         frame.setDisplay(str);
       }
       else
@@ -568,7 +569,14 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
     else
     {
-      operatorButton(operation);
+      if (operation == "^")
+      {
+        append(operation.charAt(0));
+      }
+      else
+      {
+        operatorButton(operation);
+      }
     }
   }
 
