@@ -16,6 +16,7 @@ import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
 import GUI.HistoryPanel;
 import calculations.ComplexNumber;
+import calculations.ComplexSquareRoot;
 import calculations.Equation;
 import util.InputParser;
 
@@ -105,6 +106,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         case "divide":
         case "multiply":
         case "subtract":
+        case "exponent":
           operationsSwitch(button.getText());
           break;
         case "equals":
@@ -195,6 +197,24 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           else
           {
             frame.invalidStatus(true, "Can't Conjugate.");
+          }
+          break;
+        case "squareroot":
+          if (evaluate.operatorEmpty())
+          {
+            if (evaluate.getFirstOp() == null
+                || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
+            {
+              operatorButton(button.getText());
+            }
+            else
+            {
+              operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
+            }
+          }
+          else
+          {
+            frame.invalidStatus(true, "Can't Take Square Root.");
           }
           break;
         case "mode":
@@ -497,6 +517,24 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         ComplexNumber conj = op1.conjugate();
         op1 = conj;
         str+=op1;
+        frame.setDisplay(str);
+      }
+      else if (operation.equals("sqrt"))
+      {
+        ComplexSquareRoot root = new ComplexSquareRoot();
+        String test = frame.getInputField().getText();
+        if (op1 != null && test.isBlank())
+        {
+          ComplexNumber firstOp = evaluate.getFirstOp();
+          op1 = new ComplexNumber(firstOp.getReal(), firstOp.getImaginary());
+        }
+        else if (op1 != null || (input != null && input.isEmpty()))
+        {
+          op1 = parser.parseInput(text);
+        }
+        String str = "sqrt" + getComplexText(op1) + "=";
+        ComplexNumber sqrt = root.calculate(op1);
+        str+=sqrt;
         frame.setDisplay(str);
       }
       else
