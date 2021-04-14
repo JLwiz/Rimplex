@@ -21,7 +21,7 @@ public class InputParser
 {
   private static InputParser parser = new InputParser();
   private final String validCharacters = "0123456789.+-i×÷()n^"; // n is required for negative
-                                                                // multiple/divisors
+                                                                 // multiple/divisors
   private final String negative = "-";
   private final String imaginary = "i";
   private final String plus = "+";
@@ -31,6 +31,7 @@ public class InputParser
   private final String negDivide = "÷n";
   private final String negMultiply = "×n";
   private final String negExp = "^n";
+  private final String expSpliter = "\\^";
   private ComplexAddition add = new ComplexAddition();
   private ComplexSubtraction sub = new ComplexSubtraction();
   private ComplexMultiplication multi = new ComplexMultiplication();
@@ -269,7 +270,7 @@ public class InputParser
     {
       String text = in.replaceAll(multiply + negative, negMultiply);
       text = text.replaceAll(divide + negative, negDivide);
-      text = text.replaceAll("\\^" + negative, negExp);
+      text = text.replaceAll(expSpliter + negative, negExp);
       String[] list = text.split(negative);
       int i = 1;
       if (list[0] == null || list[0].isBlank()) // checks if first number is negative
@@ -309,7 +310,7 @@ public class InputParser
     else if (in.contains(exponent))
     {
       String text = in.replaceAll(negExp, exponent + negative);
-      String[] list = text.split("\\^");
+      String[] list = text.split(expSpliter);
       n = parseNoParen(list[0]);
       for (int i = 1; i < list.length; i++)
       {
