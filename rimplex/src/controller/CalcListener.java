@@ -538,7 +538,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         }
         String str = "sqrt" + getComplexText(op1) + "=";
         ComplexNumber sqrt = root.calculate(op1);
-        str+=sqrt;
+        str += sqrt;
         frame.setDisplay(str);
       }
       else
@@ -611,7 +611,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
     else
     {
-      if (operation == "^")
+      if (operation == "^") // acts like the number Buttons but may become a proper operator later
       {
         append(operation.charAt(0));
       }

@@ -213,7 +213,7 @@ public class InputParser
               }
             }
           }
-          else if (i == in.length() - 1 && j == 1)
+          else if (i == in.length() - 1 && j == 2)
           {
             if (n != null)
               break; // stops multiple regression calls
