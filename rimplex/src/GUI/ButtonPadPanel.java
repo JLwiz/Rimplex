@@ -28,6 +28,8 @@ public class ButtonPadPanel extends JPanel
   
   private HashMap<String, JButton> buttonMap;
   
+  private JButton modeButton;
+  
   /**
    * The default constructor for our ButtonPadPanel.
    */
@@ -102,7 +104,7 @@ public class ButtonPadPanel extends JPanel
     
     numpad.gridx = leftEdge + 1;
     numpad.gridy = topEdge;
-    JButton modeButton = createButton("Mode", "mode");
+    modeButton = createButton("DEC", "mode");
     add(modeButton, numpad);
     
     numpad.gridy = topEdge + 1;
@@ -114,11 +116,11 @@ public class ButtonPadPanel extends JPanel
     add(logButton, numpad);
     
     numpad.gridy = topEdge + 3;
-    JButton expButton = createButton("exp", "exponent");
+    JButton expButton = createButton("^", "exponent");
     add(expButton, numpad);
     
     numpad.gridy = topEdge + 4;
-    JButton sqrtButton = createButton("sqrt", "exponent");
+    JButton sqrtButton = createButton("sqrt", "squareroot");
     add(sqrtButton, numpad);
   }
   /**
@@ -256,8 +258,8 @@ public class ButtonPadPanel extends JPanel
    * Butchered from "CalculatorDisplay.java", thank you Andrew.
    * 
    * @param title the text to display on the Button
-   * @param name 
-   * @return JButton
+   * @param name the internal name for switch cases
+   * @return JButton the created button
    */
   private JButton createButton(final String title, final String name)
   {
@@ -268,8 +270,22 @@ public class ButtonPadPanel extends JPanel
     b.setForeground(Color.WHITE);
     b.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     b.addActionListener(listener);
+    b.addKeyListener(listener);
     buttonMap.put(name, b);
     
     return b;
+  }
+  
+  /**
+   * For use in updating the display of the calculator to correctly display what mode its in.
+   * 
+   * @param isFraction whether or not the calculator is in fractional mode.
+   */
+  public void updateMode(final boolean isFraction) {
+    if (isFraction) {
+      modeButton.setText("FRAC");
+    } else {
+      modeButton.setText("DEC");
+    }
   }
 }

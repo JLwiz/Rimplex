@@ -70,6 +70,7 @@ class ComplexMultiplicationTest
     ComplexNumber actual = operator.calculate(op1, op2);
     testHelper(actual, expected);
   }
+  
 
   /**
    * General testHelper for to test the new calculated ComplexNumber.

@@ -23,10 +23,10 @@ public class ComplexNumber
   /**
    * Default Constructor for Complex Number.
    * 
-   * @param realNumber (Scalar)
-   *          - the real number value of the complex number
-   * @param imaginaryNumber (vector)
-   *          - the imaginary number value of the complex number
+   * @param realNumber
+   *          (Scalar) - the real number value of the complex number
+   * @param imaginaryNumber
+   *          (vector) - the imaginary number value of the complex number
    */
 
   public ComplexNumber(final Double realNumber, final Double imaginaryNumber)
@@ -66,12 +66,17 @@ public class ComplexNumber
    */
   public ComplexNumber inverse()
   {
-    Double newReal = realNumber;
-    Double newImg = imaginaryNumber;
-    newReal *= -1.0;
-    newImg *= -1.0;
-
-    return new ComplexNumber(newReal, newImg);
+    ComplexMultiplication multi = new ComplexMultiplication();
+    ComplexDivision div = new ComplexDivision();
+    ComplexNumber one = new ComplexNumber(1.0, 0.0);
+    // 1 / z
+    ComplexNumber[] zPre = new ComplexNumber[] {one, this};
+    // conj(z) / conj(z)
+    ComplexNumber[] zRat = new ComplexNumber[] {conjugate(), conjugate()};
+    ComplexNumber z = div.calculate(zPre);
+    ComplexNumber rat = div.calculate(zRat);
+    ComplexNumber back = multi.calculate(new ComplexNumber[] {z, rat});
+    return back;
   }
 
   /**
@@ -106,7 +111,7 @@ public class ComplexNumber
 
   private String getFraction(final Double number)
   {
-
+    // requires special checks for numbers the represent 1/3 or 2/3.
     boolean onlySix = true;
     boolean onlyThree = true;
     String baseThree = "3.0";
@@ -139,6 +144,11 @@ public class ComplexNumber
     {
       den = BigDecimal.TEN.pow(numParts[1].length());
       num = (new BigDecimal(numParts[0]).multiply(den)).add(new BigDecimal(numParts[1]));
+    }
+    if (number < 0 && num.intValue() >= 0)
+    {// checks to make sure negative is applied properly. negative can be lost with numbers < 1 as
+     // the -0 is lost in the split
+      num = num.negate();
     }
     return reduceFraction(num.intValue(), den.intValue());
 
@@ -176,12 +186,22 @@ public class ComplexNumber
    */
   private String reduceFraction(final int num, final int den)
   {
-    int greatestCommonDem 
-        = BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue(); // greatest
-    // common
-    // divisor
+    String number = "";
+    int greatestCommonDem = BigInteger.valueOf(num).gcd(BigInteger.valueOf(den)).intValue();
+    // greatest common denominator
     int[] reducedFraction = {num / greatestCommonDem, den / greatestCommonDem};
-    return reducedFraction[0] + "/" + reducedFraction[1];
+    if (num == 0)// prevents 0/1
+    {
+      number = "0";
+    }
+    if (reducedFraction[1] == 1) {
+      number = String.valueOf(reducedFraction[0]);
+    }
+    else
+    {
+      number = reducedFraction[0] + "/" + reducedFraction[1];
+    }
+    return number;
   }
 
   /**
@@ -201,8 +221,24 @@ public class ComplexNumber
     // Our handy DecimalFormat object does all the hard work for us
     realComponent += standardFormat.format(realNumber.doubleValue());
     imaginaryComponent += standardFormat.format(imaginaryNumber.doubleValue());
+    if (realComponent.indexOf('.') + 10 == realComponent.length())
+    {
+      realComponent = realComponent.substring(0, realComponent.length() - 1);
+    }
 
     return toStringHelper(realComponent, imaginaryComponent);
+  }
+
+  /**
+   * returns the raw complex Number (no decimal formating) String for passing to other functions in
+   * the calculator.
+   * 
+   * @return String - the raw Complex number
+   */
+
+  public String getRawString()
+  {
+    return toStringHelper(Double.toString(realNumber), Double.toString(imaginaryNumber));
   }
 
   /**
@@ -225,14 +261,14 @@ public class ComplexNumber
     if (imaginaryNumber >= 0.0)
     {
       operator += "+";
-      
+
     }
     String back = start + real + operator + imaginary + end;
     if (imaginaryNumber.toString().charAt(0) == '-' && imaginaryNumber == 0)
     {
-      back = start + real + "-" + "0" + end;
+      back = start + real + "-" + '0' + end;
     }
-    
+
     return back;
   }
 }
