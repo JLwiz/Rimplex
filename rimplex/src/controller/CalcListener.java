@@ -179,6 +179,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           {
             frame.invalidStatus(true, "Can't Inverse.");
           }
+          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
           break;
         case "logarithm":
           if (evaluate.operatorEmpty())
