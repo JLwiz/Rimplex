@@ -120,7 +120,7 @@ public class ButtonPadPanel extends JPanel
     add(expButton, numpad);
     
     numpad.gridy = topEdge + 4;
-    JButton sqrtButton = createButton("sqrt", "squareroot");
+    JButton sqrtButton = createButton("<html>&#8730</html>", "squareroot");
     add(sqrtButton, numpad);
     
     numpad.gridx = leftEdge + 2;
