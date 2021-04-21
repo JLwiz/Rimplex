@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
 import controller.CalcListener;
@@ -166,6 +167,17 @@ public class CalculatorDisplay extends JFrame
       inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     }
   } // validStatus method.
+  
+  /**
+   * test widen case.
+   */
+  public void widen()
+  {
+    Timer timer = new Timer(5, listener);
+    
+    timer.start();
+    
+  }
 
   // ----------Private Methods---------
 

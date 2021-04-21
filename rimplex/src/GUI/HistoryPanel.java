@@ -44,7 +44,7 @@ public class HistoryPanel extends JPanel
    * Default Constructor.
    */
   private HistoryPanel()
-  {
+  { 
     setSize(new Dimension(100, 100));
     setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     
