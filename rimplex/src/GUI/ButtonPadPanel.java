@@ -143,6 +143,13 @@ public class ButtonPadPanel extends JPanel
     numpad.gridy = topEdge + 4;
     JButton imaginaryPartButton = createButton("IP", "imaginarypart");
     add(imaginaryPartButton, numpad);
+    
+    numpad.gridx = leftEdge + 3;
+    numpad.gridy = topEdge;
+    numpad.gridheight = 5;
+    numpad.weightx = 0.1;
+    JButton historyButton = createButton(">", "history");
+    add(historyButton, numpad);
   }
   /**
    * Creates and adds the "Number pad" to the JPanel. Should be noted that the number pad takes up 3
