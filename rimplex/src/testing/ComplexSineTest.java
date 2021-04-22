@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import calculations.ComplexLogarithm;
 import calculations.ComplexNumber;
+import calculations.ComplexSine;
 import calculations.Operations;
-import calcultions.ComplexSine;
 
 class ComplexSineTest {
 

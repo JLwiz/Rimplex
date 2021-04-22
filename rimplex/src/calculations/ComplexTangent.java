@@ -1,7 +1,5 @@
 package calculations;
 
-import calcultions.ComplexSine;
-
 public class ComplexTangent implements Operations {
 
   @Override

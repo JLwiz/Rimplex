@@ -194,7 +194,8 @@ public class ComplexNumber
     {
       number = "0";
     }
-    if (reducedFraction[1] == 1) {
+    if (reducedFraction[1] == 1)
+    {
       number = String.valueOf(reducedFraction[0]);
     }
     else
@@ -264,9 +265,17 @@ public class ComplexNumber
 
     }
     String back = start + real + operator + imaginary + end;
-    if (imaginaryNumber.toString().charAt(0) == '-' && imaginaryNumber == 0)
+    if (realNumber == 0 && imaginaryNumber == 0)
     {
-      back = start + real + "-" + '0' + end;
+      back = start + real + operator + imaginary + end;
+    }
+    else if (imaginaryNumber == 0)
+    {
+      back = start + real + end.substring(1);
+    }
+    else if (realNumber == 0)
+    {
+      back = start + imaginary + end;
     }
 
     return back;

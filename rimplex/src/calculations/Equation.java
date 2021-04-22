@@ -98,7 +98,8 @@ public class Equation
    */
   public void setOperator(final String op)
   {
-    if (op == null || op.trim().equals("")) operator = null;
+    if (op == null || op.trim().equals(""))
+      operator = null;
     else
     {
       switch (op)
@@ -118,6 +119,17 @@ public class Equation
         case "log":
           operator = new ComplexLogarithm();
           break;
+        case "sin":
+          operator = new ComplexSine();
+          break;
+        case "cos":
+          operator = new ComplexCosine();
+          break;
+        case "tan":
+          operator = new ComplexTangent();
+          break;
+        case "sqrt":
+          operator = new ComplexSquareRoot();
         default:
           operator = null;
           break;
@@ -143,19 +155,22 @@ public class Equation
    */
   public ComplexNumber solve()
   {
-    
+
     ComplexNumber result = new ComplexNumber(0.0, 0.0);
     if (operator == null || firstOp == null || secondOp == null)
     {
-      if (firstOp != null && secondOp == null && operator instanceof ComplexLogarithm) 
+      if (firstOp != null && secondOp == null
+          && (operator instanceof ComplexLogarithm || operator instanceof ComplexSine
+              || operator instanceof ComplexCosine || operator instanceof ComplexTangent
+              || operator instanceof ComplexSquareRoot))
       {
         result = operator.calculate(firstOp);
-      } 
-      else 
+      }
+      else
       {
         return result;
       }
-      
+
     }
     else
     {
@@ -167,5 +182,5 @@ public class Equation
     setOperator(null);
     return result;
   } // solve method.
-  
+
 } // Equation class.

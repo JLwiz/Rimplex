@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import calculations.ComplexCosine;
 import calculations.ComplexDivision;
 import calculations.ComplexNumber;
+import calculations.ComplexSine;
 import calculations.ComplexTangent;
 import calculations.Operations;
-import calcultions.ComplexSine;
 
 class ComplexTangentTest {
 

@@ -1,7 +1,4 @@
-package calcultions;
-
-import calculations.ComplexNumber;
-import calculations.Operations;
+package calculations;
 
 public class ComplexSine implements Operations {
 

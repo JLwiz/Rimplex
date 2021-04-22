@@ -97,35 +97,39 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         CalculatorDisplay.getInstance().setSize(new Dimension(500, 500));
         option.setText("Show History");
         HistoryPanel.getInstance().setVisible(false);
-      }  else if (option.getText().equals("Print History...")) 
+      }
+      else if (option.getText().equals("Print History..."))
       {
         HistoryPanel history = HistoryPanel.getInstance();
         ArrayList<String> toPrint = history.getHistory();
-        try {   
+        try
+        {
           PrintableHistory ph = new PrintableHistory(history);
           PrinterController.print(ph, frame);
-        } catch (IOException e1) {
+        }
+        catch (IOException e1)
+        {
           e1.printStackTrace();
         }
-       
-        
+
       }
-//      else if (option.getText().equals("Plot"))
-//      {
-//      
-//      }
+      // else if (option.getText().equals("Plot"))
+      // {
+      //
+      // }
 
     }
-    
+
     if (e.getSource() instanceof Timer)
     {
       Timer time = (Timer) e.getSource();
-      for (int x = CalculatorDisplay.getInstance().getWidth(); x < 700; x++) {
+      for (int x = CalculatorDisplay.getInstance().getWidth(); x < 700; x++)
+      {
         CalculatorDisplay.getInstance().setSize(x, 500);
       }
-      
+
       time.stop();
-      
+
       HistoryPanel.getInstance().setVisible(true);
     }
 
@@ -178,63 +182,14 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           append(button.getText().charAt(0));
           break;
         case "inverse":
-          if (evaluate.operatorEmpty())
-          {
-            if (evaluate.getFirstOp() == null
-                || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
-            {
-              operatorButton(button.getText());
-            }
-            else
-            {
-              operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
-            }
-          }
-          else
-          {
-            frame.invalidStatus(true, "Can't Inverse.");
-          }
-          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
-          break;
         case "logarithm":
-          if (evaluate.operatorEmpty())
-          {
-            if (evaluate.getFirstOp() == null
-                || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
-            {
-              operatorButton(button.getText());
-            }
-            else
-            {
-              operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
-            }
-          }
-          else
-          {
-            frame.invalidStatus(true, "Can't Take Logarithm.");
-          }
-          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
-          break;
         case "conjugate":
-          if (evaluate.operatorEmpty())
-          {
-            if (evaluate.getFirstOp() == null
-                || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
-            {
-              operatorButton(button.getText());
-            }
-            else
-            {
-              operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
-            }
-          }
-          else
-          {
-            frame.invalidStatus(true, "Can't Conjugate.");
-          }
-          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
-          break;
         case "squareroot":
+        case "sin":
+        case "cos":
+        case "tan":
+        case "realpart":
+        case "imaginarypart":
           if (evaluate.operatorEmpty())
           {
             if (evaluate.getFirstOp() == null
@@ -249,7 +204,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           }
           else
           {
-            frame.invalidStatus(true, "Can't Take Square Root.");
+            frame.invalidStatus(true, "Can't get the " + button.getName() + ".");
           }
           HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
           break;
@@ -522,22 +477,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           op1 = parser.parseInput(text);
         }
         ComplexNumber inv = op1.inverse();
-        String str = "1/" + getComplexText(op1) + "=" + getComplexText(inv);
+        String str = "1/" + getComplexText(op1) + equalsOperator + getComplexText(inv);
         op1 = inv;
-        frame.setDisplay(str);
-      }
-      else if (operation.equals(logOperator))
-      {
-        evaluate.setFirstOp(null);
-        if (op1 != null || (input != null && input.isEmpty()))
-        {
-          op1 = parser.parseInput(text);
-        }
-        evaluate.setFirstOp(op1);
-        evaluate.setOperator(logOperator);
-        String str = logOperator + getComplexText(op1);
-        op1 = evaluate.solve();
-        str += equalsOperator + getComplexText(op1);
         frame.setDisplay(str);
       }
       else if (operation.equals("Con"))
@@ -552,28 +493,32 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         {
           op1 = parser.parseInput(text);
         }
-        String str = "con" + getComplexText(op1) + "=";
+        String str = operation + getComplexText(op1) + equalsOperator;
         ComplexNumber conj = op1.conjugate();
         op1 = conj;
         str += op1;
         frame.setDisplay(str);
       }
-      else if (operation.equals("sqrt"))
+      else if (operation.equals("sin") || operation.equals("cos") || operation.equals("tan")
+          || operation.equals("sqrt") || operation.equals(logOperator))
       {
-        ComplexSquareRoot root = new ComplexSquareRoot();
-        String test = frame.getInputField().getText();
-        if (op1 != null && test.isBlank())
-        {
-          ComplexNumber firstOp = evaluate.getFirstOp();
-          op1 = new ComplexNumber(firstOp.getReal(), firstOp.getImaginary());
-        }
-        else if (op1 != null || (input != null && input.isEmpty()))
-        {
-          op1 = parser.parseInput(text);
-        }
-        String str = "sqrt" + getComplexText(op1) + "=";
-        ComplexNumber sqrt = root.calculate(op1);
-        str += sqrt;
+        evaluate.setOperator(operation);
+        evaluate.setFirstOp(op1);
+        ComplexNumber unitaryOperationResult = evaluate.solve();
+        frame.setDisplay(operation + getComplexText(op1) + equalsOperator
+            + getComplexText(unitaryOperationResult));
+        op1 = unitaryOperationResult;
+      }
+      else if (operation.equals("RP")) {
+        String str = operation + getComplexText(op1) + equalsOperator;
+        op1 = new ComplexNumber(op1.getReal(), 0.0);
+        str += getComplexText(op1);
+        frame.setDisplay(str);
+      }
+      else if (operation.equals("IP")) {
+        String str = operation + getComplexText(op1) + equalsOperator;
+        op1 = new ComplexNumber(0.0, op1.getImaginary());
+        str += getComplexText(op1);
         frame.setDisplay(str);
       }
       else
