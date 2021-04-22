@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
 import controller.CalcListener;
@@ -166,6 +167,17 @@ public class CalculatorDisplay extends JFrame
       inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     }
   } // validStatus method.
+  
+  /**
+   * test widen case.
+   */
+  public void widen()
+  {
+    Timer timer = new Timer(5, listener);
+    
+    timer.start();
+    
+  }
 
   // ----------Private Methods---------
 
@@ -197,9 +209,9 @@ public class CalculatorDisplay extends JFrame
     constraints.gridheight = 2;
     constraints.weightx = .3;
     mainPanel.add(HistoryPanel.getInstance(), constraints);
-    HistoryPanel.getInstance().setMaximumSize(new Dimension(115, 500));
-    HistoryPanel.getInstance().setMinimumSize(new Dimension(115, 500));
-    HistoryPanel.getInstance().setPreferredSize(new Dimension(115, 500));
+    HistoryPanel.getInstance().setMaximumSize(new Dimension(115, 100));
+    HistoryPanel.getInstance().setMinimumSize(new Dimension(115, 100));
+    HistoryPanel.getInstance().setPreferredSize(new Dimension(115, 100));
     
     constraints.gridheight = 1;
     

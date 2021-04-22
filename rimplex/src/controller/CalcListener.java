@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.Timer;
 
 import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
@@ -88,9 +89,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       JMenuItem option = (JMenuItem) e.getSource();
       if (option.getText().equals("Show History"))
       {
-        CalculatorDisplay.getInstance().setSize(new Dimension(700, 500));
+        CalculatorDisplay.getInstance().widen();
         option.setText("Hide History");
-        HistoryPanel.getInstance().setVisible(true);
       }
       else if (option.getText().equals("Hide History"))
       {
@@ -115,6 +115,18 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 //      
 //      }
 
+    }
+    
+    if (e.getSource() instanceof Timer)
+    {
+      Timer time = (Timer) e.getSource();
+      for (int x = CalculatorDisplay.getInstance().getWidth(); x < 700; x++) {
+        CalculatorDisplay.getInstance().setSize(x, 500);
+      }
+      
+      time.stop();
+      
+      HistoryPanel.getInstance().setVisible(true);
     }
 
     if (button != null)
@@ -182,6 +194,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           {
             frame.invalidStatus(true, "Can't Inverse.");
           }
+          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
           break;
         case "logarithm":
           if (evaluate.operatorEmpty())

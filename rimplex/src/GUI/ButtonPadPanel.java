@@ -120,8 +120,36 @@ public class ButtonPadPanel extends JPanel
     add(expButton, numpad);
     
     numpad.gridy = topEdge + 4;
-    JButton sqrtButton = createButton("sqrt", "squareroot");
+    JButton sqrtButton = createButton("<html>&#8730</html>", "squareroot");
     add(sqrtButton, numpad);
+    
+    numpad.gridx = leftEdge + 2;
+    numpad.gridy = topEdge;
+    JButton sinButton = createButton("sin", "sin");
+    add(sinButton, numpad);
+    
+    numpad.gridy = topEdge + 1;
+    JButton cosButton = createButton("cos", "cos");
+    add(cosButton, numpad);
+    
+    numpad.gridy = topEdge + 2;
+    JButton tanButton = createButton("tan", "tan");
+    add(tanButton, numpad);
+    
+    numpad.gridy = topEdge + 3;
+    JButton realPartButton = createButton("RP", "realpart");
+    add(realPartButton, numpad);
+    
+    numpad.gridy = topEdge + 4;
+    JButton imaginaryPartButton = createButton("IP", "imaginarypart");
+    add(imaginaryPartButton, numpad);
+    
+    numpad.gridx = leftEdge + 3;
+    numpad.gridy = topEdge;
+    numpad.gridheight = 5;
+    numpad.weightx = 0.1;
+    JButton historyButton = createButton(">", "history");
+    add(historyButton, numpad);
   }
   /**
    * Creates and adds the "Number pad" to the JPanel. Should be noted that the number pad takes up 3
@@ -250,7 +278,7 @@ public class ButtonPadPanel extends JPanel
     add(clearButton, numpad);
     
     numpad.gridx = leftEdge + 2;
-    JButton backspaceButton = createButton("<-", "backspace");
+    JButton backspaceButton = createButton("<html>&#8592</html>", "backspace");
     add(backspaceButton, numpad);
   }
 
