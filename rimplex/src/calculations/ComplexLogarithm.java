@@ -50,29 +50,4 @@ public class ComplexLogarithm implements Operations
     return answer;
 
   }
-
-  // .
-  // /**
-  // * Evaluates complex logarithms.
-  // *
-  // * @param op1
-  // * ComplexNumber
-  // * @param op2
-  // * ComplexNumber
-  // * @return ComplexNumber post logarithm evaluation.
-  // */
-  // public ComplexNumber calculate(final ComplexNumber op1, final ComplexNumber op2)
-  // {
-  // ComplexNumber answer = new ComplexNumber(0.0, 0.0);
-  // if (op1 != null)
-  // {
-  // answer = calculate(op1);
-  // }
-  // else if (op2 != null)
-  // {
-  // answer = calculate(op2);
-  // }
-  // return answer;
-  // }
-
 }
