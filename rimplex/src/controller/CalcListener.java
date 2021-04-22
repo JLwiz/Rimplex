@@ -89,14 +89,13 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       JMenuItem option = (JMenuItem) e.getSource();
       if (option.getText().equals("Show History"))
       {
-        CalculatorDisplay.getInstance().widen();
+        HistoryWindow.getInstance().open();
         option.setText("Hide History");
       }
       else if (option.getText().equals("Hide History"))
       {
-        CalculatorDisplay.getInstance().setSize(new Dimension(500, 500));
+        HistoryWindow.getInstance().close();
         option.setText("Show History");
-        HistoryWindow.getInstance().setVisible(false);
       }
       else if (option.getText().equals("Print History..."))
       {
@@ -118,6 +117,21 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       //
       // }
 
+    }
+    
+    if (e.getSource() instanceof Timer)
+    {
+      Timer timer = (Timer) e.getSource();
+      HistoryWindow window = HistoryWindow.getInstance();
+      
+      if (window.getWidth() == 0) 
+        for (int x = 0; x < 200; x++)
+          window.setSize(x, 300);
+      else
+        for (int x = 200; x > 0; x--)
+          window.setSize(x, 300);
+      
+      timer.stop();
     }
 
     if (button != null)

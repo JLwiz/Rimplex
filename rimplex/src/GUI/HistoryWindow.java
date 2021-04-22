@@ -3,12 +3,17 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JWindow;
+import javax.swing.Timer;
+
+import controller.CalcListener;
 
 /**
  * HistoryPanel - A JPanel that will display the history of the
@@ -27,11 +32,13 @@ public class HistoryWindow extends JWindow
   private static final long serialVersionUID = -6237181401018469549L;
   private static HistoryWindow single_instance = null;
   
+  private boolean open;
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private ArrayList<String> equations;
   private JTextArea historyText;
   private JPanel historyPanel;
   private JScrollPane scrollList;
+  private Timer timer;
   
   
   
@@ -46,13 +53,16 @@ public class HistoryWindow extends JWindow
   { 
     super(CalculatorDisplay.getInstance());
     
-    setSize(new Dimension(200, 300));
+    open = false;
+    timer = new Timer(5, CalcListener.getInstance());
+    
+    setSize(new Dimension(0, 300));
     setLocation(display.getX() + 490, display.getY() + 160);
     createComponents();
     setComponents();
     addComponents();    
     
-    setVisible(false);
+    setVisible(true);
   } // constructor.
   
   /**
@@ -107,6 +117,26 @@ public class HistoryWindow extends JWindow
     return historyPanel;
   } // getPanel method.
   
+  /**
+   * open - Will animate the showing of the window.
+   */
+  public void open()
+  {
+    open = true;
+    setSize(0, 300);
+    setVisible(true);
+    timer.start();
+  } // open method.
+  
+  /**
+   * close - Will animate the hiding of the window.
+   */
+  public void close()
+  {
+    open = false;
+    timer.start();
+  } // close method.
+  
   
   
   //----------Private Methods----------
@@ -143,6 +173,5 @@ public class HistoryWindow extends JWindow
     historyText.setEditable(false);
     historyPanel.setLayout(new GridLayout(1, 1));
   } // setComponenets method.
-  
   
 } // HistoryWindow class.
