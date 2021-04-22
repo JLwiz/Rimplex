@@ -19,6 +19,7 @@ import GUI.CalculatorDisplay;
 import GUI.HistoryPanel;
 import calculations.ComplexNumber;
 import calculations.ComplexSquareRoot;
+import calculations.ComplexTangent;
 import calculations.Equation;
 import printing.PrintableHistory;
 import printing.PrinterController;
@@ -253,6 +254,18 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           }
           HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
           break;
+        case "log" :
+          unitarySwitchHelper(button);
+          break;
+        case "sin":
+          unitarySwitchHelper(button);
+          break;
+        case "tan":
+          unitarySwitchHelper(button);
+          break;
+        case "cos":
+          unitarySwitchHelper(button);
+          break;
         case "mode":
           changeMode();
           break;
@@ -262,7 +275,32 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
 
   } // actionPerformed method.
-
+  
+  /**
+   * helper method switch logic for above unitary operators.
+   * 
+   * @param button passed
+   */
+  public void unitarySwitchHelper(JButton button)
+  {
+    if (evaluate.operatorEmpty())
+    {
+      if (evaluate.getFirstOp() == null
+          || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
+      {
+        operatorButton(button.getText());
+      }
+      else
+      {
+        operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
+      }
+    }
+    else
+    {
+      frame.invalidStatus(true, "Can't " + button.getText() + ".");
+    }
+    HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
+  }
   /**
    * keyPressed - Will perform the correct action of the key pressed.
    * 
@@ -495,6 +533,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
     String equalsOperator = "=";
     String logOperator = "log";
+    String sineOperator = "sin";
+    String cosineOperator = "cos";
+    String tangentOperator = "tan";
 
     if (evaluate.operatorEmpty() && text.length() > 0)
     {
@@ -538,6 +579,48 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         String str = logOperator + getComplexText(op1);
         op1 = evaluate.solve();
         str += equalsOperator + getComplexText(op1);
+        frame.setDisplay(str);
+      } 
+      else if (operation.equals(sineOperator))
+      {
+        evaluate.setFirstOp(null);
+        if (op1 != null || (input != null && input.isEmpty()))
+        {
+          op1 = parser.parseInput(text);
+        }
+        evaluate.setFirstOp(op1);
+        evaluate.setOperator(sineOperator);
+        String str = sineOperator + getComplexText(op1);
+        op1 = evaluate.solve();
+        str += equalsOperator + getComplexText(op1);
+        frame.setDisplay(str);
+      }
+      else if (operation.equals(cosineOperator))
+      {
+        evaluate.setFirstOp(null);
+        if (op1 != null || (input != null && input.isEmpty()))
+        {
+          op1 = parser.parseInput(text);
+        }
+        evaluate.setFirstOp(op1);
+        evaluate.setOperator(cosineOperator);
+        String str = cosineOperator + getComplexText(op1);
+        op1 = evaluate.solve();
+        str += equalsOperator + getComplexText(op1);
+        frame.setDisplay(str);
+      }
+      else if (operation.equals(tangentOperator))
+      {
+        evaluate.setFirstOp(null);
+        if (op1 != null || (input != null && input.isEmpty()))
+        {
+          op1 = parser.parseInput(text);
+        }
+        evaluate.setFirstOp(op1);
+        evaluate.setOperator(tangentOperator);
+        String str = tangentOperator + getComplexText(op1);
+        op1 = evaluate.solve();
+        str += equalsOperator + op1.getRawString();
         frame.setDisplay(str);
       }
       else if (operation.equals("Con"))
@@ -757,7 +840,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       frame.setInput(text);
     }
   }
-
+  
   @Override
   public void windowClosed(final WindowEvent e)
   {

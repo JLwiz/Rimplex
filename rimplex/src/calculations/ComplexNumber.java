@@ -225,7 +225,6 @@ public class ComplexNumber
     {
       realComponent = realComponent.substring(0, realComponent.length() - 1);
     }
-
     return toStringHelper(realComponent, imaginaryComponent);
   }
 

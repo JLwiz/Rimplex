@@ -1,5 +1,7 @@
 package calculations;
 
+import calcultions.ComplexSine;
+
 /**
  * Holds complex numbers, operator, and will solve the equation using the correct operation.
  * 
@@ -118,6 +120,15 @@ public class Equation
         case "log":
           operator = new ComplexLogarithm();
           break;
+        case "sin":
+          operator = new ComplexSine();
+          break;
+        case "cos":
+          operator = new ComplexCosine();
+          break;
+        case "tan":
+          operator = new ComplexTangent();
+          break;
         default:
           operator = null;
           break;
@@ -145,9 +156,15 @@ public class Equation
   {
     
     ComplexNumber result = new ComplexNumber(0.0, 0.0);
+    boolean trigFunction = 
+        operator instanceof ComplexLogarithm || 
+        operator instanceof ComplexSine ||
+        operator instanceof ComplexTangent || 
+        operator instanceof ComplexCosine;
+    
     if (operator == null || firstOp == null || secondOp == null)
     {
-      if (firstOp != null && secondOp == null && operator instanceof ComplexLogarithm) 
+      if (firstOp != null && secondOp == null && trigFunction) 
       {
         result = operator.calculate(firstOp);
       } 
