@@ -3,17 +3,19 @@ package testing;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import calculations.ComplexLogarithm;
+import calculations.ComplexCosine;
+import calculations.ComplexDivision;
 import calculations.ComplexNumber;
+import calculations.ComplexTangent;
 import calculations.Operations;
 import calcultions.ComplexSine;
 
-class ComplexSineTest {
+class ComplexTangentTest {
 
   @Test
-  void sineCalculateTest()
+  void tangentCalculateTest()
   {
-    Operations operator = new ComplexSine();
+    Operations operator = new ComplexTangent();
     ComplexNumber op;
     ComplexNumber expected;
     ComplexNumber actual;
@@ -42,23 +44,23 @@ class ComplexSineTest {
     });
     
     op = new ComplexNumber(3.0, -8.0);
-    expected = new ComplexNumber(210.33643, 1475.56285);
+    expected = new ComplexNumber(-0.0000, -0.999999);
     actual = operator.calculate(op);
     testHelper(actual, expected);
     
     op = new ComplexNumber(0.0, 2.0);
-    expected = new ComplexNumber(0.0, 3.62686);
+    expected = new ComplexNumber(0.0, 0.9640275);
     actual = operator.calculate(op);
     testHelper(actual, expected);
 
     op = new ComplexNumber(10.0, 10.0);
-    expected = new ComplexNumber(-5991.43120, -9240.8901);
+    expected = new ComplexNumber(0.000000003, .9999999983177);
     actual = operator.calculate(op);
     testHelper(actual, expected);
   }
   
   @Test
-  void sineRandomTesting()
+  void tangentRandomTesting()
   {
     Double[] values = new Double[2];
     for (int i = 0; i < values.length; i++)
@@ -68,9 +70,15 @@ class ComplexSineTest {
     ComplexNumber op = new ComplexNumber(values[0], values[1]);
     Double real = values[0];
     Double img = values[1];
-    Double newReal = Math.sin(real) * Math.cosh(img);
-    Double newImg = Math.cos(real) * Math.sinh(img);
-    Operations operator = new ComplexSine();
+    Operations sine = new ComplexSine();
+    ComplexNumber sin = sine.calculate(op);
+    Operations cosine = new ComplexCosine();
+    ComplexNumber cos = cosine.calculate(op);
+    Operations divide = new ComplexDivision();
+    ComplexNumber tangent = divide.calculate(sin, cos);
+    Double newReal = tangent.getReal();
+    Double newImg = tangent.getImaginary();
+    Operations operator = new ComplexTangent();
     ComplexNumber expected = new ComplexNumber(newReal, newImg);
     ComplexNumber actual = operator.calculate(op);
     testHelper(actual, expected);
@@ -87,5 +95,6 @@ class ComplexSineTest {
     assertEquals(actual.getReal(), expected.getReal(), .001);
     assertEquals(actual.getImaginary(), expected.getImaginary(), .001);
   }
+
 
 }

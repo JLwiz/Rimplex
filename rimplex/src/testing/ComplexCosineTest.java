@@ -3,17 +3,16 @@ package testing;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import calculations.ComplexLogarithm;
+import calculations.ComplexCosine;
 import calculations.ComplexNumber;
 import calculations.Operations;
-import calcultions.ComplexSine;
 
-class ComplexSineTest {
+class ComplexCosineTest {
 
   @Test
-  void sineCalculateTest()
+  void cosineCalculateTest()
   {
-    Operations operator = new ComplexSine();
+    Operations operator = new ComplexCosine();
     ComplexNumber op;
     ComplexNumber expected;
     ComplexNumber actual;
@@ -42,23 +41,23 @@ class ComplexSineTest {
     });
     
     op = new ComplexNumber(3.0, -8.0);
-    expected = new ComplexNumber(210.33643, 1475.56285);
+    expected = new ComplexNumber(-1475.56318, 210.33638);
     actual = operator.calculate(op);
     testHelper(actual, expected);
     
     op = new ComplexNumber(0.0, 2.0);
-    expected = new ComplexNumber(0.0, 3.62686);
+    expected = new ComplexNumber(3.762195, 0.0);
     actual = operator.calculate(op);
     testHelper(actual, expected);
 
     op = new ComplexNumber(10.0, 10.0);
-    expected = new ComplexNumber(-5991.43120, -9240.8901);
+    expected = new ComplexNumber(-9240.89018, 5991.431182);
     actual = operator.calculate(op);
     testHelper(actual, expected);
   }
   
   @Test
-  void sineRandomTesting()
+  void cosineRandomTesting()
   {
     Double[] values = new Double[2];
     for (int i = 0; i < values.length; i++)
@@ -68,14 +67,14 @@ class ComplexSineTest {
     ComplexNumber op = new ComplexNumber(values[0], values[1]);
     Double real = values[0];
     Double img = values[1];
-    Double newReal = Math.sin(real) * Math.cosh(img);
-    Double newImg = Math.cos(real) * Math.sinh(img);
-    Operations operator = new ComplexSine();
+    Double newReal = Math.cos(real) * Math.cosh(img);
+    Double newImg = Math.sin(-real) * Math.sinh(img);
+    Operations operator = new ComplexCosine();
     ComplexNumber expected = new ComplexNumber(newReal, newImg);
     ComplexNumber actual = operator.calculate(op);
     testHelper(actual, expected);
   }
-
+  
   /**
    * General testHelper for to test the new calculated ComplexNumber.
    * 
@@ -87,5 +86,4 @@ class ComplexSineTest {
     assertEquals(actual.getReal(), expected.getReal(), .001);
     assertEquals(actual.getImaginary(), expected.getImaginary(), .001);
   }
-
 }
