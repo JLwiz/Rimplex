@@ -42,17 +42,17 @@ class ComplexSineTest {
     });
     
     op = new ComplexNumber(3.0, -8.0);
-    expected = new ComplexNumber(210.33643, 1475.56285);
+    expected = new ComplexNumber(210.3364312, 1475.5628539);
     actual = operator.calculate(op);
     testHelper(actual, expected);
     
     op = new ComplexNumber(0.0, 2.0);
-    expected = new ComplexNumber(0.0, 3.62686);
+    expected = new ComplexNumber(0.0, 3.6268604);
     actual = operator.calculate(op);
     testHelper(actual, expected);
 
     op = new ComplexNumber(10.0, 10.0);
-    expected = new ComplexNumber(-5991.43120, -9240.8901);
+    expected = new ComplexNumber(-5991.4312077, -9240.8901483);
     actual = operator.calculate(op);
     testHelper(actual, expected);
   }
