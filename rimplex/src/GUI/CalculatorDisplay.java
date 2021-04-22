@@ -203,20 +203,6 @@ public class CalculatorDisplay extends JFrame
     northPanel.setMaximumSize(new Dimension(50, 50));
     northPanel.add(display);
     northPanel.add(inputField);
-    
-    constraints.gridx = 1;
-    constraints.gridy = 0;
-    constraints.gridheight = 2;
-    constraints.weightx = .3;
-    mainPanel.add(HistoryPanel.getInstance(), constraints);
-    HistoryPanel.getInstance().setMaximumSize(new Dimension(115, 100));
-    HistoryPanel.getInstance().setMinimumSize(new Dimension(115, 100));
-    HistoryPanel.getInstance().setPreferredSize(new Dimension(115, 100));
-    
-    constraints.gridheight = 1;
-    
-    
-    
   } // addComponents method.
   
   /**

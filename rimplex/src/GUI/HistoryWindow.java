@@ -5,11 +5,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.border.EtchedBorder;
+import javax.swing.JWindow;
 
 /**
  * HistoryPanel - A JPanel that will display the history of the
@@ -18,7 +17,7 @@ import javax.swing.border.EtchedBorder;
  * @author Andrew Fryer
  * @version 1.0 (04/13/2021)
  */
-public class HistoryPanel extends JPanel
+public class HistoryWindow extends JWindow
 {
 
   //----------Declarations----------
@@ -26,12 +25,12 @@ public class HistoryPanel extends JPanel
   
   
   private static final long serialVersionUID = -6237181401018469549L;
-  private static HistoryPanel single_instance = null;
+  private static HistoryWindow single_instance = null;
   
+  private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private ArrayList<String> equations;
-  
   private JTextArea historyText;
-  
+  private JPanel historyPanel;
   private JScrollPane scrollList;
   
   
@@ -43,12 +42,12 @@ public class HistoryPanel extends JPanel
   /**
    * Default Constructor.
    */
-  private HistoryPanel()
+  private HistoryWindow()
   { 
-    setSize(new Dimension(100, 100));
-    setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+    super(CalculatorDisplay.getInstance());
     
-    setLayout(new GridLayout(1, 1));
+    setSize(new Dimension(200, 300));
+    setLocation(display.getX() + 490, display.getY() + 160);
     createComponents();
     setComponents();
     addComponents();    
@@ -61,9 +60,9 @@ public class HistoryPanel extends JPanel
    * 
    * @return the one and only HistoryPanel object.
    */
-  public static HistoryPanel getInstance()
+  public static HistoryWindow getInstance()
   {
-    if (single_instance == null) single_instance = new HistoryPanel();
+    if (single_instance == null) single_instance = new HistoryWindow();
     return single_instance;
   } // getInstance method.
   
@@ -81,17 +80,32 @@ public class HistoryPanel extends JPanel
    */
   public void addToHistory(final String saved)
   {
-    
-    String keep = saved.replaceAll("<html>", "");
-    keep = keep.replaceAll("<i>", "");
-    keep = keep.replaceAll("</html>", "").replaceAll("</i>", "");
-    
-    equations.add(keep);
-    
+    String keep = saved.replaceAll("<html>", "")
+        .replaceAll("<i>", "").replaceAll("</html>", "").replaceAll("</i>", "");
+    equations.add(keep); 
     historyText.setText(historyText.getText() + keep + "\n\n");
-    
-    
   } // addToHistory method.
+  
+  /**
+   * getHistory - Will get the equation list.
+   * 
+   * @return ArrayList
+   */
+  public ArrayList<String> getHistory() 
+  {
+    return equations;
+  }
+  
+  /**
+   * getPanel - Will return the JPanel.
+   * 
+   * @return historyPanel
+   *            (JPanel)
+   */
+  public JPanel getPanel()
+  {
+    return historyPanel;
+  } // getPanel method.
   
   
   
@@ -104,7 +118,8 @@ public class HistoryPanel extends JPanel
    */
   private void addComponents()
   {
-    add(scrollList);
+    historyPanel.add(scrollList);
+    add(historyPanel);
   } // addComponents method.
   
   /**
@@ -114,6 +129,7 @@ public class HistoryPanel extends JPanel
   {
     equations = new ArrayList<>();
     historyText = new JTextArea();
+    historyPanel = new JPanel();
     scrollList = new JScrollPane(historyText);
   } // createComponenets method.
   
@@ -125,17 +141,8 @@ public class HistoryPanel extends JPanel
     scrollList.setWheelScrollingEnabled(true);
     historyText.setFont(new Font("Arial", Font.BOLD, 10));
     historyText.setEditable(false);
+    historyPanel.setLayout(new GridLayout(1, 1));
   } // setComponenets method.
   
-  /**
-   * getHistory - Will get the equation list.
-   * 
-   * @return ArrayList
-   */
-  public ArrayList<String> getHistory() 
-  {
-    return equations;
-  }
   
-  
-} // HistoryPanel class.
+} // HistoryWindow class.

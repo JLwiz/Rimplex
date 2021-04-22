@@ -1,6 +1,7 @@
 package app;
 
 import GUI.CalculatorDisplay;
+import controller.DisplayListener;
 
 /**
  * The driver for rimplex.
@@ -19,7 +20,7 @@ public class RimplexDriver
   public static void main(final String[] args)
   {
     
-    CalculatorDisplay.getInstance();
+    CalculatorDisplay.getInstance().addComponentListener(new DisplayListener());
     
   } // main method.
   

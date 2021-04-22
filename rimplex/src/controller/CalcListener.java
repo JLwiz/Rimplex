@@ -120,19 +120,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
     }
 
-    if (e.getSource() instanceof Timer)
-    {
-      Timer time = (Timer) e.getSource();
-      for (int x = CalculatorDisplay.getInstance().getWidth(); x < 700; x++)
-      {
-        CalculatorDisplay.getInstance().setSize(x, 500);
-      }
-
-      time.stop();
-
-      HistoryPanel.getInstance().setVisible(true);
-    }
-
     if (button != null)
     {
       switch (button.getName().toLowerCase())
