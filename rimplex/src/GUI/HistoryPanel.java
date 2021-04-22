@@ -129,6 +129,15 @@ public class HistoryPanel extends JPanel
     historyText.setFont(new Font("Arial", Font.BOLD, 10));
   } // setComponenets method.
   
+  /**
+   * getHistory - Will get the equation list.
+   * 
+   * @return ArrayList
+   */
+  public ArrayList<String> getHistory() 
+  {
+    return equations;
+  }
   
   
 } // HistoryPanel class.

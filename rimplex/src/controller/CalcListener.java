@@ -7,7 +7,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -18,6 +19,8 @@ import GUI.HistoryPanel;
 import calculations.ComplexNumber;
 import calculations.ComplexSquareRoot;
 import calculations.Equation;
+import printing.PrintableHistory;
+import printing.PrinterController;
 import util.InputParser;
 
 /**
@@ -94,7 +97,19 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         CalculatorDisplay.getInstance().setSize(new Dimension(500, 500));
         option.setText("Show History");
         HistoryPanel.getInstance().setVisible(false);
-      } 
+      }  else if (option.getText().equals("Print History...")) 
+      {
+        HistoryPanel history = HistoryPanel.getInstance();
+        ArrayList<String> toPrint = history.getHistory();
+        try {   
+          PrintableHistory ph = new PrintableHistory(history);
+          PrinterController.print(ph, frame);
+        } catch (IOException e1) {
+          e1.printStackTrace();
+        }
+       
+        
+      }
 //      else if (option.getText().equals("Plot"))
 //      {
 //      
