@@ -16,7 +16,7 @@ import javax.swing.Timer;
 
 import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
-import GUI.HistoryPanel;
+import GUI.HistoryWindow;
 import calculations.ComplexNumber;
 import calculations.ComplexSquareRoot;
 import calculations.Equation;
@@ -96,15 +96,15 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       {
         CalculatorDisplay.getInstance().setSize(new Dimension(500, 500));
         option.setText("Show History");
-        HistoryPanel.getInstance().setVisible(false);
+        HistoryWindow.getInstance().setVisible(false);
       }
       else if (option.getText().equals("Print History..."))
       {
-        HistoryPanel history = HistoryPanel.getInstance();
+        HistoryWindow history = HistoryWindow.getInstance();
         ArrayList<String> toPrint = history.getHistory();
         try
         {
-          PrintableHistory ph = new PrintableHistory(history);
+          PrintableHistory ph = new PrintableHistory(history.getPanel());
           PrinterController.print(ph, frame);
         }
         catch (IOException e1)
@@ -134,7 +134,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           break;
         case "equals":
           operatorButton(button.getText());
-          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
+          HistoryWindow.getInstance().addToHistory(frame.getDisplay().getText());
           break;
         case "clear":
           clearInput();
@@ -193,7 +193,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           {
             frame.invalidStatus(true, "Can't get the " + button.getName() + ".");
           }
-          HistoryPanel.getInstance().addToHistory(frame.getDisplay().getText());
+          HistoryWindow.getInstance().addToHistory(frame.getDisplay().getText());
           break;
         case "mode":
           changeMode();
