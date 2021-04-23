@@ -166,6 +166,10 @@ public class HistoryWindow extends JWindow
     scrollList = new JScrollPane(historyText);
   } // createComponenets method.
   
+  public JTextArea getTextArea() {
+    return this.historyText;
+  }
+  
   /**
    * setComponents - Will set the components attributes.
    */

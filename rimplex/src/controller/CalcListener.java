@@ -99,10 +99,11 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       else if (option.getText().equals("Print History..."))
       {
         HistoryWindow history = HistoryWindow.getInstance();
+
         ArrayList<String> toPrint = history.getHistory();
         try
         {
-          PrintableHistory ph = new PrintableHistory(history.getPanel());
+          PrintableHistory ph = new PrintableHistory(history.getTextArea());
           PrinterController.print(ph, frame);
         }
         catch (IOException e1)
