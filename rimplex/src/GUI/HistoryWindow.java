@@ -38,7 +38,6 @@ public class HistoryWindow extends JWindow
   private JTextArea historyText;
   private JPanel historyPanel;
   private JScrollPane scrollList;
-  private Timer timer;
   
   
   
@@ -49,13 +48,11 @@ public class HistoryWindow extends JWindow
   /**
    * Default Constructor.
    */
-  private HistoryWindow()
+  public HistoryWindow()
   { 
     super(CalculatorDisplay.getInstance());
     
     open = false;
-    timer = new Timer(5, CalcListener.getInstance());
-    
     setSize(new Dimension(0, 300));
     setLocation(display.getX() + 490, display.getY() + 160);
     createComponents();
@@ -118,25 +115,29 @@ public class HistoryWindow extends JWindow
   } // getPanel method.
   
   /**
-   * open - Will animate the showing of the window.
+   * toggleHistory - Will open/close the history.
+   * 
+   * @param open
+   *      boolean
    */
-  public void open()
+  public void toggleHistory(boolean open)
   {
-    open = true;
-    setSize(0, 300);
-    setVisible(true);
+    Timer timer = new Timer(5, CalcListener.getInstance());
+    
     timer.start();
+    
+    this.open = open;
   } // open method.
   
   /**
-   * close - Will animate the hiding of the window.
+   * isOpen - Will return the state of the JWindow.
+   * 
+   * @return true if open, false if closed.
    */
-  public void close()
+  public boolean isOpen()
   {
-    open = false;
-    timer.start();
-  } // close method.
-  
+    return open;
+  } // state method.
   
   
   //----------Private Methods----------

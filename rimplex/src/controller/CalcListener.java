@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -18,7 +17,6 @@ import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
 import GUI.HistoryWindow;
 import calculations.ComplexNumber;
-import calculations.ComplexSquareRoot;
 import calculations.Equation;
 import printing.PrintableHistory;
 import printing.PrinterController;
@@ -80,6 +78,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   {
     JButton button = null;
     frame = CalculatorDisplay.getInstance();
+    HistoryWindow window = new HistoryWindow();
 
     if (e.getSource() instanceof JButton)
       button = (JButton) e.getSource();
@@ -89,12 +88,12 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       JMenuItem option = (JMenuItem) e.getSource();
       if (option.getText().equals("Show History"))
       {
-        HistoryWindow.getInstance().open();
+        HistoryWindow.getInstance().toggleHistory(true);
         option.setText("Hide History");
       }
       else if (option.getText().equals("Hide History"))
       {
-        HistoryWindow.getInstance().close();
+        HistoryWindow.getInstance().toggleHistory(false);
         option.setText("Show History");
       }
       else if (option.getText().equals("Print History..."))
@@ -122,16 +121,16 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     if (e.getSource() instanceof Timer)
     {
       Timer timer = (Timer) e.getSource();
-      HistoryWindow window = HistoryWindow.getInstance();
+      window = HistoryWindow.getInstance();
+      boolean state = window.isOpen();
+      System.out.println(state);
       
-      if (window.getWidth() == 0) 
-        for (int x = 0; x < 200; x++)
-          window.setSize(x, 300);
-      else
-        for (int x = 200; x > 0; x--)
-          window.setSize(x, 300);
+      if (state) 
+        if (window.getWidth() != 200) window.setSize(window.getWidth() + 10, 300);
+      if (!state)
+        if (window.getWidth() != 0) window.setSize(window.getWidth() - 10, 300);
       
-      timer.stop();
+      if (window.getWidth() == 0 || window.getWidth() == 200) timer.stop();
     }
 
     if (button != null)
