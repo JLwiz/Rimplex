@@ -123,7 +123,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       Timer timer = (Timer) e.getSource();
       window = HistoryWindow.getInstance();
       boolean state = window.isOpen();
-      System.out.println(state);
       
       if (state) 
         if (window.getWidth() != 200) window.setSize(window.getWidth() + 10, 300);

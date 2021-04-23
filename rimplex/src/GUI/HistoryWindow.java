@@ -58,6 +58,8 @@ public class HistoryWindow extends JWindow
     createComponents();
     setComponents();
     addComponents();    
+    setFocusable(true);
+    addKeyListener(CalcListener.getInstance());
     
     setVisible(true);
   } // constructor.
