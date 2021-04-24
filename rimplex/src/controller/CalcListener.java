@@ -145,9 +145,11 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         case "history":
           if (!HistoryWindow.getInstance().isOpen())
             HistoryWindow.getInstance().toggleHistory(true);
-        case "winHistory": // window history button.
+          break;
+        case "winhistory": // window history button.
           if (HistoryWindow.getInstance().isOpen())
             HistoryWindow.getInstance().toggleHistory(false);
+          break;
         case "backspace":
           append('b');
           break;

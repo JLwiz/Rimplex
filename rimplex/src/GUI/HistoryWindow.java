@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -36,6 +37,7 @@ public class HistoryWindow extends JWindow
   private boolean open;
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private ArrayList<String> equations;
+  private JButton close;
   private JTextPane historyText;
   private JPanel historyPanel;
   private JScrollPane scrollList;
@@ -158,6 +160,7 @@ public class HistoryWindow extends JWindow
   private void addComponents()
   {
     historyPanel.add(scrollList);
+    historyPanel.add(close);
     add(historyPanel);
   } // addComponents method.
   
@@ -167,11 +170,17 @@ public class HistoryWindow extends JWindow
   private void createComponents()
   {
     equations = new ArrayList<>();
+    close = new JButton("<");
     historyText = new JTextPane();
     historyPanel = new JPanel();
     scrollList = new JScrollPane(historyText);
   } // createComponenets method.
   
+  /**
+   * getTextPane - Will return the JTextPane component.
+   * 
+   * @return the JTextPane.
+   */
   public JTextPane getTextArea() {
     return this.historyText;
   }
@@ -181,10 +190,12 @@ public class HistoryWindow extends JWindow
    */
   private void setComponents()
   {
+    close.setName("winhistory");
+    close.addActionListener(CalcListener.getInstance());
     scrollList.setWheelScrollingEnabled(true);
     historyText.setFont(new Font("Arial", Font.BOLD, 10));
     historyText.setEditable(false);
-    historyPanel.setLayout(new GridLayout(1, 1));
+    historyPanel.setLayout(new GridLayout(1, 2));
   } // setComponenets method.
   
 } // HistoryWindow class.
