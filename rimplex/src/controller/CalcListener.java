@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -472,7 +471,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       case "equals":
         operatorButton(button.getText());
         HistoryWindow.getInstance().addToHistory(frame.getDisplay().getText());
-        Playback play = new Playback(frame.getDisplay().getText());
         break;
       case "clear":
         clearInput();

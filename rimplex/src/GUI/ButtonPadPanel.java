@@ -9,7 +9,6 @@ import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 
 import controller.*;
 
