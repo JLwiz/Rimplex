@@ -1,5 +1,7 @@
 package app;
 
+import javax.swing.SwingUtilities;
+
 import GUI.CalculatorDisplay;
 import controller.DisplayListener;
 
@@ -19,9 +21,8 @@ public class RimplexDriver
    */
   public static void main(final String[] args)
   {
-    
-    CalculatorDisplay.getInstance().addComponentListener(new DisplayListener());
-    
+    SwingUtilities.invokeLater(() -> 
+        CalculatorDisplay.getInstance().addComponentListener(new DisplayListener()));
   } // main method.
   
 } // RimplexDriver class.

@@ -5,7 +5,6 @@ import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
 
-import GUI.CalculatorDisplay;
 import GUI.HistoryWindow;
 
 /**

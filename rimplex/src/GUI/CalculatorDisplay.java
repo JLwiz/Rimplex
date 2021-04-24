@@ -7,13 +7,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.FocusListener;
 import java.util.ResourceBundle;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -22,8 +20,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
 import controller.CalcListener;
@@ -53,9 +49,7 @@ public class CalculatorDisplay extends JFrame
   private JLabel inputField;
   private static final ResourceBundle STRINGS = ResourceBundle.getBundle("Language.Strings");
 
-  private JPanel centerPanel;
-  private JPanel mainPanel;
-  private JPanel northPanel;
+  private JPanel centerPanel, mainPanel, northPanel;
 
   // ----------Constructor----------
 
@@ -64,7 +58,6 @@ public class CalculatorDisplay extends JFrame
    */
   public CalculatorDisplay()
   {
-    
     setSize(new Dimension(500, 500));
 
     listener = CalcListener.getInstance();
@@ -73,7 +66,8 @@ public class CalculatorDisplay extends JFrame
     setComponents();
     setLayouts();
     addComponents();
-    ImageIcon img = new ImageIcon("rimplex/src/iconRimplex.png");
+    ImageIcon img = new ImageIcon(CalculatorDisplay.class
+        .getResource("/images/iconRimplex.png"));
     setIconImage(img.getImage());
     setTitle("Rimplex");
     getRootPane().setBorder(BorderFactory.createLoweredBevelBorder());
@@ -129,7 +123,7 @@ public class CalculatorDisplay extends JFrame
   {
     return inputField;
   }
-
+  
   /**
    * setDisplay - Will set the displays test and adjust font if necessary.
    * 
@@ -173,18 +167,7 @@ public class CalculatorDisplay extends JFrame
       inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     }
   } // validStatus method.
-
-  /**
-   * test widen case.
-   */
-  public void widen()
-  {
-    Timer timer = new Timer(5, listener);
-
-    timer.start();
-
-  }
-
+  
   // ----------Private Methods---------
 
   /**
@@ -214,6 +197,9 @@ public class CalculatorDisplay extends JFrame
   /**
    * adjustFont - Will adjust the font size of the display field depending on the amount of
    * characters in the display.
+   * 
+   * @param label
+   *      JLabel
    */
   private void adjustFont(final JLabel label)
   {
@@ -268,32 +254,21 @@ public class CalculatorDisplay extends JFrame
    * 
    * This will be used for implementing themes, history, and saving history.
    */
-  private void createMenuBar()
+  private void createMenuBar() 
   {
-
-    // ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
-    // JMenuItem themes = new JMenuItem("Themes", themeIcon);
-    // JMenu optionsMenu = new JMenu("Options");
-    // optionsMenu.add(themes);
-    System.out.println(Locale.getDefault().getLanguage() + "_" + Locale.getDefault().getCountry() + "_" + Locale.getDefault().getVariant());
-    
-    ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon.png");
-    JMenuItem history = new JMenuItem(STRINGS.getString("SHistory"), historyIcon);
-    history.addActionListener(listener);
     JMenuItem print = new JMenuItem(STRINGS.getString("PHistory"));
     print.addActionListener(listener);
-    ImageIcon importIcon = new ImageIcon("rimplex/src/import-icon.png");
+    JMenuItem playback = new JMenuItem("Playback");
+    playback.addActionListener(listener);
+    ImageIcon importIcon = new ImageIcon(CalculatorDisplay.class
+        .getResource("/images/import-icon.png"));
     JMenuItem open = new JMenuItem("Import File", importIcon);
-    ImageIcon saveIcon = new ImageIcon("rimplex/src/save-icon.png");
+    ImageIcon saveIcon = new ImageIcon(CalculatorDisplay.class
+        .getResource("/images/save-icon.png"));
     JMenuItem save = new JMenuItem("Save", saveIcon);
     JMenu fileMenu = new JMenu(STRINGS.getString("File"));
-    fileMenu.add(history);
+    fileMenu.add(playback);
     fileMenu.add(print);
-
-    JMenuItem plot = new JMenuItem("Plot");
-    // fileMenu.add(plot);
-    // fileMenu.add(open);
-    // fileMenu.add(save);
 
     JMenuBar menuBar = new JMenuBar();
     // menuBar.add(optionsMenu);
