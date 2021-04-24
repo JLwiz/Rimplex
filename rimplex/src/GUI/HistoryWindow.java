@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -92,15 +93,11 @@ public class HistoryWindow extends JWindow
    */
   public void addToHistory(final String saved)
   {
-    String keep = saved.replaceAll("<html>", "")
-        .replaceAll("<i>", "").replaceAll("</html>", "").replaceAll("</i>", "");
+    String keep = saved.replaceAll("<html>", "").replaceAll("</html>", "");
     equations.add(keep); 
     
-    keep = historyText.getText() + keep;
-    keep = keep.replaceAll("<html>", "").replaceAll("</html>", "")
-        .replaceAll("</i>", "").replaceAll("<i>", "").replaceAll("i", "<i>i</i>");
-    keep = "<html>" + keep + "</html>";
-    historyText.setText(keep + "\n\n");
+    keep = historyText.getText().replaceAll("</p>", keep + "<br><br></p>");
+    historyText.setText(keep);
   } // addToHistory method.
   
   /**
@@ -193,6 +190,7 @@ public class HistoryWindow extends JWindow
     close.setName("winhistory");
     close.addActionListener(CalcListener.getInstance());
     scrollList.setWheelScrollingEnabled(true);
+    historyText.setContentType("text/html");
     historyText.setFont(new Font("Arial", Font.BOLD, 10));
     historyText.setEditable(false);
     historyPanel.setLayout(new GridLayout(1, 2));
