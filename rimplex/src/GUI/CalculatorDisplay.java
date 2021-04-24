@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.FocusListener;
+import java.util.ResourceBundle;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -49,6 +51,7 @@ public class CalculatorDisplay extends JFrame
 
   private JLabel display;
   private JLabel inputField;
+  private static final ResourceBundle STRINGS = ResourceBundle.getBundle("Language.Strings");
 
   private JPanel centerPanel;
   private JPanel mainPanel;
@@ -61,6 +64,7 @@ public class CalculatorDisplay extends JFrame
    */
   public CalculatorDisplay()
   {
+    Locale.setDefault(new Locale("es", "ES"));
     setSize(new Dimension(500, 500));
 
     listener = CalcListener.getInstance();
@@ -125,35 +129,37 @@ public class CalculatorDisplay extends JFrame
   {
     return inputField;
   }
-  
+
   /**
    * setDisplay - Will set the displays test and adjust font if necessary.
    * 
-   * @param text (String)
+   * @param text
+   *          (String)
    */
   public void setDisplay(final String text)
   {
     display.setText(replaceI(text));
     adjustFont(display);
   } // setDisplay method.
-  
+
   /**
    * setInput - Will set the input text.
    * 
-   * @param text (String)
+   * @param text
+   *          (String)
    */
   public void setInput(final String text)
   {
     inputField.setText(text);
     adjustFont(inputField);
   }
-  
+
   /**
    * invalidStatus - Will change the color of the JPanel based on the the validity of the content in
    * the text field.
    * 
-   * @param invalid true if there is an error present, otherwise false.
-   *          (boolean)
+   * @param invalid
+   *          true if there is an error present, otherwise false. (boolean)
    */
   public void invalidStatus(final boolean invalid, final String message)
   {
@@ -167,16 +173,16 @@ public class CalculatorDisplay extends JFrame
       inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     }
   } // validStatus method.
-  
+
   /**
    * test widen case.
    */
   public void widen()
   {
     Timer timer = new Timer(5, listener);
-    
+
     timer.start();
-    
+
   }
 
   // ----------Private Methods---------
@@ -185,14 +191,14 @@ public class CalculatorDisplay extends JFrame
    * addComponents - Will add the components to the panel.
    */
   private void addComponents()
-  { 
+  {
     constraints.gridx = 0;
     constraints.gridy = 0;
     constraints.weightx = 1;
     constraints.weighty = 0.3;
     constraints.fill = GridBagConstraints.BOTH;
     mainPanel.add(northPanel, constraints);
-    
+
     constraints.gridx = 0;
     constraints.gridy = 1;
     constraints.weighty = .8;
@@ -204,15 +210,17 @@ public class CalculatorDisplay extends JFrame
     northPanel.add(display);
     northPanel.add(inputField);
   } // addComponents method.
-  
+
   /**
-   * adjustFont - Will adjust the font size of the display field depending
-   * on the amount of characters in the display.
+   * adjustFont - Will adjust the font size of the display field depending on the amount of
+   * characters in the display.
    */
   private void adjustFont(final JLabel label)
   {
-    if (label.getText().length() > 23) label.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
-    else label.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
+    if (label.getText().length() > 23)
+      label.setFont(new Font(FONT, Font.BOLD, MINFONTSIZE));
+    else
+      label.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
   } // adjustFont method.
 
   /**
@@ -254,50 +262,52 @@ public class CalculatorDisplay extends JFrame
     northPanel.setLayout(new GridLayout(2, 1));
     centerPanel.setLayout(new GridLayout(1, 0));
   } // setLayouts method.
-  
+
   /**
    * Creates a menu bar for the application.
    * 
    * This will be used for implementing themes, history, and saving history.
    */
-  private void createMenuBar() 
+  private void createMenuBar()
   {
-    
-//    ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
-//    JMenuItem themes = new JMenuItem("Themes", themeIcon);
-//    JMenu optionsMenu = new JMenu("Options");
-//    optionsMenu.add(themes);
+
+    // ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
+    // JMenuItem themes = new JMenuItem("Themes", themeIcon);
+    // JMenu optionsMenu = new JMenu("Options");
+    // optionsMenu.add(themes);
+    System.out.println(Locale.getDefault().getLanguage() + "_" + Locale.getDefault().getCountry() + "_" + Locale.getDefault().getVariant());
     
     ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon.png");
-    JMenuItem history = new JMenuItem("Show History", historyIcon);
+    JMenuItem history = new JMenuItem(STRINGS.getString("SHistory"), historyIcon);
     history.addActionListener(listener);
-    JMenuItem print = new JMenuItem("Print History...");
+    JMenuItem print = new JMenuItem(STRINGS.getString("PHistory"));
     print.addActionListener(listener);
     ImageIcon importIcon = new ImageIcon("rimplex/src/import-icon.png");
-    JMenuItem open = new JMenuItem("Import File", importIcon);   
+    JMenuItem open = new JMenuItem("Import File", importIcon);
     ImageIcon saveIcon = new ImageIcon("rimplex/src/save-icon.png");
     JMenuItem save = new JMenuItem("Save", saveIcon);
-    JMenu fileMenu = new JMenu("File");
+    JMenu fileMenu = new JMenu(STRINGS.getString("File"));
     fileMenu.add(history);
     fileMenu.add(print);
-    
+
     JMenuItem plot = new JMenuItem("Plot");
-//    fileMenu.add(plot);
-//    fileMenu.add(open);
-//    fileMenu.add(save);
-    
+    // fileMenu.add(plot);
+    // fileMenu.add(open);
+    // fileMenu.add(save);
+
     JMenuBar menuBar = new JMenuBar();
-//    menuBar.add(optionsMenu);
+    // menuBar.add(optionsMenu);
     menuBar.add(fileMenu);
-    setJMenuBar(menuBar); 
+    setJMenuBar(menuBar);
     // If you want to hide the menu bar, set this to false.
     menuBar.setVisible(true);
   }
-  
+
   /**
    * replaceI - Will replace all normal i's with italics.
    * 
-   * @param text (String)
+   * @param text
+   *          (String)
    * @return a string with italic i's
    */
   private String replaceI(final String text)
@@ -307,7 +317,7 @@ public class CalculatorDisplay extends JFrame
     temp = temp.replaceAll("<i>", "");
     temp = temp.replaceAll("</i>", "");
     temp = "<html>" + temp + "</html>";
-    
+
     return temp.replaceAll("i", ITALICI);
   }
 } // CalculatorDisplay class.
