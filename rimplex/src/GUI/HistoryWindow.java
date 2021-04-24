@@ -1,17 +1,17 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JWindow;
 import javax.swing.Timer;
@@ -42,6 +42,9 @@ public class HistoryWindow extends JWindow
   private JTextPane historyText;
   private JPanel historyPanel;
   private JScrollPane scrollList;
+  
+  private GridBagLayout layout = new GridBagLayout();
+  private GridBagConstraints constraints = new GridBagConstraints();
   
   
   
@@ -127,7 +130,7 @@ public class HistoryWindow extends JWindow
    * @param open
    *      boolean
    */
-  public void toggleHistory(boolean open)
+  public void toggleHistory(final boolean open)
   {
     Timer timer = new Timer(5, CalcListener.getInstance());
     
@@ -156,8 +159,19 @@ public class HistoryWindow extends JWindow
    */
   private void addComponents()
   {
-    historyPanel.add(scrollList);
-    historyPanel.add(close);
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.weightx = .95;
+    constraints.weighty = 1;
+    constraints.fill = GridBagConstraints.BOTH;
+    historyPanel.add(scrollList, constraints);
+    
+    constraints.gridx = 1;
+    constraints.gridy = 0;
+    constraints.weightx = .05;
+    constraints.weighty = 1;
+    historyPanel.add(close, constraints);
+    
     add(historyPanel);
   } // addComponents method.
   
@@ -178,7 +192,8 @@ public class HistoryWindow extends JWindow
    * 
    * @return the JTextPane.
    */
-  public JTextPane getTextArea() {
+  public JTextPane getTextArea()
+  {
     return this.historyText;
   }
   
@@ -189,11 +204,18 @@ public class HistoryWindow extends JWindow
   {
     close.setName("winhistory");
     close.addActionListener(CalcListener.getInstance());
+    close.setMaximumSize(new Dimension(20, getHeight()));
+    close.setMinimumSize(new Dimension(20, getHeight()));
+    close.setPreferredSize(new Dimension(20, getHeight()));
+    close.setBackground(Color.BLACK);
+    close.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+    close.setForeground(Color.WHITE);
+    close.setFont(new Font("Arial", Font.BOLD, 15));
     scrollList.setWheelScrollingEnabled(true);
     historyText.setContentType("text/html");
     historyText.setFont(new Font("Arial", Font.BOLD, 10));
     historyText.setEditable(false);
-    historyPanel.setLayout(new GridLayout(1, 2));
+    historyPanel.setLayout(layout);
   } // setComponenets method.
   
 } // HistoryWindow class.

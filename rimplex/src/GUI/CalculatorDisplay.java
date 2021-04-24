@@ -209,6 +209,9 @@ public class CalculatorDisplay extends JFrame
   /**
    * adjustFont - Will adjust the font size of the display field depending
    * on the amount of characters in the display.
+   * 
+   * @param label
+   *      JLabel
    */
   private void adjustFont(final JLabel label)
   {
