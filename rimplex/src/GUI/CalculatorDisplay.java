@@ -64,7 +64,7 @@ public class CalculatorDisplay extends JFrame
    */
   public CalculatorDisplay()
   {
-    Locale.setDefault(new Locale("es", "ES"));
+    
     setSize(new Dimension(500, 500));
 
     listener = CalcListener.getInstance();
