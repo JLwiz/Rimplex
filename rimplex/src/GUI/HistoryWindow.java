@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -99,8 +98,11 @@ public class HistoryWindow extends JWindow
     String keep = saved.replaceAll("<html>", "").replaceAll("</html>", "");
     equations.add(keep); 
     
-    keep = historyText.getText().replaceAll("</p>", keep + "<br><br></p>");
-    historyText.setText(keep);
+    if (!keep.trim().equals(""))
+    {
+      keep = historyText.getText().replaceAll("</p>", keep + "<br><br></p>");
+      historyText.setText(keep);
+    }
   } // addToHistory method.
   
   /**
