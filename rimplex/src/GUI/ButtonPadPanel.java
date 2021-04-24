@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import controller.*;
 
@@ -297,6 +298,7 @@ public class ButtonPadPanel extends JPanel
     b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
     b.setForeground(Color.WHITE);
     b.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
+    b.setFocusable(true);
     b.addActionListener(listener);
     b.addKeyListener(listener);
     buttonMap.put(name, b);
@@ -310,9 +312,11 @@ public class ButtonPadPanel extends JPanel
    * @param isFraction whether or not the calculator is in fractional mode.
    */
   public void updateMode(final boolean isFraction) {
-    if (isFraction) {
+    if (isFraction)
+    {
       modeButton.setText("FRAC");
-    } else {
+    } else
+    {
       modeButton.setText("DEC");
     }
   }

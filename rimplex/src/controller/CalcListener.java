@@ -22,6 +22,7 @@ import calculations.Equation;
 import printing.PrintableHistory;
 import printing.PrinterController;
 import util.InputParser;
+import util.Playback;
 
 /**
  * Listener class to handle events of buttons, events of the JFrame, and other components of the
@@ -471,6 +472,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       case "equals":
         operatorButton(button.getText());
         HistoryWindow.getInstance().addToHistory(frame.getDisplay().getText());
+        Playback play = new Playback(frame.getDisplay().getText());
         break;
       case "clear":
         clearInput();
