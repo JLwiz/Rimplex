@@ -86,17 +86,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     if (e.getSource() instanceof JMenuItem)
     {
       JMenuItem option = (JMenuItem) e.getSource();
-      if (option.getText().equals("Show History"))
-      {
-        HistoryWindow.getInstance().toggleHistory(true);
-        option.setText("Hide History");
-      }
-      else if (option.getText().equals("Hide History"))
-      {
-        HistoryWindow.getInstance().toggleHistory(false);
-        option.setText("Show History");
-      }
-      else if (option.getText().equals("Print History..."))
+      if (option.getText().equals("Print History..."))
       {
         HistoryWindow history = HistoryWindow.getInstance();
 
@@ -112,10 +102,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         }
 
       }
-      // else if (option.getText().equals("Plot"))
-      // {
-      //
-      // }
 
     }
     
@@ -156,7 +142,12 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         case "reset":
           resetDisplay();
           break;
-
+        case "history":
+          if (!HistoryWindow.getInstance().isOpen())
+            HistoryWindow.getInstance().toggleHistory(true);
+        case "winHistory": // window history button.
+          if (HistoryWindow.getInstance().isOpen())
+            HistoryWindow.getInstance().toggleHistory(false);
         case "backspace":
           append('b');
           break;
