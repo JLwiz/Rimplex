@@ -54,7 +54,7 @@ public class HistoryWindow extends JWindow
   /**
    * Default Constructor.
    */
-  public HistoryWindow()
+  private HistoryWindow()
   { 
     super(CalculatorDisplay.getInstance());
     
@@ -66,6 +66,7 @@ public class HistoryWindow extends JWindow
     addComponents();    
     setFocusable(true);
     addKeyListener(CalcListener.getInstance());
+    getContentPane().add(historyPanel);
     
     setVisible(true);
   } // constructor.
@@ -173,8 +174,6 @@ public class HistoryWindow extends JWindow
     constraints.weightx = .05;
     constraints.weighty = 1;
     historyPanel.add(close, constraints);
-    
-    add(historyPanel);
   } // addComponents method.
   
   /**

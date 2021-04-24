@@ -78,7 +78,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   {
     JButton button = null;
     frame = CalculatorDisplay.getInstance();
-    HistoryWindow window = new HistoryWindow();
+    HistoryWindow window = HistoryWindow.getInstance();
 
     if (e.getSource() instanceof JButton)
       button = (JButton) e.getSource();
