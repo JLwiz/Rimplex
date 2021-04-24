@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.JWindow;
 import javax.swing.Timer;
 
@@ -35,7 +36,7 @@ public class HistoryWindow extends JWindow
   private boolean open;
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private ArrayList<String> equations;
-  private JTextArea historyText;
+  private JTextPane historyText;
   private JPanel historyPanel;
   private JScrollPane scrollList;
   
@@ -92,7 +93,12 @@ public class HistoryWindow extends JWindow
     String keep = saved.replaceAll("<html>", "")
         .replaceAll("<i>", "").replaceAll("</html>", "").replaceAll("</i>", "");
     equations.add(keep); 
-    historyText.setText(historyText.getText() + keep + "\n\n");
+    
+    keep = historyText.getText() + keep;
+    keep = keep.replaceAll("<html>", "").replaceAll("</html>", "")
+        .replaceAll("</i>", "").replaceAll("<i>", "").replaceAll("i", "<i>i</i>");
+    keep = "<html>" + keep + "</html>";
+    historyText.setText(keep + "\n\n");
   } // addToHistory method.
   
   /**
@@ -161,12 +167,12 @@ public class HistoryWindow extends JWindow
   private void createComponents()
   {
     equations = new ArrayList<>();
-    historyText = new JTextArea();
+    historyText = new JTextPane();
     historyPanel = new JPanel();
     scrollList = new JScrollPane(historyText);
   } // createComponenets method.
   
-  public JTextArea getTextArea() {
+  public JTextPane getTextArea() {
     return this.historyText;
   }
   

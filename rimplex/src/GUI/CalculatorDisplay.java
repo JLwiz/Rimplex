@@ -69,7 +69,8 @@ public class CalculatorDisplay extends JFrame
     setComponents();
     setLayouts();
     addComponents();
-    ImageIcon img = new ImageIcon("rimplex/src/iconRimplex.png");
+    ImageIcon img = new ImageIcon(CalculatorDisplay.class
+        .getResource("/images/iconRimplex.png"));
     setIconImage(img.getImage());
     setTitle("Rimplex");
     getRootPane().setBorder(BorderFactory.createLoweredBevelBorder());
@@ -261,30 +262,17 @@ public class CalculatorDisplay extends JFrame
    * This will be used for implementing themes, history, and saving history.
    */
   private void createMenuBar() 
-  {
-    
-//    ImageIcon themeIcon = new ImageIcon("rimplex/src/theme-icon.png");
-//    JMenuItem themes = new JMenuItem("Themes", themeIcon);
-//    JMenu optionsMenu = new JMenu("Options");
-//    optionsMenu.add(themes);
-    
-    ImageIcon historyIcon = new ImageIcon("rimplex/src/history-icon.png");
-    JMenuItem history = new JMenuItem("Show History", historyIcon);
-    history.addActionListener(listener);
+  { 
     JMenuItem print = new JMenuItem("Print History...");
     print.addActionListener(listener);
-    ImageIcon importIcon = new ImageIcon("rimplex/src/import-icon.png");
+    ImageIcon importIcon = new ImageIcon(CalculatorDisplay.class
+        .getResource("/images/import-icon.png"));
     JMenuItem open = new JMenuItem("Import File", importIcon);   
-    ImageIcon saveIcon = new ImageIcon("rimplex/src/save-icon.png");
+    ImageIcon saveIcon = new ImageIcon(CalculatorDisplay.class
+        .getResource("/images/save-icon.png"));
     JMenuItem save = new JMenuItem("Save", saveIcon);
     JMenu fileMenu = new JMenu("File");
-    fileMenu.add(history);
     fileMenu.add(print);
-    
-    JMenuItem plot = new JMenuItem("Plot");
-//    fileMenu.add(plot);
-//    fileMenu.add(open);
-//    fileMenu.add(save);
     
     JMenuBar menuBar = new JMenuBar();
 //    menuBar.add(optionsMenu);
