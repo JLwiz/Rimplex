@@ -49,8 +49,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private CalcListener()
   {
     evaluate = Equation.getInstance();
-    parser = parser.getInstance();
-
+    parser = InputParser.getInstance();
+    this.inFractions = false;
   } // Default Constructor.
 
   /**
@@ -61,57 +61,29 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   public static CalcListener getInstance()
   {
-    if (listener == null)
-    {
-      listener = new CalcListener();
-      listener.inFractions = false;
-    }
+    if (listener == null) listener = new CalcListener();
     return listener;
   }
 
   /**
    * Determines what actions to do following an action event.
    */
-
   @SuppressWarnings("unlikely-arg-type")
   @Override
   public void actionPerformed(final ActionEvent e)
   {
-    JButton button = null;
     frame = CalculatorDisplay.getInstance();
-    HistoryWindow window = HistoryWindow.getInstance();
-
+    
     if (e.getSource() instanceof JButton)
-      button = (JButton) e.getSource();
-
+      buttonActions((JButton) e.getSource());
+    
     if (e.getSource() instanceof JMenuItem)
-    {
-      JMenuItem option = (JMenuItem) e.getSource();
-      if (option.getText().equals("Print History..."))
-      {
-        HistoryWindow history = HistoryWindow.getInstance();
-
-        ArrayList<String> toPrint = history.getHistory();
-        try
-        {
-          PrintableHistory ph = new PrintableHistory(history.getTextArea());
-          PrinterController.print(ph, frame);
-        }
-        catch (IOException e1)
-        {
-          e1.printStackTrace();
-        }
-
-      }
-      else if (option.getText().equals("Playback"))
-        PlaybackWindow.getInstance().setVisible(true);
-
-    }
+      menuActions((JMenuItem) e.getSource());
     
     if (e.getSource() instanceof Timer)
     {
       Timer timer = (Timer) e.getSource();
-      window = HistoryWindow.getInstance();
+      HistoryWindow window = HistoryWindow.getInstance();
       boolean state = window.isOpen();
       
       if (state) 
@@ -121,97 +93,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       
       if (window.getWidth() == 0 || window.getWidth() == 200) timer.stop();
     }
-
-    if (button != null)
-    {
-      switch (button.getName().toLowerCase())
-      {
-        case "add":// Multiple buttons that go down the same path can be condensed in such
-                   // statements
-        case "divide":
-        case "multiply":
-        case "subtract":
-        case "exponent":
-          operationsSwitch(button.getText());
-          break;
-        case "equals":
-          operatorButton(button.getText());
-          HistoryWindow.getInstance().addToHistory(frame.getDisplay().getText());
-          break;
-        case "clear":
-          clearInput();
-          frame.invalidStatus(false, "no Error");
-          break;
-        case "reset":
-          resetDisplay();
-          break;
-        case "history":
-          if (!HistoryWindow.getInstance().isOpen())
-            HistoryWindow.getInstance().toggleHistory(true);
-          break;
-        case "winhistory": // window history button.
-          if (HistoryWindow.getInstance().isOpen())
-            HistoryWindow.getInstance().toggleHistory(false);
-          break;
-        case "backspace":
-          append('b');
-          break;
-        case "sign":
-          signChange();
-          break;
-        case "i":
-          append('i');
-          break;
-        case "0":// these cases can also be condensed like this.
-        case "1":
-        case "2":
-        case "3":
-        case "4":
-        case "5":
-        case "6":
-        case "7":
-        case "8":
-        case "9":
-        case "decimal":
-        case "open parenthases":
-        case "closed parenthases":
-          append(button.getText().charAt(0));
-          break;
-        case "inverse":
-        case "logarithm":
-        case "conjugate":
-        case "squareroot":
-        case "sin":
-        case "cos":
-        case "tan":
-        case "realpart":
-        case "imaginarypart":
-          if (evaluate.operatorEmpty())
-          {
-            if (evaluate.getFirstOp() == null
-                || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
-            {
-              operatorButton(button.getText());
-            }
-            else
-            {
-              operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
-            }
-          }
-          else
-          {
-            frame.invalidStatus(true, "Can't get the " + button.getName() + ".");
-          }
-          HistoryWindow.getInstance().addToHistory(frame.getDisplay().getText());
-          break;
-        case "mode":
-          changeMode();
-          break;
-        default:
-          break;
-      }
-    }
-
   } // actionPerformed method.
 
   /**
@@ -316,7 +197,22 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     if (text.length() > 0)
       frame.setInput(text.substring(0, text.length() - 1));
   } // append method.
-
+  
+  /**
+   * buttonActions - Will call the buttons actions.
+   * 
+   * @param button
+   *          The button pressed.
+   */
+  private void buttonActions(final JButton button)
+  {
+    numberActions(button);
+    operationActions(button);
+    logicActions(button);
+    historyActions(button);
+    playbackActions(button);
+  } // buttonActions method.
+  
   /**
    * clears InputField for CalculatorDisplay.
    */
@@ -393,6 +289,29 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
     return text;
   }
+  
+  /**
+   * historyActions - Will call the button actions for history.
+   * 
+   * @param button
+   *          The button pressed.
+   */
+  private void historyActions(final JButton button)
+  {
+    switch (button.getName().toLowerCase())
+    {
+      case "history":
+        if (!HistoryWindow.getInstance().isOpen())
+          HistoryWindow.getInstance().toggleHistory(true);
+        break;
+      case "winhistory": // window history button.
+        if (HistoryWindow.getInstance().isOpen())
+          HistoryWindow.getInstance().toggleHistory(false);
+        break;
+      default:
+        break;
+    }
+  } // historyActions method.
 
   /**
    * signals that the input is invalid.
@@ -423,6 +342,147 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
     return isNum;
   }
+  
+  /**
+   * logicActions - Will call the button actions for logic.
+   * 
+   * @param button
+   *          The button pressed.
+   */
+  private void logicActions(final JButton button)
+  {
+    switch (button.getName().toLowerCase())
+    {
+      case "inverse":
+      case "logarithm":
+      case "conjugate":
+      case "squareroot":
+      case "sin":
+      case "cos":
+      case "tan":
+      case "realpart":
+      case "imaginarypart":
+        if (evaluate.operatorEmpty())
+        {
+          if (evaluate.getFirstOp() == null
+              || frame.getInputField() != null && !frame.getInputField().getText().equals(""))
+          {
+            operatorButton(button.getText());
+          }
+          else
+          {
+            operationsProcessor(evaluate.getFirstOp().getRawString(), button.getText());
+          }
+        }
+        else
+        {
+          frame.invalidStatus(true, "Can't get the " + button.getName() + ".");
+        }
+        HistoryWindow.getInstance().addToHistory(frame.getDisplay().getText());
+        break;
+      default:
+        break;
+    }
+  } // logicActions method.
+  
+  /**
+   * menuActions - Will perform the menu actions.
+   * 
+   * @param menu
+   *          The menu item selected.
+   */
+  private void menuActions(final JMenuItem menu)
+  {
+    if (menu.getText().equals("Print History..."))
+    {
+      HistoryWindow history = HistoryWindow.getInstance();
+      try
+      {
+        PrintableHistory ph = new PrintableHistory(history.getTextArea());
+        PrinterController.print(ph, frame);
+      }
+      catch (IOException e1)
+      {
+        e1.printStackTrace();
+      }
+
+    }
+    else if (menu.getText().equals("Playback"))
+      PlaybackWindow.getInstance().setVisible(true);
+  } // menuActions method.
+
+  
+  /**
+   * numberActions - Will call button actions for number buttons.
+   * 
+   * @param button
+   *          The button pressed.
+   */
+  private void numberActions(final JButton button)
+  {
+    switch (button.getName().toLowerCase())
+    {
+      case "0":
+      case "1":
+      case "2":
+      case "3":
+      case "4":
+      case "5":
+      case "6":
+      case "7":
+      case "8":
+      case "9":
+      case "decimal":
+      case "open parenthases":
+      case "closed parenthases":
+        append(button.getText().charAt(0));
+        break;
+      case "i":
+        append('i');
+        break;
+      case "backspace":
+        append('b');
+        break;
+      case "sign":
+        signChange();
+        break;
+      default:
+        break;
+    }
+  } // numberActions method.
+  
+  /**
+   * operationActions - Will call button actions for operations.
+   * 
+   * @param button
+   *          The button pressed.
+   */
+  private void operationActions(final JButton button)
+  {
+    switch (button.getName().toLowerCase())
+    {
+      case "add":
+      case "divide":
+      case "multiply":
+      case "subtract":
+      case "exponent":
+        operationsSwitch(button.getText());
+        break;
+      case "equals":
+        operatorButton(button.getText());
+        HistoryWindow.getInstance().addToHistory(frame.getDisplay().getText());
+        break;
+      case "clear":
+        clearInput();
+        frame.invalidStatus(false, "no Error");
+        break;
+      case "reset":
+        resetDisplay();
+        break;
+      default:
+        break;
+    }
+  } // operationActions method.
 
   /**
    * Logic processor for performing operations and updating the display.
@@ -656,6 +716,21 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
     return (openParen != closedParen);
   }
+  
+  /**
+   * playbackActions - Will perform the playback actions.
+   * 
+   * @param button
+   *          The button pressed.
+   */
+  private void playbackActions(final JButton button)
+  {
+    switch (button.getName().toLowerCase())
+    {
+      default:
+        break;
+    }
+  } // playbackActions method.
 
   /**
    * resets the display and the equation class.
@@ -728,12 +803,12 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   } // unused.
 
   @Override
-  public void windowActivated(final WindowEvent e)
+  public void windowDeactivated(final WindowEvent e)
   {
   } // unused.
 
   @Override
-  public void windowDeactivated(final WindowEvent e)
+  public void windowActivated(final WindowEvent e)
   {
   } // unused.
 

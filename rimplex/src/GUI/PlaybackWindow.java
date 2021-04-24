@@ -39,7 +39,7 @@ public class PlaybackWindow extends JWindow
   {
     super(CalculatorDisplay.getInstance());
     
-    setSize(300, 100);
+    setSize(250, 50);
     createComponents();
     setComponents();
     addComponents();
@@ -94,45 +94,48 @@ public class PlaybackWindow extends JWindow
    */
   private JButton createButton(final String name, final String title)
   {
-    JButton b = new JButton(title);
+    JButton b;
     ImageIcon icon;
-    
-    b.setName(name);
-    b.setBackground(Color.BLACK);
-    b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-    b.setForeground(Color.WHITE);
-    b.setFont(new Font("Arial", Font.BOLD, 20));
-    b.addActionListener(CalcListener.getInstance());
-    
     switch (name)
     {
       case "pause":
         icon = new ImageIcon(PlaybackWindow.class
             .getResource("/images/pause.jpg"));
         Image pauseimg = icon.getImage();
-        pauseimg = pauseimg.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        pauseimg = pauseimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(pauseimg);
-        b.setIcon(icon);
+        b = new JButton(icon);
         break;
       case "play":
         icon = new ImageIcon(PlaybackWindow.class
             .getResource("/images/play.jpg"));
         Image playimg = icon.getImage();
-        playimg = playimg.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        playimg = playimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(playimg);
-        b.setIcon(icon);
+        b = new JButton(icon);
         break;
       case "record":
         icon = new ImageIcon(PlaybackWindow.class
             .getResource("/images/pre-recording.jpg"));
         Image recimg = icon.getImage();
-        recimg = recimg.getScaledInstance(150, 100, java.awt.Image.SCALE_SMOOTH);
+        recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(recimg);
-        b.setIcon(icon);
+        b = new JButton(icon);
         break;
       default:
+        b = new JButton(title);
         break;
     }
+    
+    b.setName(name);
+//    b.setBackground(Color.BLACK);
+//    b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+//    b.setForeground(Color.WHITE);
+    b.setFont(new Font("Arial", Font.PLAIN, 10));
+    b.setOpaque(false);
+    b.setContentAreaFilled(false);
+    b.setBorderPainted(false);
+    b.addActionListener(CalcListener.getInstance());
     
     return b;
   } // createButton method.
