@@ -3,6 +3,7 @@ package GUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -26,6 +27,7 @@ public class PlaybackWindow extends JWindow
   // ----------Declarations----------
   
   private static final long serialVersionUID = 2287276262000046595L;
+  private static PlaybackWindow single_instance = null;
   private JButton close, pause, play, rec;
   private JComboBox<String> select;
   private JPanel main, side;
@@ -37,15 +39,26 @@ public class PlaybackWindow extends JWindow
   {
     super(CalculatorDisplay.getInstance());
     
-    setSize(200, 100);
+    setSize(300, 100);
     createComponents();
     setComponents();
     addComponents();
     getContentPane().add(main);
     setFocusable(true);
     
-    setVisible(true);
+    setVisible(false);
   } // constructor.
+  
+  /**
+   * Singleton.
+   * 
+   * @return PlaybackWindow object.
+   */
+  public static PlaybackWindow getInstance()
+  {
+    if (single_instance == null) single_instance = new PlaybackWindow();
+    return single_instance;
+  } // getInstance method.
   
   // ----------Public Methods----------
   
@@ -96,16 +109,25 @@ public class PlaybackWindow extends JWindow
       case "pause":
         icon = new ImageIcon(PlaybackWindow.class
             .getResource("/images/pause.jpg"));
+        Image pauseimg = icon.getImage();
+        pauseimg = pauseimg.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(pauseimg);
         b.setIcon(icon);
         break;
       case "play":
         icon = new ImageIcon(PlaybackWindow.class
             .getResource("/images/play.jpg"));
+        Image playimg = icon.getImage();
+        playimg = playimg.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(playimg);
         b.setIcon(icon);
         break;
       case "record":
         icon = new ImageIcon(PlaybackWindow.class
             .getResource("/images/pre-recording.jpg"));
+        Image recimg = icon.getImage();
+        recimg = recimg.getScaledInstance(150, 100, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(recimg);
         b.setIcon(icon);
         break;
       default:
@@ -136,8 +158,8 @@ public class PlaybackWindow extends JWindow
    */
   private void setComponents()
   {
-    main.setLayout(new GridLayout(4, 0));
-    side.setLayout(new GridLayout(0, 1));
+    main.setLayout(new GridLayout(0, 4));
+    side.setLayout(new GridLayout(2, 0));
   } // setComponents method.
   
   

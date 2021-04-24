@@ -16,6 +16,7 @@ import javax.swing.Timer;
 import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
 import GUI.HistoryWindow;
+import GUI.PlaybackWindow;
 import calculations.ComplexNumber;
 import calculations.Equation;
 import printing.PrintableHistory;
@@ -102,6 +103,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         }
 
       }
+      else if (option.getText().equals("Playback"))
+        PlaybackWindow.getInstance().setVisible(true);
 
     }
     

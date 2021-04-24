@@ -50,9 +50,7 @@ public class CalculatorDisplay extends JFrame
   private JLabel display;
   private JLabel inputField;
 
-  private JPanel centerPanel;
-  private JPanel mainPanel;
-  private JPanel northPanel;
+  private JPanel centerPanel, mainPanel, northPanel;
 
   // ----------Constructor----------
 
@@ -168,17 +166,6 @@ public class CalculatorDisplay extends JFrame
       inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     }
   } // validStatus method.
-  
-  /**
-   * test widen case.
-   */
-  public void widen()
-  {
-    Timer timer = new Timer(5, listener);
-    
-    timer.start();
-    
-  }
 
   // ----------Private Methods---------
 
@@ -268,6 +255,8 @@ public class CalculatorDisplay extends JFrame
   { 
     JMenuItem print = new JMenuItem("Print History...");
     print.addActionListener(listener);
+    JMenuItem playback = new JMenuItem("Playback");
+    playback.addActionListener(listener);
     ImageIcon importIcon = new ImageIcon(CalculatorDisplay.class
         .getResource("/images/import-icon.png"));
     JMenuItem open = new JMenuItem("Import File", importIcon);   
@@ -275,6 +264,7 @@ public class CalculatorDisplay extends JFrame
         .getResource("/images/save-icon.png"));
     JMenuItem save = new JMenuItem("Save", saveIcon);
     JMenu fileMenu = new JMenu("File");
+    fileMenu.add(playback);
     fileMenu.add(print);
     
     JMenuBar menuBar = new JMenuBar();
