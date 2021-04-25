@@ -98,11 +98,14 @@ public class HistoryWindow extends JWindow
    */
   public void addToHistory(final String saved)
   {
+    if (saved == null || saved.equals("")) return;
+    
     String keep = saved.replaceAll("<html>", "").replaceAll("</html>", "");
     
+    System.out.println(place);
     if (PlaybackWindow.getInstance().recording())
-      if (recordings.size() < 1) recordings.add(place, keep);
-      else recordings.add(place, recordings.get(place) + keep);
+      if (recordings.size() == place + 1) recordings.add(place, recordings.get(place) + keep);
+      else recordings.add(keep);
     
     if (!keep.trim().equals(""))
     {
@@ -124,11 +127,15 @@ public class HistoryWindow extends JWindow
   /**
    * getRecording - Will get the equation list.
    * 
-   * @return ArrayList
+   * @param pos
+   *          int
+   * @return equation
+   *            String
    */
-  public ArrayList<String> getRecording() 
+  public String getRecording(int pos) 
   {
-    return recordings;
+    if (pos < recordings.size()) return recordings.get(pos);
+    return "";
   }
   
   /**
@@ -147,7 +154,7 @@ public class HistoryWindow extends JWindow
    */
   public void nextRecording()
   {
-    place++;
+    if (recordings.size() > place) place++;
   } // nextRecording.
   
   /**
