@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -26,6 +27,7 @@ public class ButtonPadPanel extends JPanel
   private GridBagConstraints numpad = new GridBagConstraints();
   private CalcListener listener;
   
+  private ArrayList<String> buttonNames;
   private HashMap<String, JButton> buttonMap;
   
   private JButton modeButton;
@@ -37,6 +39,7 @@ public class ButtonPadPanel extends JPanel
   {
     listener = CalcListener.getInstance();
     buttonMap = new HashMap<>();
+    buttonNames = new ArrayList<>();
     setLayout(layout);
     addUtilitiesBar(0, 0);
     addNumberButtons(0, 1);
@@ -63,9 +66,27 @@ public class ButtonPadPanel extends JPanel
    */
   public void pressButton (final String buttonID)
   {
+    buttonMap.get(buttonID).setEnabled(true);
     buttonMap.get(buttonID).doClick();
+    if (!buttonMap.get(buttonID).isFocusable()) buttonMap.get(buttonID).setEnabled(false);
   }
 
+  /**
+   * toggleFocus - Will toggle the focus of all components in this panel.
+   * 
+   * @param focusable
+   *          boolean
+   */
+  public void toggleFocus(final boolean focusable)
+  {
+    this.setFocusable(focusable);
+    for (String name : buttonNames)
+    {
+      buttonMap.get(name).setFocusable(focusable);
+      buttonMap.get(name).setEnabled(focusable);
+    }
+  } // toggleFocus method.
+  
   /**
    * Adds the "Miscellaneous Column" to the button pad.  It should be noted that the "Miscellaneous
    * Column" takes up 1 horizontal space and 5 vertical space on the GridBag.
@@ -301,6 +322,7 @@ public class ButtonPadPanel extends JPanel
     b.addActionListener(listener);
     b.addKeyListener(listener);
     buttonMap.put(name, b);
+    buttonNames.add(name);
     
     return b;
   }

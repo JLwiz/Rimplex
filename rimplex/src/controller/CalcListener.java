@@ -43,6 +43,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private final String leftParen = "(";
   private final String rightParen = ")";
   private boolean inFractions;
+  
+  private String recording = "";
 
   /**
    * Default Constructor.
@@ -742,12 +744,19 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
          * JComboBox, create a new object of Playback with the string
          * of total recording.
          */
-        playback = new Playback("3+3i=(3+3i)");
+        String input = "3+3i=(3+3i)";
+        if (!recording.equals(input))
+        {
+          playback = new Playback(input);
+          recording = input;
+        }
         playback.start();
         break;
       case "pause":
         if (playback != null)
           if (!playback.paused()) playback.pause(true);
+        break;
+      case "close":
         break;
       default:
         break;

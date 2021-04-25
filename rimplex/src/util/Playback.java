@@ -42,6 +42,7 @@ public class Playback
     place = new int[play.length/2];
     place[row] = 0;
     pad = ButtonPadPanel.getInstance();
+    history = HistoryWindow.getInstance();
   } // constructor.
   
   /**
@@ -97,12 +98,8 @@ public class Playback
    */
   public void toggleFocusable(final boolean focusable)
   {
-    if (focusable)
-    {
-      
-      return;
-    }
-    
+    history.setFocusable(focusable);
+    pad.toggleFocus(focusable);
   } // toggleFocusable method.
   
   /**

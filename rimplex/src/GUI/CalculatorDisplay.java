@@ -38,6 +38,7 @@ public class CalculatorDisplay extends JFrame
   private static final int MINFONTSIZE = 13;
   private static final String FONT = "Arial";
   private static final String ITALICI = "<i>i</i>";
+  private static final ResourceBundle STRINGS = ResourceBundle.getBundle("Language.Strings");
 
   private static CalculatorDisplay single_instance = null;
   private CalcListener listener;
@@ -47,7 +48,6 @@ public class CalculatorDisplay extends JFrame
 
   private JLabel display;
   private JLabel inputField;
-  private static final ResourceBundle STRINGS = ResourceBundle.getBundle("Language.Strings");
 
   private JPanel centerPanel, mainPanel, northPanel;
 
@@ -66,8 +66,8 @@ public class CalculatorDisplay extends JFrame
     setComponents();
     setLayouts();
     addComponents();
-//    ImageIcon img = new ImageIcon(CalculatorDisplay.class.getResource("/images/iconRimplex.png"));
-//    setIconImage(img.getImage());
+    ImageIcon img = new ImageIcon(CalculatorDisplay.class.getResource("/images/iconRimplex.png"));
+    setIconImage(img.getImage());
     setTitle("Rimplex");
     getRootPane().setBorder(BorderFactory.createLoweredBevelBorder());
     getContentPane().add(mainPanel);
@@ -261,10 +261,10 @@ public class CalculatorDisplay extends JFrame
     playback.addActionListener(listener);
 //    ImageIcon importIcon = new ImageIcon(
 //        CalculatorDisplay.class.getResource("/images/import-icon.png"));
-    JMenuItem open = new JMenuItem("Import File");
+//    JMenuItem open = new JMenuItem("Import File");
 //    ImageIcon saveIcon = new ImageIcon(
 //        CalculatorDisplay.class.getResource("/images/save-icon.png"));
-    JMenuItem save = new JMenuItem("Save");
+//    JMenuItem save = new JMenuItem("Save");
     JMenu fileMenu = new JMenu(STRINGS.getString("File"));
     fileMenu.add(playback);
     fileMenu.add(print);
