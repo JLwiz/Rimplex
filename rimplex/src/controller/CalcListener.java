@@ -785,6 +785,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           resetDisplay();
           playback.pause(true);
           playback.toggleFocusable(true);
+          PlaybackWindow.getInstance().toggleRecord(true);
           recording = "";
         }
         break;

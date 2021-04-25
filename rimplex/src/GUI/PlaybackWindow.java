@@ -152,6 +152,18 @@ public class PlaybackWindow extends JWindow
     rec.setIcon(icon);
   } // toggleIcon method.
   
+  /**
+   * toggleRecord - Will change toggle the ability to press the
+   * record button.
+   * 
+   * @param enabled
+   *          boolean
+   */
+  public void toggleRecord(final boolean enabled)
+  {
+    rec.setEnabled(enabled);
+  } // toggleRecord method.
+  
   
   // -----------Private Methods-----------
   
