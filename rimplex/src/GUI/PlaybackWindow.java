@@ -107,6 +107,8 @@ public class PlaybackWindow extends JWindow
    */
   public void saveRecording(final String record)
   {
+    if (record.trim().equals("")) return;
+    
     String name = (String)JOptionPane.showInputDialog(this,
         "Please provide a name for your recording.",
         "Save Recording", JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -131,18 +133,20 @@ public class PlaybackWindow extends JWindow
     recording = !recording; 
     if (recording)
     {
-      icon = new ImageIcon(PlaybackWindow.class
-          .getResource("/images/recording.jpg"));
+      icon = new ImageIcon("/resources/images/recording.jpg");
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
       icon = new ImageIcon(recimg);
+      play.setEnabled(false);
+      pause.setEnabled(false);
     }
     else
     {
-      icon = new ImageIcon(PlaybackWindow.class
-          .getResource("/images/pre-recording.jpg"));
+      icon = new ImageIcon("/resources/images/pre-recording.jpg");
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
+      play.setEnabled(true);
+      pause.setEnabled(true);
     }
     icon = new ImageIcon(recimg);
     rec.setIcon(icon);
@@ -182,24 +186,21 @@ public class PlaybackWindow extends JWindow
     switch (name)
     {
       case "pause":
-        icon = new ImageIcon(PlaybackWindow.class
-            .getResource("/images/pause.jpg"));
+        icon = new ImageIcon("/resources/images/pause.jpg");
         Image pauseimg = icon.getImage();
         pauseimg = pauseimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(pauseimg);
         b = new JButton(icon);
         break;
       case "play":
-        icon = new ImageIcon(PlaybackWindow.class
-            .getResource("/images/play.jpg"));
+        icon = new ImageIcon("/resources/images/play.jpg");
         Image playimg = icon.getImage();
         playimg = playimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(playimg);
         b = new JButton(icon);
         break;
       case "record":
-        icon = new ImageIcon(PlaybackWindow.class
-            .getResource("/images/pre-recording.jpg"));
+        icon = new ImageIcon("/resources/images/pre-recording.jpg");
         Image recimg = icon.getImage();
         recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(recimg);

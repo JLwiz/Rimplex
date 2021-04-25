@@ -744,7 +744,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           place = HistoryWindow.getInstance().getPlace();
           HistoryWindow.getInstance().nextRecording();
           PlaybackWindow.getInstance().saveRecording(
-              HistoryWindow.getInstance().getRecording().get(place));
+              HistoryWindow.getInstance().getRecording(place));
         }
         else
         {
