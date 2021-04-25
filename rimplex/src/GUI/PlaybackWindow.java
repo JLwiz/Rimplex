@@ -26,6 +26,7 @@ public class PlaybackWindow extends JWindow
   
   private static final long serialVersionUID = 2287276262000046595L;
   private static PlaybackWindow single_instance = null;
+  private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private boolean recording;
   private JButton close, pause, play, rec;
   private JComboBox<String> select;
@@ -40,6 +41,7 @@ public class PlaybackWindow extends JWindow
     recording = false;
     
     setSize(250, 50);
+    setLocation(display.getX() + 495, display.getY() + 10);
     createComponents();
     setComponents();
     addComponents();

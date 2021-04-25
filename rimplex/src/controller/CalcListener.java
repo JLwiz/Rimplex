@@ -769,7 +769,12 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         break;
       case "close":
         PlaybackWindow.getInstance().setVisible(false);
-        if (playback != null) playback.toggleFocusable(true);
+        if (playback != null) 
+        {
+          playback.pause(true);
+          playback.toggleFocusable(true);
+          recording = "";
+        }
         break;
       default:
         break;

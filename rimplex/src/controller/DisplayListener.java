@@ -6,6 +6,7 @@ import java.awt.event.ComponentListener;
 import javax.swing.JFrame;
 
 import GUI.HistoryWindow;
+import GUI.PlaybackWindow;
 
 /**
  * DisplayListener - A listener for the JFrame that manipulates the positioning
@@ -27,6 +28,8 @@ public class DisplayListener implements ComponentListener
       frame = (JFrame) e.getSource();
       HistoryWindow.getInstance().setLocation(frame.getX() + (int)((.98) * frame.getWidth()),
           frame.getY() + (int)((.32) * frame.getHeight()));
+      PlaybackWindow.getInstance().setLocation(frame.getX() + (int)((.99) * frame.getWidth()),
+          frame.getY() + (int)((.02) * frame.getHeight()));
     }
   }
 
@@ -40,6 +43,8 @@ public class DisplayListener implements ComponentListener
       frame = (JFrame) e.getSource();
       HistoryWindow.getInstance().setLocation(frame.getX() + (int)((.98) * frame.getWidth()),
           frame.getY() + (int)((.32) * frame.getHeight())); 
+      PlaybackWindow.getInstance().setLocation(frame.getX() + (int)((.99) * frame.getWidth()),
+          frame.getY() + (int)((.02) * frame.getHeight()));
     }
   }
 
