@@ -745,7 +745,12 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           HistoryWindow.getInstance().nextRecording();
           PlaybackWindow.getInstance().saveRecording(
               HistoryWindow.getInstance().getRecording().get(place));
-          System.out.println(HistoryWindow.getInstance().getRecording().get(place));
+        }
+        else
+        {
+          clearInput();
+          resetDisplay();
+          if (playback != null) playback.toggleFocusable(true);
         }
         break;
       case "play":
