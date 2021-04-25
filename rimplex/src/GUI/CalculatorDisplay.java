@@ -66,9 +66,8 @@ public class CalculatorDisplay extends JFrame
     setComponents();
     setLayouts();
     addComponents();
-    ImageIcon img = new ImageIcon(CalculatorDisplay.class
-        .getResource("/images/iconRimplex.png"));
-    setIconImage(img.getImage());
+//    ImageIcon img = new ImageIcon(CalculatorDisplay.class.getResource("/images/iconRimplex.png"));
+//    setIconImage(img.getImage());
     setTitle("Rimplex");
     getRootPane().setBorder(BorderFactory.createLoweredBevelBorder());
     getContentPane().add(mainPanel);
@@ -123,7 +122,7 @@ public class CalculatorDisplay extends JFrame
   {
     return inputField;
   }
-  
+
   /**
    * setDisplay - Will set the displays test and adjust font if necessary.
    * 
@@ -167,7 +166,7 @@ public class CalculatorDisplay extends JFrame
       inputField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     }
   } // validStatus method.
-  
+
   // ----------Private Methods---------
 
   /**
@@ -199,7 +198,7 @@ public class CalculatorDisplay extends JFrame
    * characters in the display.
    * 
    * @param label
-   *      JLabel
+   *          JLabel
    */
   private void adjustFont(final JLabel label)
   {
@@ -254,18 +253,18 @@ public class CalculatorDisplay extends JFrame
    * 
    * This will be used for implementing themes, history, and saving history.
    */
-  private void createMenuBar() 
+  private void createMenuBar()
   {
     JMenuItem print = new JMenuItem(STRINGS.getString("PHistory"));
     print.addActionListener(listener);
     JMenuItem playback = new JMenuItem("Playback");
     playback.addActionListener(listener);
-    ImageIcon importIcon = new ImageIcon(CalculatorDisplay.class
-        .getResource("/images/import-icon.png"));
-    JMenuItem open = new JMenuItem("Import File", importIcon);
-    ImageIcon saveIcon = new ImageIcon(CalculatorDisplay.class
-        .getResource("/images/save-icon.png"));
-    JMenuItem save = new JMenuItem("Save", saveIcon);
+//    ImageIcon importIcon = new ImageIcon(
+//        CalculatorDisplay.class.getResource("/images/import-icon.png"));
+    JMenuItem open = new JMenuItem("Import File");
+//    ImageIcon saveIcon = new ImageIcon(
+//        CalculatorDisplay.class.getResource("/images/save-icon.png"));
+    JMenuItem save = new JMenuItem("Save");
     JMenu fileMenu = new JMenu(STRINGS.getString("File"));
     fileMenu.add(playback);
     fileMenu.add(print);
