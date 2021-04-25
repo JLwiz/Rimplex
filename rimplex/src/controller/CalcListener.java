@@ -90,7 +90,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     {
       Timer timer = (Timer) e.getSource();
       
-      if (timer.getDelay() != 1000)
+      if (timer.getDelay() != 750)
       {
         HistoryWindow window = HistoryWindow.getInstance();
         boolean state = window.isOpen();

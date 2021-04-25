@@ -25,7 +25,7 @@ public class Playback
   private String recording;
   private String[] play;
   private String[] equation;
-  private Timer timer;
+  private Timer timer = null;
   
   /**
    * constructor.
@@ -54,7 +54,11 @@ public class Playback
   public void pause(final boolean pause)
   {
     this.paused = pause;
-    if (pause && timer.isRunning()) timer.stop();
+    if (pause && timer.isRunning())
+    {
+      timer.stop();
+      timer = null;
+    }
   } // pause method.
   
   /**
@@ -91,8 +95,11 @@ public class Playback
   public void start()
   {
     toggleFocusable(false);
-    timer = new Timer(1000, CalcListener.getInstance());
-    timer.start();
+    if (timer == null)
+    {
+      timer = new Timer(750, CalcListener.getInstance());
+      timer.start();
+    }
   } // start method.
   
   /**
@@ -120,6 +127,9 @@ public class Playback
     {
       pause(true);
       toggleFocusable(true);
+      for (int i = 0; i < place.length; i++)
+        place[i] = 0;
+      row = 0;
     }
   } // checkNext method.
   
