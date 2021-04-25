@@ -2,49 +2,144 @@ package Color;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ColorSelector implements ActionListener
+public class ColorSelector
 {
-  private Color primary;
-  private Color secondary;
-  private static JTextField pcolor1, pcolor2, pcolor3;
-  private static ColorSelector listener;
-  private static JButton ok;
+  private JFrame colorSelector;
+  private JTextField fcolorr, fcolorg, fcolorb, bcolorr, bcolorg, bcolorb;
+  public ColorSelector() {
+    GridBagConstraints format = new GridBagConstraints();
+    
+    colorSelector = new JFrame();
+    colorSelector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    colorSelector.getContentPane().setLayout(new GridBagLayout());
+    colorSelector.setVisible(true);
+    colorSelector.setTitle("Color Selector");
+    format.gridx = 0;
+    format.gridy = 0;
+    format.anchor = GridBagConstraints.CENTER;
+    
+    colorSelector.getContentPane().add(createForegroundPanel(), format);
+    
+    format.gridx = 1;
+    colorSelector.getContentPane().add(createBackgroundPanel(), format);
+    
+    format.gridwidth = 2;
+    format.gridy = 1;
+    format.gridx = 0;
+    JButton ok = new JButton("OK");
+    colorSelector.getContentPane().add(ok, format);
+    
+    colorSelector.setSize(300, 150);
+  }
+  
+  /**
+   * Helper method for constructor, creates the left side of the input block.
+   * @return the Panel to paste to the constructor.
+   */
+  private JPanel createForegroundPanel() {
+    
+    GridBagConstraints format = new GridBagConstraints();
+    
+    JPanel colorSelectorPanel = new JPanel(new GridBagLayout());
+    
+    format.fill = GridBagConstraints.NONE;
+    format.gridheight = 1;
+    format.gridwidth = 2;
+    format.gridx = 0;
+    format.gridy = 0;
+    
+    JLabel foreground = new JLabel("Foreground: ");
+    colorSelectorPanel.add(foreground, format);
+    
+    format.gridwidth = 1;
+    format.gridy = 1;
+    JLabel red = new JLabel("R: ");
+    colorSelectorPanel.add(red, format);
+    
+    format.gridy = 2;
+    JLabel green = new JLabel("G: ");
+    colorSelectorPanel.add(green, format);
+    
+    format.gridy = 3;
+    JLabel blue = new JLabel("B: ");
+    colorSelectorPanel.add(blue, format);
+    
+    format.gridx = 1;
+    format.gridy = 1;
+    fcolorr = new JTextField(3);
+    colorSelectorPanel.add(fcolorr, format);
+    
+    format.gridy = 2;
+    fcolorg = new JTextField(3);
+    colorSelectorPanel.add(fcolorg, format);
+    
+    format.gridy = 3;
+    fcolorb = new JTextField(3);
+    colorSelectorPanel.add(fcolorb, format);
+    
+    return colorSelectorPanel;
+  }
+  
+  /**
+   * Helper method for constructor, creates the right side of the input block.
+   * @return the Panel to paste to the constructor.
+   */
+  private JPanel createBackgroundPanel() {
+    
+    GridBagConstraints format = new GridBagConstraints();
+    
+    JPanel colorSelectorPanel = new JPanel(new GridBagLayout());
+    
+    format.fill = GridBagConstraints.NONE;
+    format.gridheight = 1;
+    format.gridwidth = 2;
+    format.gridx = 0;
+    format.gridy = 0;
+    
+    JLabel background = new JLabel("Background: ");
+    colorSelectorPanel.add(background, format);
+    
+    format.gridwidth = 1;
+    format.gridy = 1;
+    JLabel red = new JLabel("R: ");
+    colorSelectorPanel.add(red, format);
+    
+    format.gridy = 2;
+    JLabel green = new JLabel("G: ");
+    colorSelectorPanel.add(green, format);
+    
+    format.gridy = 3;
+    JLabel blue = new JLabel("B: ");
+    colorSelectorPanel.add(blue, format);
+    
+    format.gridx = 1;
+    format.gridy = 1;
+    bcolorr = new JTextField(3);
+    colorSelectorPanel.add(bcolorr, format);
+    
+    format.gridy = 2;
+    bcolorg = new JTextField(3);
+    colorSelectorPanel.add(bcolorg, format);
+    
+    format.gridy = 3;
+    bcolorb = new JTextField(3);
+    colorSelectorPanel.add(bcolorb, format);
+    
+    return colorSelectorPanel;
+  }
   public static void main(String[] args)
   {
-    listener = new ColorSelector();
-    
-    JFrame colorSelector = new JFrame();
-    colorSelector.setSize(250, 250);
-    colorSelector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-    JPanel colorInputs = new JPanel(new BorderLayout());
-    
-    pcolor1 = new JTextField();
-    colorInputs.add(pcolor1, BorderLayout.CENTER);
-    
-    ok = new JButton("OK");
-    ok.addActionListener(listener);
-    colorInputs.add(ok, BorderLayout.SOUTH);
-    
-    colorSelector.add(colorInputs);
-    
-    colorSelector.setVisible(true);
+    ColorSelector yes = new ColorSelector();
   }
-  @Override
-  public void actionPerformed(ActionEvent e)
-  {
-    
-    int a = Integer.parseInt(pcolor1.getText());
-    primary = new Color(a, a, a);
-    ((JButton) e.getSource()).setBackground(primary);
-  }
-
 }
