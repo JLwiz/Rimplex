@@ -26,6 +26,7 @@ public class PlaybackWindow extends JWindow
   
   private static final long serialVersionUID = 2287276262000046595L;
   private static PlaybackWindow single_instance = null;
+  private boolean recording;
   private JButton close, pause, play, rec;
   private JComboBox<String> select;
   private JPanel main, side;
@@ -36,6 +37,7 @@ public class PlaybackWindow extends JWindow
   private PlaybackWindow()
   {
     super(CalculatorDisplay.getInstance());
+    recording = false;
     
     setSize(250, 50);
     createComponents();
@@ -61,7 +63,32 @@ public class PlaybackWindow extends JWindow
   // ----------Public Methods----------
   
   
-  
+  /**
+   * toggleIcon - Will change the recording icon.
+   */
+  public void toggleIcon()
+  {
+    ImageIcon icon;
+    Image recimg;
+    if (recording)
+    {
+      icon = new ImageIcon(PlaybackWindow.class
+          .getResource("/images/recording.jpg"));
+      recimg = icon.getImage();
+      recimg = recimg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+      icon = new ImageIcon(recimg);
+    }
+    else
+    {
+      icon = new ImageIcon(PlaybackWindow.class
+          .getResource("/images/pre-recording.jpg"));
+      recimg = icon.getImage();
+      recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
+    }
+    icon = new ImageIcon(recimg);
+    rec.setIcon(icon);
+    recording = !recording; 
+  } // toggleIcon method.
   
   
   // -----------Private Methods-----------

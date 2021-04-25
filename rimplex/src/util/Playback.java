@@ -36,7 +36,9 @@ public class Playback
   public Playback(final String recording)
   {
     this.recording = recording.replaceAll("<html>", "")
-          .replaceAll("</html>", "").replaceAll("</i>", "").replaceAll("<i>", "");
+          .replaceAll("</html>", "").replaceAll("</i>", "").replaceAll("<i>", "")
+          .replaceAll("sin", "(s").replaceAll("cos", "(c").replaceAll("tan", "(t")
+          .replaceAll("Con", "(C").replaceAll("log", "(l").replaceAll("&#8730", "(&");
     play = this.recording.split("(?<==)");
     row = 0;
     paused = false;
@@ -80,9 +82,10 @@ public class Playback
     {
       equation = play[row].trim().split("\\)\\(");
       if (equation.length == 1 && place[row] == 0)
-        play[row] = equation[0];
+        play[row] = format(equation[0]);
       else if (place[row] == 0)
-        play[row] = "(" + equation[1];
+        play[row] = format(equation[1]);
+      System.out.println(play[row]);
       String name = "" + play[row].charAt(place[row]);
       pressButton(name);
       checkNext();
@@ -184,9 +187,52 @@ public class Playback
       case "^":
         pad.pressButton("exponent");
         break;
+      case "C":
+        pad.pressButton("conjugate");
+        break;
+      case "l":
+        pad.pressButton("logarithm");
+        break;
+      case "s":
+        pad.pressButton("sin");
+        break;
+      case "c":
+        pad.pressButton("cos");
+        break;
+      case "t":
+        pad.pressButton("tan");
+        break;
+      case "&":
+        pad.pressButton("squareroot");
+        break;
       default:
         break;
     }
   } // pressButton method.
+  
+  /**
+   * format - Will swap special characters around with parenthesis
+   * so that it calls in the correct order when pressing the buttons.
+   * 
+   * @param equation
+   *            String
+   * @return formated string.
+   */
+  private String format(final String equation)
+  {
+    String formated = "";
+    char keyChar = equation.charAt(0);
+    if (equation.replaceAll("[C|c|l|s|t|&]", "z").contains("z"))
+    {
+      formated = equation.replaceAll("[C|c|l|s|t|&|z|=]", "");
+      formated = formated + keyChar;
+    }
+    else
+    {
+      if (equation.charAt(0) == '(') return equation;
+      else return "(" + equation;
+    }
+    return formated;
+  } // format method.
   
 } // Playback class.

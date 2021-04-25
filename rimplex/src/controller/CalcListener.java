@@ -35,9 +35,15 @@ import util.Playback;
  */
 public class CalcListener implements ActionListener, KeyListener, WindowListener
 {
-  private static final String DEMO = "(3+3i)+(3^3-6i)^4=(answer)"
-      + "(-441.349+38391i)×(441+3i)=(answer)"
-      + "(383+3848i)÷(383+3848i)=(1)";
+  private static final String DEMO = "(3+3i)+(3^3-6i)^4=(1)"
+      + "(-441.349+38391i)×(441+3i)=(1)"
+      + "(383+3848i)÷(383+3848i)=(1)"
+      + "sin(33)=(1)"
+      + "cos(33)=(1)"
+      + "tan(33)=(1)"
+      + "&#8730(334)=(1)"
+      + "log(30)=(1)"
+      + "Con(331)=(1)";
   private static CalcListener listener;
   private CalculatorDisplay frame;
   private Equation evaluate;
@@ -740,6 +746,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     switch (button.getName().toLowerCase())
     {
       case "record":
+        PlaybackWindow.getInstance().toggleIcon();
         break;
       case "play":
         /*
