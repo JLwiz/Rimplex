@@ -133,7 +133,7 @@ public class PlaybackWindow extends JWindow
     recording = !recording; 
     if (recording)
     {
-      icon = new ImageIcon("/resources/images/recording.jpg");
+      icon = new ImageIcon(this.getClass().getResource("/resources/images/recording.jpg"));
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
       icon = new ImageIcon(recimg);
@@ -142,7 +142,7 @@ public class PlaybackWindow extends JWindow
     }
     else
     {
-      icon = new ImageIcon("/src/resources/images/pre-recording.jpg");
+      icon = new ImageIcon(this.getClass().getResource("/resources/images/pre-recording.jpg"));
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
       play.setEnabled(true);
@@ -198,21 +198,21 @@ public class PlaybackWindow extends JWindow
     switch (name)
     {
       case "pause":
-        icon = new ImageIcon("/resources/images/pause.jpg");
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/pause.jpg"));
         Image pauseimg = icon.getImage();
         pauseimg = pauseimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(pauseimg);
         b = new JButton(icon);
         break;
       case "play":
-        icon = new ImageIcon("/resources/images/play.jpg");
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/play.jpg"));
         Image playimg = icon.getImage();
         playimg = playimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(playimg);
         b = new JButton(icon);
         break;
       case "record":
-        icon = new ImageIcon("/resources/images/pre-recording.jpg");
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/pre-recording.jpg"));
         Image recimg = icon.getImage();
         recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(recimg);
