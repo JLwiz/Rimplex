@@ -41,7 +41,7 @@ public class PlaybackWindow extends JWindow
   private boolean recording;
   private HashMap<String, String> saved;
   private JButton close, pause, play, rec;
-  private JComboBox<String> select;
+  private JComboBox select;
   private JOptionPane promptSave;
   private JPanel main, side;
   
@@ -59,7 +59,6 @@ public class PlaybackWindow extends JWindow
     setComponents();
     addComponents();
     getContentPane().add(main);
-    setFocusable(true);
     
     setVisible(false);
   } // constructor.
@@ -247,7 +246,7 @@ public class PlaybackWindow extends JWindow
     play = createButton("play", "");
     rec = createButton("record", "");
     promptSave = new JOptionPane();
-    select = new JComboBox<>();
+    select = new JComboBox();
     main = new JPanel();
     side = new JPanel();
     saved = new HashMap<>();
