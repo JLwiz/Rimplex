@@ -39,6 +39,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private CalculatorDisplay frame;
   private Equation evaluate;
   private InputParser parser;
+  private Playback playback;
   private final String leftParen = "(";
   private final String rightParen = ")";
   private boolean inFractions;
@@ -83,15 +84,21 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     if (e.getSource() instanceof Timer)
     {
       Timer timer = (Timer) e.getSource();
-      HistoryWindow window = HistoryWindow.getInstance();
-      boolean state = window.isOpen();
       
-      if (state) 
-        if (window.getWidth() != 200) window.setSize(window.getWidth() + 10, 300);
-      if (!state)
-        if (window.getWidth() != 0) window.setSize(window.getWidth() - 10, 300);
+      if (timer.getDelay() != 1000)
+      {
+        HistoryWindow window = HistoryWindow.getInstance();
+        boolean state = window.isOpen();
       
-      if (window.getWidth() == 0 || window.getWidth() == 200) timer.stop();
+        if (state) 
+          if (window.getWidth() != 200) window.setSize(window.getWidth() + 10, 300);
+        if (!state)
+          if (window.getWidth() != 0) window.setSize(window.getWidth() - 10, 300);
+      
+        if (window.getWidth() == 0 || window.getWidth() == 200) timer.stop();
+      }
+      else playback.run();
+        
     }
   } // actionPerformed method.
 
@@ -727,6 +734,21 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   {
     switch (button.getName().toLowerCase())
     {
+      case "record":
+        break;
+      case "play":
+        /*
+         * Grab a string based on the name of recording stored in the
+         * JComboBox, create a new object of Playback with the string
+         * of total recording.
+         */
+        playback = new Playback("3+3i=(3+3i)");
+        playback.start();
+        break;
+      case "pause":
+        if (playback != null)
+          if (!playback.paused()) playback.pause(true);
+        break;
       default:
         break;
     }

@@ -1,6 +1,10 @@
 package util;
 
+import javax.swing.Timer;
+
 import GUI.ButtonPadPanel;
+import GUI.HistoryWindow;
+import controller.CalcListener;
 
 /**
  * Playback - A class that will handle the showing of a recording
@@ -14,11 +18,13 @@ public class Playback
 
   // ----------Declarations---------
   private ButtonPadPanel pad;
+  private HistoryWindow history;
   private boolean paused;
   private int row;
-  private int[] place;;
+  private int[] place;
   private String recording;
   private String[] play;
+  private Timer timer;
   
   /**
    * constructor.
@@ -39,9 +45,30 @@ public class Playback
   } // constructor.
   
   /**
-   * play - Will play the recording starting from the placeholder.
+   * pause - Will pause the recording and save the placement in the recording.
+   * 
+   * @param pause
    */
-  public void play()
+  public void pause(final boolean pause)
+  {
+    this.paused = pause;
+    if (pause && timer.isRunning()) timer.stop();
+  } // pause method.
+  
+  /**
+   * paused - Will return if the playback is paused or not.
+   * 
+   * @return true if paused, false if otherwise.
+   */
+  public boolean paused()
+  {
+    return paused;
+  } // paused method.
+  
+  /**
+   * run - Will play the recording starting from the placeholder.
+   */
+  public void run()
   {
     if (!paused)
     {
@@ -49,15 +76,34 @@ public class Playback
       pressButton(name);
       checkNext();
     }
-  } // play method.
+  } // run method.
   
   /**
-   * pause - Will pause the recording and save the placement in the recording.
+   * start - Will start the playback.
    */
-  public void pause()
+  public void start()
   {
-    paused = true;
-  } // pause method.
+    toggleFocusable(false);
+    timer = new Timer(1000, CalcListener.getInstance());
+    timer.start();
+  } // start method.
+  
+  /**
+   * toggleFocusable - Will toggle if the JPanels and JButtons on the GUI
+   * are focusable or not.
+   * 
+   * @param focusable
+   *          boolean
+   */
+  public void toggleFocusable(final boolean focusable)
+  {
+    if (focusable)
+    {
+      
+      return;
+    }
+    
+  } // toggleFocusable method.
   
   /**
    * checkNext - Will check to see if there is another character in the
@@ -65,8 +111,13 @@ public class Playback
    */
   private void checkNext()
   {
-    if (place[row] < play[row * 2].length()) place[row]++;
-    else place[row++] = 0;
+    if (place[row] < play[row * 2].length() - 1) place[row]++;
+    else if ((row + 1) < (play.length / 2)) place[row] = 0;
+    else
+    {
+      pause(true);
+      toggleFocusable(true);
+    }
   } // checkNext method.
   
   /**
