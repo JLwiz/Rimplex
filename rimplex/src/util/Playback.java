@@ -24,6 +24,7 @@ public class Playback
   private int[] place;
   private String recording;
   private String[] play;
+  private String[] equation;
   private Timer timer;
   
   /**
@@ -39,7 +40,7 @@ public class Playback
     play = this.recording.split("(?<==)");
     row = 0;
     paused = false;
-    place = new int[play.length/2];
+    place = new int[play.length - 1];
     place[row] = 0;
     pad = ButtonPadPanel.getInstance();
     history = HistoryWindow.getInstance();
@@ -73,7 +74,12 @@ public class Playback
   {
     if (!paused)
     {
-      String name = "" + play[row * 2].charAt(place[row]);
+      equation = play[row].trim().split("\\)\\(");
+      if (equation.length == 1 && place[row] == 0)
+        play[row] = equation[0];
+      else if (place[row] == 0)
+        play[row] = "(" + equation[1];
+      String name = "" + play[row].charAt(place[row]);
       pressButton(name);
       checkNext();
     }
@@ -108,8 +114,8 @@ public class Playback
    */
   private void checkNext()
   {
-    if (place[row] < play[row * 2].length() - 1) place[row]++;
-    else if ((row + 1) < (play.length / 2)) place[row] = 0;
+    if (place[row] < play[row].length() - 1) place[row]++;
+    else if ((row + 1) < (play.length - 1)) place[row++] = 0;
     else
     {
       pause(true);
@@ -142,7 +148,7 @@ public class Playback
         pad.pressButton(name);
         break;
       case ".":
-        pad.pressButton("deciemal");
+        pad.pressButton("decimal");
         break;
       case "+":
         pad.pressButton("add");

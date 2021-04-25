@@ -35,11 +35,14 @@ import util.Playback;
  */
 public class CalcListener implements ActionListener, KeyListener, WindowListener
 {
+  private static final String DEMO = "(3+3i)+(3^3-6i)^4=(answer)"
+      + "(-441.349+38391i)×(441+3i)=(answer)"
+      + "(383+3848i)÷(383+3848i)=(1)";
   private static CalcListener listener;
   private CalculatorDisplay frame;
   private Equation evaluate;
   private InputParser parser;
-  private Playback playback;
+  private Playback playback = null;
   private final String leftParen = "(";
   private final String rightParen = ")";
   private boolean inFractions;
@@ -744,12 +747,13 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
          * JComboBox, create a new object of Playback with the string
          * of total recording.
          */
-        String input = "3+3i=(3+3i)";
+        String input = DEMO;
         if (!recording.equals(input))
         {
           playback = new Playback(input);
           recording = input;
         }
+        playback.pause(false);
         playback.start();
         break;
       case "pause":
@@ -757,6 +761,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           if (!playback.paused()) playback.pause(true);
         break;
       case "close":
+        PlaybackWindow.getInstance().setVisible(false);
+        if (playback != null) playback.toggleFocusable(true);
         break;
       default:
         break;
