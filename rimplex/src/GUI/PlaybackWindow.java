@@ -142,7 +142,7 @@ public class PlaybackWindow extends JWindow
     }
     else
     {
-      icon = new ImageIcon("/resources/images/pre-recording.jpg");
+      icon = new ImageIcon("/src/resources/images/pre-recording.jpg");
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
       play.setEnabled(true);
