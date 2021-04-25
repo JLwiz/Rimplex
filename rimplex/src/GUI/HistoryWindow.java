@@ -36,7 +36,8 @@ public class HistoryWindow extends JWindow
   
   private boolean open;
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
-  private ArrayList<String> equations;
+  private ArrayList<String> recordings;
+  private int place;
   private JButton close;
   private JTextPane historyText;
   private JPanel historyPanel;
@@ -59,6 +60,7 @@ public class HistoryWindow extends JWindow
     super(CalculatorDisplay.getInstance());
     
     open = false;
+    place = 0;
     setSize(new Dimension(0, 300));
     setLocation(display.getX() + 490, display.getY() + 160);
     createComponents();
@@ -97,7 +99,10 @@ public class HistoryWindow extends JWindow
   public void addToHistory(final String saved)
   {
     String keep = saved.replaceAll("<html>", "").replaceAll("</html>", "");
-    equations.add(keep); 
+    
+    if (PlaybackWindow.getInstance().recording())
+      if (recordings.size() < 1) recordings.add(place, keep);
+      else recordings.add(place, recordings.get(place) + keep);
     
     if (!keep.trim().equals(""))
     {
@@ -107,13 +112,23 @@ public class HistoryWindow extends JWindow
   } // addToHistory method.
   
   /**
-   * getHistory - Will get the equation list.
+   * getPlace - Will return the current place integer.
+   * 
+   * @return place
+   */
+  public int getPlace()
+  {
+    return place;
+  }
+  
+  /**
+   * getRecording - Will get the equation list.
    * 
    * @return ArrayList
    */
-  public ArrayList<String> getHistory() 
+  public ArrayList<String> getRecording() 
   {
-    return equations;
+    return recordings;
   }
   
   /**
@@ -126,6 +141,14 @@ public class HistoryWindow extends JWindow
   {
     return historyPanel;
   } // getPanel method.
+  
+  /**
+   * nextRecording - Will increment place by one.
+   */
+  public void nextRecording()
+  {
+    place++;
+  } // nextRecording.
   
   /**
    * toggleHistory - Will open/close the history.
@@ -181,7 +204,7 @@ public class HistoryWindow extends JWindow
    */
   private void createComponents()
   {
-    equations = new ArrayList<>();
+    recordings = new ArrayList<>();
     close = new JButton("<");
     historyText = new JTextPane();
     historyPanel = new JPanel();

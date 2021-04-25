@@ -3,10 +3,12 @@ package GUI;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 
@@ -25,11 +27,22 @@ public class PlaybackWindow extends JWindow
   // ----------Declarations----------
   
   private static final long serialVersionUID = 2287276262000046595L;
+  private static final String DEMO = "(3+3i)+(3^3-6i)^4=(1)"
+      + "(-441.349+38391i)×(441+3i)=(1)"
+      + "(383+3848i)÷(383+3848i)=(1)"
+      + "sin(33)=(1)"
+      + "cos(33)=(1)"
+      + "tan(33)=(1)"
+      + "&#8730(334)=(1)"
+      + "log(30)=(1)"
+      + "Con(331)=(1)";
   private static PlaybackWindow single_instance = null;
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private boolean recording;
+  private HashMap<String, String> saved;
   private JButton close, pause, play, rec;
   private JComboBox<String> select;
+  private JOptionPane promptSave;
   private JPanel main, side;
   
   /**
@@ -64,7 +77,50 @@ public class PlaybackWindow extends JWindow
   
   // ----------Public Methods----------
   
+  /**
+   * getRecording - Will return the recording selected.
+   * 
+   * @return equation selected
+   *              String
+   */
+  public String getRecording()
+  {
+    return saved.get(select.getSelectedItem());
+  } // getRecording method.
   
+  /**
+   * recording - Will return the boolean recording.
+   * 
+   * @return true if recording, false if otherwise.
+   */
+  public boolean recording()
+  {
+    return recording;
+  } // recording method.
+  
+  /**
+   * saveRecording - Will save the recording by writing it to a file,
+   * as well as getting a name from the user and adding it to the JComboBox.
+   * 
+   * @param record
+   *          String
+   */
+  public void saveRecording(final String record)
+  {
+    String name = (String)JOptionPane.showInputDialog(this,
+        "Please provide a name for your recording.",
+        "Save Recording", JOptionPane.QUESTION_MESSAGE, null, null, null);
+    
+    if (name == null) return;
+    
+    /*
+     * logic for saving to file.
+     */
+    
+    saved.put(name, record);
+    select.addItem(name);
+  } // saveRecording method.
+
   /**
    * toggleIcon - Will change the recording icon.
    */
@@ -72,6 +128,7 @@ public class PlaybackWindow extends JWindow
   {
     ImageIcon icon;
     Image recimg;
+    recording = !recording; 
     if (recording)
     {
       icon = new ImageIcon(PlaybackWindow.class
@@ -89,7 +146,6 @@ public class PlaybackWindow extends JWindow
     }
     icon = new ImageIcon(recimg);
     rec.setIcon(icon);
-    recording = !recording; 
   } // toggleIcon method.
   
   
@@ -177,9 +233,11 @@ public class PlaybackWindow extends JWindow
     pause = createButton("pause", "");
     play = createButton("play", "");
     rec = createButton("record", "");
+    promptSave = new JOptionPane();
     select = new JComboBox<>();
     main = new JPanel();
     side = new JPanel();
+    saved = new HashMap<>();
   } // createComponents method.
   
   
@@ -190,6 +248,10 @@ public class PlaybackWindow extends JWindow
   {
     main.setLayout(new GridLayout(0, 4));
     side.setLayout(new GridLayout(2, 0));
+    promptSave.setVisible(false);
+    
+    saved.put("DEMO", DEMO);
+    select.addItem("DEMO");
   } // setComponents method.
   
   

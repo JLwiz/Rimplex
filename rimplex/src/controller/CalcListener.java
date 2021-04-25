@@ -35,15 +35,6 @@ import util.Playback;
  */
 public class CalcListener implements ActionListener, KeyListener, WindowListener
 {
-  private static final String DEMO = "(3+3i)+(3^3-6i)^4=(1)"
-      + "(-441.349+38391i)×(441+3i)=(1)"
-      + "(383+3848i)÷(383+3848i)=(1)"
-      + "sin(33)=(1)"
-      + "cos(33)=(1)"
-      + "tan(33)=(1)"
-      + "&#8730(334)=(1)"
-      + "log(30)=(1)"
-      + "Con(331)=(1)";
   private static CalcListener listener;
   private CalculatorDisplay frame;
   private Equation evaluate;
@@ -746,7 +737,16 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     switch (button.getName().toLowerCase())
     {
       case "record":
+        int place;
         PlaybackWindow.getInstance().toggleIcon();
+        if (!PlaybackWindow.getInstance().recording())
+        {
+          place = HistoryWindow.getInstance().getPlace();
+          HistoryWindow.getInstance().nextRecording();
+          PlaybackWindow.getInstance().saveRecording(
+              HistoryWindow.getInstance().getRecording().get(place));
+          System.out.println(HistoryWindow.getInstance().getRecording().get(place));
+        }
         break;
       case "play":
         /*
@@ -754,9 +754,11 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
          * JComboBox, create a new object of Playback with the string
          * of total recording.
          */
-        String input = DEMO;
+        String input = PlaybackWindow.getInstance().getRecording();
         if (!recording.equals(input))
         {
+          clearInput();
+          resetDisplay();
           playback = new Playback(input);
           recording = input;
         }
@@ -771,6 +773,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         PlaybackWindow.getInstance().setVisible(false);
         if (playback != null) 
         {
+          clearInput();
+          resetDisplay();
           playback.pause(true);
           playback.toggleFocusable(true);
           recording = "";

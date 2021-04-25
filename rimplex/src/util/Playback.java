@@ -56,11 +56,12 @@ public class Playback
   public void pause(final boolean pause)
   {
     this.paused = pause;
-    if (pause && timer.isRunning())
-    {
-      timer.stop();
-      timer = null;
-    }
+    if (timer != null)
+      if (pause && timer.isRunning())
+      {
+        timer.stop();
+        timer = null;
+      }
   } // pause method.
   
   /**
@@ -85,7 +86,6 @@ public class Playback
         play[row] = format(equation[0]);
       else if (place[row] == 0)
         play[row] = format(equation[1]);
-      System.out.println(play[row]);
       String name = "" + play[row].charAt(place[row]);
       pressButton(name);
       checkNext();
