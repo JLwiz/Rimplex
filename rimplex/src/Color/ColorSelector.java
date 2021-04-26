@@ -27,7 +27,7 @@ public class ColorSelector extends JFrame
   private JButton ok;
   private JTextField fcolorr, fcolorg, fcolorb, bcolorr, bcolorg, bcolorb;
   
-  public ColorSelector() {
+  private ColorSelector() {
     listener = new ColorSelectorListener();
     
     GridBagConstraints format = new GridBagConstraints();
