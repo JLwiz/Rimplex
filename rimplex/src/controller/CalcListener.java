@@ -269,15 +269,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   private void changeMode()
   {
-    if (inFractions)
-    {
-      inFractions = false;
-    }
-    else if (!inFractions)
-    {
-      inFractions = true;
-    }
-    ButtonPadPanel.getInstance().updateMode(inFractions);
+    ButtonPadPanel.getInstance().updateMode();
   }
 
   /**
