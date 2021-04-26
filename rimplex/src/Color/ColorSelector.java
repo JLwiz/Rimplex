@@ -13,34 +13,55 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ColorSelector
+import GUI.CalculatorDisplay;
+
+public class ColorSelector extends JFrame
 {
-  private JFrame colorSelector;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -8657371588811888341L;
+  private static ColorSelector single_instance = null;
   private JTextField fcolorr, fcolorg, fcolorb, bcolorr, bcolorg, bcolorb;
+  
+  private ColorSelectorListener listener;
   public ColorSelector() {
+    listener = new ColorSelectorListener();
+    
     GridBagConstraints format = new GridBagConstraints();
     
-    colorSelector = new JFrame();
-    colorSelector.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    colorSelector.getContentPane().setLayout(new GridBagLayout());
-    colorSelector.setVisible(true);
-    colorSelector.setTitle("Color Selector");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    getContentPane().setLayout(new GridBagLayout());
+    setVisible(true);
+    setTitle("Color Selector");
     format.gridx = 0;
     format.gridy = 0;
     format.anchor = GridBagConstraints.CENTER;
     
-    colorSelector.getContentPane().add(createForegroundPanel(), format);
+    getContentPane().add(createForegroundPanel(), format);
     
     format.gridx = 1;
-    colorSelector.getContentPane().add(createBackgroundPanel(), format);
+    getContentPane().add(createBackgroundPanel(), format);
     
     format.gridwidth = 2;
     format.gridy = 1;
     format.gridx = 0;
     JButton ok = new JButton("OK");
-    colorSelector.getContentPane().add(ok, format);
+    getContentPane().add(ok, format);
+    ok.addActionListener(listener);
     
-    colorSelector.setSize(300, 150);
+    setSize(300, 150);
+  }
+  /**
+   * Singleton object.
+   * 
+   * @return the one and only CalculatorDisplay object.
+   */
+  public static ColorSelector getInstance()
+  {
+    if (single_instance == null)
+      single_instance = new ColorSelector();
+    return single_instance;
   }
   
   /**
@@ -138,8 +159,26 @@ public class ColorSelector
     
     return colorSelectorPanel;
   }
+  
+  public int[] getForegroundColors() {
+    int output[] = new int[3];
+    output[0] = Integer.parseInt(fcolorr.getText());
+    output[1] = Integer.parseInt(fcolorg.getText());
+    output[2] = Integer.parseInt(fcolorb.getText());
+    
+    return output;
+  }
+  
+  public int[] getBackgroundColors() {
+    int output[] = new int[3];
+    output[0] = Integer.parseInt(bcolorr.getText());
+    output[1] = Integer.parseInt(bcolorg.getText());
+    output[2] = Integer.parseInt(bcolorb.getText());
+    
+    return output;
+  }
   public static void main(String[] args)
   {
-    ColorSelector yes = new ColorSelector();
+    ColorSelector.getInstance();
   }
 }
