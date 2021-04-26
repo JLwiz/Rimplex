@@ -146,6 +146,21 @@ public class Playback
   } // checkNext method.
   
   /**
+   * checkParenthesis - Will make sure there is an equal amount of opening and 
+   * closing parenthesis for equation.
+   * 
+   *  @param equation
+   *            String
+   *  @return boolean if all closing parenthesis have an opening.
+   */
+  private boolean checkParenthesis(final String equation)
+  {
+    if ((equation.replaceAll("\\(", "").length()) == (equation.replaceAll("\\)", "").length()))
+      return true;
+    return false;
+  } // checkParenthesis method.
+  
+  /**
    * format - Will swap special characters around with parenthesis
    * so that it calls in the correct order when pressing the buttons.
    * 
@@ -160,18 +175,15 @@ public class Playback
     char check = equation.charAt(1);
     if (equation.replaceAll("[C|c|l|s|t|&]", "z").contains("z"))
     {
-      System.out.println(equation);
       formated = equation.replaceAll("[C|c|l|s|t|&|z|=]", "");
       if ((keyChar == '(') && (check == 'c') || (check == 'C')
           || (check == 'l') || (check == 's') || (check == '&')
           || (check == 't')) formated = formated.substring(1) + check;
       else formated = formated + keyChar;
-      System.out.println(formated);
     }
     else
     {
-      System.out.println(formated);
-      if (equation.charAt(0) == '(') return equation;
+      if (equation.charAt(0) == '(' && checkParenthesis(equation)) return equation;
       else return "(" + equation;
     }
     return formated;
