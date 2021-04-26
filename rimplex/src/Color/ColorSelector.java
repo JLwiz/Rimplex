@@ -162,21 +162,34 @@ public class ColorSelector extends JFrame
     return colorSelectorPanel;
   }
   
-  public int[] getForegroundColors() {
+  public int[] getForegroundColors() throws NumberFormatException {
     int output[] = new int[3];
-    output[0] = Integer.parseInt(fcolorr.getText());
-    output[1] = Integer.parseInt(fcolorg.getText());
-    output[2] = Integer.parseInt(fcolorb.getText());
+    try 
+    {
+      output[0] = Integer.parseInt(fcolorr.getText());
+      output[1] = Integer.parseInt(fcolorg.getText());
+      output[2] = Integer.parseInt(fcolorb.getText());
+    }
+    catch (NumberFormatException e) 
+    {
+      System.out.println("A foreground field is not an integer.");
+    }
     
     return output;
   }
   
-  public int[] getBackgroundColors() {
+  public int[] getBackgroundColors() throws NumberFormatException {
     int output[] = new int[3];
+    try 
+    {
     output[0] = Integer.parseInt(bcolorr.getText());
     output[1] = Integer.parseInt(bcolorg.getText());
     output[2] = Integer.parseInt(bcolorb.getText());
-    
+    } 
+    catch (NumberFormatException e) 
+    {
+      System.out.println("A background field is not an integer.");
+    }
     return output;
   }
   
