@@ -47,7 +47,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private boolean inFractions;
 
   private String recording = "";
-
+  private int mode = 0;
   /**
    * Default Constructor.
    */
@@ -269,7 +269,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   private void changeMode()
   {
-    ButtonPadPanel.getInstance().updateMode();
+    mode = ButtonPadPanel.getInstance().updateMode();
   }
 
   /**
@@ -313,13 +313,15 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private String getComplexText(final ComplexNumber compNum)
   {
     String text = "";
-    if (inFractions)
-    {
-      text = compNum.toFraction();
-    }
-    else if (!inFractions)
+    if (mode == 0)
     {
       text = compNum.toString();
+    } else if (mode == 1)
+    {
+      text = compNum.toFraction();
+    } else if (mode >= 2) 
+    {
+      text = compNum.toPolar();
     }
     return text;
   }
@@ -603,7 +605,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         evaluate.setOperator(operation);
         evaluate.setFirstOp(op1);
         ComplexNumber unitaryOperationResult = evaluate.solve();
-        frame.setDisplay(operation + getComplexText(op1) + equalsOperator
+        frame.setDisplay(operation + op1.toString() + equalsOperator
             + getComplexText(unitaryOperationResult));
         op1 = unitaryOperationResult;
       }

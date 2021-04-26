@@ -333,19 +333,21 @@ public class ButtonPadPanel extends JPanel
    * 
    * @param isFraction whether or not the calculator is in fractional mode.
    */
-  public void updateMode() {
-    if (mode == 0)
+  public int updateMode() {
+    String text = modeButton.getText();
+    if (text.equals("POLAR"))
     {
       mode = 1;
       modeButton.setText("FRAC");
-    } else if (mode == 1)
-    {
-      mode = 2;
-      modeButton.setText("DEC");
-    } else if (mode == 2) 
+    } else if (text.equals("FRAC"))
     {
       mode = 0;
+      modeButton.setText("DEC");
+    } else if (text.equals("DEC")) 
+    {
+      mode = 2;
       modeButton.setText("POLAR");
     }
+    return mode;
   }
 }
