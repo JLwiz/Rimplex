@@ -4,6 +4,7 @@ import javax.swing.Timer;
 
 import GUI.ButtonPadPanel;
 import GUI.HistoryWindow;
+import GUI.PlaybackWindow;
 import controller.CalcListener;
 
 /**
@@ -56,6 +57,7 @@ public class Playback
   public void pause(final boolean pause)
   {
     this.paused = pause;
+    PlaybackWindow.getInstance().toggleRecord(true);
     if (timer != null)
       if (pause && timer.isRunning())
       {
@@ -98,6 +100,7 @@ public class Playback
   public void start()
   {
     toggleFocusable(false);
+    PlaybackWindow.getInstance().toggleRecord(false);
     if (timer == null)
     {
       timer = new Timer(750, CalcListener.getInstance());
@@ -135,6 +138,39 @@ public class Playback
       row = 0;
     }
   } // checkNext method.
+  
+  /**
+   * format - Will swap special characters around with parenthesis
+   * so that it calls in the correct order when pressing the buttons.
+   * 
+   * @param equation
+   *            String
+   * @return formated string.
+   */
+  private String format(final String equation)
+  {
+    System.out.println(equation);
+    String formated = "";
+    char keyChar = equation.charAt(0);
+    char check = equation.charAt(1);
+    if (equation.replaceAll("[C|c|l|s|t|&]", "z").contains("z"))
+    {
+      System.out.println(equation);
+      formated = equation.replaceAll("[C|c|l|s|t|&|z|=]", "");
+      if ((keyChar == '(') && (check == 'c') || (check == 'C')
+          || (check == 'l') || (check == 's') || (check == '&')
+          || (check == 't')) formated = formated.substring(1) + check;
+      else formated = formated + keyChar;
+      System.out.println(formated);
+    }
+    else
+    {
+      System.out.println(formated);
+      if (equation.charAt(0) == '(') return equation;
+      else return "(" + equation;
+    }
+    return formated;
+  } // format method.
   
   /**
    * pressButton - Will press the button that is correlated with the name
@@ -209,30 +245,5 @@ public class Playback
         break;
     }
   } // pressButton method.
-  
-  /**
-   * format - Will swap special characters around with parenthesis
-   * so that it calls in the correct order when pressing the buttons.
-   * 
-   * @param equation
-   *            String
-   * @return formated string.
-   */
-  private String format(final String equation)
-  {
-    String formated = "";
-    char keyChar = equation.charAt(0);
-    if (equation.replaceAll("[C|c|l|s|t|&]", "z").contains("z"))
-    {
-      formated = equation.replaceAll("[C|c|l|s|t|&|z|=]", "");
-      formated = formated + keyChar;
-    }
-    else
-    {
-      if (equation.charAt(0) == '(') return equation;
-      else return "(" + equation;
-    }
-    return formated;
-  } // format method.
   
 } // Playback class.

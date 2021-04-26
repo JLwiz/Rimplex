@@ -488,6 +488,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       case "reset":
         resetDisplay();
         break;
+      case "mode":
+        changeMode();
+        break;
       default:
         break;
     }
@@ -782,6 +785,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           resetDisplay();
           playback.pause(true);
           playback.toggleFocusable(true);
+          PlaybackWindow.getInstance().toggleRecord(true);
           recording = "";
         }
         break;

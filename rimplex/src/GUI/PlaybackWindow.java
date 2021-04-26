@@ -42,7 +42,6 @@ public class PlaybackWindow extends JWindow
   private HashMap<String, String> saved;
   private JButton close, pause, play, rec;
   private JComboBox<String> select;
-  private JOptionPane promptSave;
   private JPanel main, side;
   
   /**
@@ -59,7 +58,6 @@ public class PlaybackWindow extends JWindow
     setComponents();
     addComponents();
     getContentPane().add(main);
-    setFocusable(true);
     
     setVisible(false);
   } // constructor.
@@ -133,7 +131,7 @@ public class PlaybackWindow extends JWindow
     recording = !recording; 
     if (recording)
     {
-      icon = new ImageIcon("/resources/images/recording.jpg");
+      icon = new ImageIcon(this.getClass().getResource("/resources/images/recording.jpg"));
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
       icon = new ImageIcon(recimg);
@@ -142,7 +140,7 @@ public class PlaybackWindow extends JWindow
     }
     else
     {
-      icon = new ImageIcon("/resources/images/pre-recording.jpg");
+      icon = new ImageIcon(this.getClass().getResource("/resources/images/pre-recording.jpg"));
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
       play.setEnabled(true);
@@ -151,6 +149,18 @@ public class PlaybackWindow extends JWindow
     icon = new ImageIcon(recimg);
     rec.setIcon(icon);
   } // toggleIcon method.
+  
+  /**
+   * toggleRecord - Will change toggle the ability to press the
+   * record button.
+   * 
+   * @param enabled
+   *          boolean
+   */
+  public void toggleRecord(final boolean enabled)
+  {
+    rec.setEnabled(enabled);
+  } // toggleRecord method.
   
   
   // -----------Private Methods-----------
@@ -186,21 +196,21 @@ public class PlaybackWindow extends JWindow
     switch (name)
     {
       case "pause":
-        icon = new ImageIcon("/resources/images/pause.jpg");
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/pause.jpg"));
         Image pauseimg = icon.getImage();
         pauseimg = pauseimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(pauseimg);
         b = new JButton(icon);
         break;
       case "play":
-        icon = new ImageIcon("/resources/images/play.jpg");
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/play.jpg"));
         Image playimg = icon.getImage();
         playimg = playimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(playimg);
         b = new JButton(icon);
         break;
       case "record":
-        icon = new ImageIcon("/resources/images/pre-recording.jpg");
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/pre-recording.jpg"));
         Image recimg = icon.getImage();
         recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(recimg);
@@ -234,7 +244,6 @@ public class PlaybackWindow extends JWindow
     pause = createButton("pause", "");
     play = createButton("play", "");
     rec = createButton("record", "");
-    promptSave = new JOptionPane();
     select = new JComboBox<>();
     main = new JPanel();
     side = new JPanel();
@@ -249,7 +258,6 @@ public class PlaybackWindow extends JWindow
   {
     main.setLayout(new GridLayout(0, 4));
     side.setLayout(new GridLayout(2, 0));
-    promptSave.setVisible(false);
     
     saved.put("DEMO", DEMO);
     select.addItem("DEMO");

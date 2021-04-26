@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -36,7 +36,7 @@ public class HistoryWindow extends JWindow
   
   private boolean open;
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
-  private ArrayList<String> recordings;
+  private HashMap<Integer, String> recordings;
   private int place;
   private JButton close;
   private JTextPane historyText;
@@ -102,10 +102,9 @@ public class HistoryWindow extends JWindow
     
     String keep = saved.replaceAll("<html>", "").replaceAll("</html>", "");
     
-    System.out.println(place);
     if (PlaybackWindow.getInstance().recording())
-      if (recordings.size() == place + 1) recordings.add(place, recordings.get(place) + keep);
-      else recordings.add(keep);
+      if (recordings.size() == place + 1) recordings.put(place, recordings.get(place) + keep);
+      else recordings.put(place, keep);
     
     if (!keep.trim().equals(""))
     {
@@ -211,7 +210,7 @@ public class HistoryWindow extends JWindow
    */
   private void createComponents()
   {
-    recordings = new ArrayList<>();
+    recordings = new HashMap<>();
     close = new JButton("<");
     historyText = new JTextPane();
     historyPanel = new JPanel();
