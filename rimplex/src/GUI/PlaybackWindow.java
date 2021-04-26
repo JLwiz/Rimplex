@@ -157,18 +157,20 @@ public class PlaybackWindow extends JWindow
     recording = !recording;
     if (recording)
     {
-      icon = new ImageIcon(this.getClass().getResource("/resources/images/recording.jpg"));
+      icon = new ImageIcon(this.getClass().getResource("/resources/images/"
+          + "baseline_radio_button_checked_black_24dp.png"));
       recimg = icon.getImage();
-      recimg = recimg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+      recimg = recimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
       icon = new ImageIcon(recimg);
       play.setEnabled(false);
       pause.setEnabled(false);
     }
     else
     {
-      icon = new ImageIcon(this.getClass().getResource("/resources/images/pre-recording.jpg"));
+      icon = new ImageIcon(this.getClass().getResource("/resources/images/"
+          + "baseline_radio_button_unchecked_black_24dp.png"));
       recimg = icon.getImage();
-      recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
+      recimg = recimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
       play.setEnabled(true);
       pause.setEnabled(true);
     }
@@ -218,23 +220,26 @@ public class PlaybackWindow extends JWindow
     switch (name)
     {
       case "pause":
-        icon = new ImageIcon(this.getClass().getResource("/resources/images/pause.jpg"));
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/"
+            + "baseline_pause_circle_filled_black_24dp.png"));
         Image pauseimg = icon.getImage();
         pauseimg = pauseimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(pauseimg);
         b = new JButton(icon);
         break;
       case "play":
-        icon = new ImageIcon(this.getClass().getResource("/resources/images/play.jpg"));
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/"
+            + "baseline_play_circle_black_24dp.png"));
         Image playimg = icon.getImage();
         playimg = playimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(playimg);
         b = new JButton(icon);
         break;
       case "record":
-        icon = new ImageIcon(this.getClass().getResource("/resources/images/pre-recording.jpg"));
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/"
+            + "baseline_radio_button_unchecked_black_24dp.png"));
         Image recimg = icon.getImage();
-        recimg = recimg.getScaledInstance(75, 50, java.awt.Image.SCALE_SMOOTH);
+        recimg = recimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(recimg);
         b = new JButton(icon);
         break;
