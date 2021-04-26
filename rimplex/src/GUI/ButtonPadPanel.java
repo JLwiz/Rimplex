@@ -31,6 +31,7 @@ public class ButtonPadPanel extends JPanel
   private HashMap<String, JButton> buttonMap;
   
   private JButton modeButton;
+  private int mode = 0;
   
   /**
    * The default constructor for our ButtonPadPanel.
@@ -332,13 +333,19 @@ public class ButtonPadPanel extends JPanel
    * 
    * @param isFraction whether or not the calculator is in fractional mode.
    */
-  public void updateMode(final boolean isFraction) {
-    if (isFraction)
+  public void updateMode() {
+    if (mode == 0)
     {
+      mode = 1;
       modeButton.setText("FRAC");
-    } else
+    } else if (mode == 1)
     {
+      mode = 2;
       modeButton.setText("DEC");
+    } else if (mode == 2) 
+    {
+      mode = 0;
+      modeButton.setText("POLAR");
     }
   }
 }
