@@ -22,6 +22,8 @@ public class ButtonPadPanel extends JPanel
   private static final int MAXFONTSIZE = 30;
   private static final String FONT = "Arial";
   private static ButtonPadPanel single_instance = null;
+  private static Color foreground = new Color(255, 255, 255);
+  private static Color background = new Color(0, 0, 0);
   
   private GridBagLayout layout = new GridBagLayout();
   private GridBagConstraints numpad = new GridBagConstraints();

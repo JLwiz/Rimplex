@@ -433,7 +433,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
    */
   private void menuActions(final JMenuItem menu) throws IOException
   {
-    if (menu.getText().equals("Print History"))
+    if (menu.getName().equals("Print History"))
     {
       HistoryWindow history = HistoryWindow.getInstance();
       try

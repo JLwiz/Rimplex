@@ -256,8 +256,10 @@ public class CalculatorDisplay extends JFrame
   private void createMenuBar()
   {
     JMenuItem print = new JMenuItem(STRINGS.getString("PHistory"));
+    print.setName("Print History");
     print.addActionListener(listener);
     JMenuItem playback = new JMenuItem("Playback");
+    playback.setName("Playback");
     playback.addActionListener(listener);
 //    ImageIcon importIcon = new ImageIcon(
 //        CalculatorDisplay.class.getResource("/images/import-icon.png"));
