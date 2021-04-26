@@ -8,7 +8,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ResourceBundle;
-import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -278,6 +277,8 @@ public class CalculatorDisplay extends JFrame
     // If you want to hide the menu bar, set this to false.
     menuBar.setVisible(true);
   }
+  
+
 
   /**
    * replaceI - Will replace all normal i's with italics.

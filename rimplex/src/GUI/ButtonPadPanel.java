@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -40,6 +43,16 @@ public class ButtonPadPanel extends JPanel
    */
   private ButtonPadPanel()
   {
+    try
+    {
+      int colors[] = fetchColors();
+      setForeground(colors[0], colors[1], colors[2]);
+      setBackground(colors[3], colors[4], colors[5]);
+    }
+    catch (FileNotFoundException e)
+    {
+      System.out.println("ERROR RETRIEVING THEMEING");
+    }
     listener = CalcListener.getInstance();
     buttonMap = new HashMap<>();
     buttonNames = new ArrayList<>();
@@ -317,9 +330,9 @@ public class ButtonPadPanel extends JPanel
   {
     JButton b = new JButton(title);
     b.setName(name);
-    b.setBackground(Color.BLACK);
+    b.setBackground(background);
     b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-    b.setForeground(Color.WHITE);
+    b.setForeground(foreground);
     b.setFont(new Font(FONT, Font.BOLD, MAXFONTSIZE));
     b.setFocusable(true);
     b.addActionListener(listener);
@@ -328,6 +341,27 @@ public class ButtonPadPanel extends JPanel
     buttonNames.add(name);
     
     return b;
+  }
+  
+  public static void setForeground(int a, int b, int c) {
+    foreground = new Color(a, b, c);
+  }
+  
+  public static void setBackground(int a, int b, int c) {
+    background = new Color(a, b, c);
+  }
+  
+  private static int[] fetchColors() throws FileNotFoundException{
+    Scanner in = new Scanner(new File("src/app/config.txt"));
+    int colors[] = new int[6];
+    for(int i = 0; i < 3; i++) {
+      colors[i] = in.nextInt();
+    }
+    for(int i = 3; i < 6; i++) {
+      colors[i] = in.nextInt();
+    }
+    in.close();
+    return colors;
   }
   
   /**

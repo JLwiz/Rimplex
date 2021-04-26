@@ -44,6 +44,7 @@ public class RimplexDriver
     }
     SwingUtilities.invokeLater(() -> 
        CalculatorDisplay.getInstance().addComponentListener(new DisplayListener()));
+        
   } // main method.
   
 } // RimplexDriver class.
