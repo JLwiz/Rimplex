@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -15,11 +16,11 @@ import javax.swing.JTextPane;
 import javax.swing.JWindow;
 import javax.swing.Timer;
 
+import File.SaveHandler;
 import controller.CalcListener;
 
 /**
- * HistoryPanel - A JPanel that will display the history of the
- * calculators equations.
+ * HistoryPanel - A JPanel that will display the history of the calculators equations.
  * 
  * @author Andrew Fryer
  * @version 1.0 (04/13/2021)
@@ -27,13 +28,11 @@ import controller.CalcListener;
 public class HistoryWindow extends JWindow
 {
 
-  //----------Declarations----------
-  
-  
-  
+  // ----------Declarations----------
+
   private static final long serialVersionUID = -6237181401018469549L;
   private static HistoryWindow single_instance = null;
-  
+
   private boolean open;
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private HashMap<Integer, String> recordings;
@@ -42,37 +41,33 @@ public class HistoryWindow extends JWindow
   private JTextPane historyText;
   private JPanel historyPanel;
   private JScrollPane scrollList;
-  
+
   private GridBagLayout layout = new GridBagLayout();
   private GridBagConstraints constraints = new GridBagConstraints();
-  
-  
-  
-  //----------Constructors----------
-  
-  
-  
+
+  // ----------Constructors----------
+
   /**
    * Default Constructor.
    */
   private HistoryWindow()
-  { 
+  {
     super(CalculatorDisplay.getInstance());
-    
+
     open = false;
     place = 0;
     setSize(new Dimension(0, 300));
     setLocation(display.getX() + 490, display.getY() + 160);
     createComponents();
     setComponents();
-    addComponents();    
+    addComponents();
     setFocusable(true);
     addKeyListener(CalcListener.getInstance());
     getContentPane().add(historyPanel);
-    
+
     setVisible(true);
   } // constructor.
-  
+
   /**
    * getInstance - Singleton for HistoryPanel.
    * 
@@ -80,39 +75,41 @@ public class HistoryWindow extends JWindow
    */
   public static HistoryWindow getInstance()
   {
-    if (single_instance == null) single_instance = new HistoryWindow();
+    if (single_instance == null)
+      single_instance = new HistoryWindow();
     return single_instance;
   } // getInstance method.
-  
-  
-  
-  //----------Public Methods----------
-  
-  
-  
+
+  // ----------Public Methods----------
+
   /**
    * addToHistory - Will add an equation and answer to the history.
    * 
    * @param saved
    *          String of the equation.
+   * @throws IOException
+   *           - the IOException
    */
-  public void addToHistory(final String saved)
+  public void addToHistory(final String saved) throws IOException
   {
-    if (saved == null || saved.equals("")) return;
-    
+    if (saved == null || saved.equals(""))
+      return;
+
     String keep = saved.replaceAll("<html>", "").replaceAll("</html>", "");
-    
+
     if (PlaybackWindow.getInstance().recording())
-      if (recordings.size() == place + 1) recordings.put(place, recordings.get(place) + keep);
-      else recordings.put(place, keep);
-    
+      if (recordings.size() == place + 1)
+        recordings.put(place, recordings.get(place) + keep);
+      else
+        recordings.put(place, keep);
+
     if (!keep.trim().equals(""))
     {
       keep = historyText.getText().replaceAll("</p>", keep + "<br><br></p>");
       historyText.setText(keep);
     }
   } // addToHistory method.
-  
+
   /**
    * getPlace - Will return the current place integer.
    * 
@@ -122,55 +119,55 @@ public class HistoryWindow extends JWindow
   {
     return place;
   }
-  
+
   /**
    * getRecording - Will get the equation list.
    * 
    * @param pos
    *          int
-   * @return equation
-   *            String
+   * @return equation String
    */
-  public String getRecording(int pos) 
+  public String getRecording(int pos)
   {
-    if (pos < recordings.size()) return recordings.get(pos);
+    if (pos < recordings.size())
+      return recordings.get(pos);
     return "";
   }
-  
+
   /**
    * getPanel - Will return the JPanel.
    * 
-   * @return historyPanel
-   *            (JPanel)
+   * @return historyPanel (JPanel)
    */
   public JPanel getPanel()
   {
     return historyPanel;
   } // getPanel method.
-  
+
   /**
    * nextRecording - Will increment place by one.
    */
   public void nextRecording()
   {
-    if (recordings.size() > place) place++;
+    if (recordings.size() > place)
+      place++;
   } // nextRecording.
-  
+
   /**
    * toggleHistory - Will open/close the history.
    * 
    * @param open
-   *      boolean
+   *          boolean
    */
   public void toggleHistory(final boolean open)
   {
     Timer timer = new Timer(5, CalcListener.getInstance());
-    
+
     timer.start();
-    
+
     this.open = open;
   } // open method.
-  
+
   /**
    * isOpen - Will return the state of the JWindow.
    * 
@@ -180,12 +177,9 @@ public class HistoryWindow extends JWindow
   {
     return open;
   } // state method.
-  
-  
-  //----------Private Methods----------
-  
-  
-  
+
+  // ----------Private Methods----------
+
   /**
    * addComponents - Will add the components to their correct positions.
    */
@@ -197,14 +191,14 @@ public class HistoryWindow extends JWindow
     constraints.weighty = 1;
     constraints.fill = GridBagConstraints.BOTH;
     historyPanel.add(scrollList, constraints);
-    
+
     constraints.gridx = 1;
     constraints.gridy = 0;
     constraints.weightx = .05;
     constraints.weighty = 1;
     historyPanel.add(close, constraints);
   } // addComponents method.
-  
+
   /**
    * createComponenets - Will create the components.
    */
@@ -216,7 +210,7 @@ public class HistoryWindow extends JWindow
     historyPanel = new JPanel();
     scrollList = new JScrollPane(historyText);
   } // createComponenets method.
-  
+
   /**
    * getTextPane - Will return the JTextPane component.
    * 
@@ -226,7 +220,7 @@ public class HistoryWindow extends JWindow
   {
     return this.historyText;
   }
-  
+
   /**
    * setComponents - Will set the components attributes.
    */
@@ -247,5 +241,5 @@ public class HistoryWindow extends JWindow
     historyText.setEditable(false);
     historyPanel.setLayout(layout);
   } // setComponenets method.
-  
+
 } // HistoryWindow class.

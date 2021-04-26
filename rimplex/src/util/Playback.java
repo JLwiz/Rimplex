@@ -1,5 +1,7 @@
 package util;
 
+import java.io.IOException;
+
 import javax.swing.Timer;
 
 import GUI.ButtonPadPanel;
@@ -53,8 +55,9 @@ public class Playback
    * pause - Will pause the recording and save the placement in the recording.
    * 
    * @param pause
+   * @throws IOException - the IOException
    */
-  public void pause(final boolean pause)
+  public void pause(final boolean pause) throws IOException
   {
     this.paused = pause;
     PlaybackWindow.getInstance().toggleRecord(true);
@@ -78,8 +81,9 @@ public class Playback
   
   /**
    * run - Will play the recording starting from the placeholder.
+   * @throws IOException - the IOException
    */
-  public void run()
+  public void run() throws IOException
   {
     if (!paused)
     {
@@ -96,8 +100,9 @@ public class Playback
   
   /**
    * start - Will start the playback.
+   * @throws IOException - the IOException
    */
-  public void start()
+  public void start() throws IOException
   {
     toggleFocusable(false);
     PlaybackWindow.getInstance().toggleRecord(false);
@@ -124,8 +129,9 @@ public class Playback
   /**
    * checkNext - Will check to see if there is another character in the
    * current string being played back.
+   * @throws IOException - the IOException
    */
-  private void checkNext()
+  private void checkNext() throws IOException
   {
     if (place[row] < play[row].length() - 1) place[row]++;
     else if ((row + 1) < (play.length - 1)) place[row++] = 0;
@@ -149,7 +155,6 @@ public class Playback
    */
   private String format(final String equation)
   {
-    System.out.println(equation);
     String formated = "";
     char keyChar = equation.charAt(0);
     char check = equation.charAt(1);

@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -28,8 +29,16 @@ public class DisplayListener implements ComponentListener
       frame = (JFrame) e.getSource();
       HistoryWindow.getInstance().setLocation(frame.getX() + (int)((.98) * frame.getWidth()),
           frame.getY() + (int)((.32) * frame.getHeight()));
-      PlaybackWindow.getInstance().setLocation(frame.getX() + (int)((.99) * frame.getWidth()),
-          frame.getY() + (int)((.02) * frame.getHeight()));
+      try
+      {
+        PlaybackWindow.getInstance().setLocation(frame.getX() + (int)((.99) * frame.getWidth()),
+            frame.getY() + (int)((.02) * frame.getHeight()));
+      }
+      catch (IOException e1)
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     }
   }
 
@@ -43,8 +52,16 @@ public class DisplayListener implements ComponentListener
       frame = (JFrame) e.getSource();
       HistoryWindow.getInstance().setLocation(frame.getX() + (int)((.98) * frame.getWidth()),
           frame.getY() + (int)((.32) * frame.getHeight())); 
-      PlaybackWindow.getInstance().setLocation(frame.getX() + (int)((.99) * frame.getWidth()),
-          frame.getY() + (int)((.02) * frame.getHeight()));
+      try
+      {
+        PlaybackWindow.getInstance().setLocation(frame.getX() + (int)((.99) * frame.getWidth()),
+            frame.getY() + (int)((.02) * frame.getHeight()));
+      }
+      catch (IOException e1)
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     }
   }
 

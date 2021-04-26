@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.Timer;
 
+import File.SaveHandler;
 import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
 import GUI.HistoryWindow;
@@ -40,10 +41,11 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private Equation evaluate;
   private InputParser parser;
   private Playback playback = null;
+  private SaveHandler calcSaver;
   private final String leftParen = "(";
   private final String rightParen = ")";
   private boolean inFractions;
-  
+
   private String recording = "";
 
   /**
@@ -64,7 +66,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   public static CalcListener getInstance()
   {
-    if (listener == null) listener = new CalcListener();
+    if (listener == null)
+      listener = new CalcListener();
     return listener;
   }
 
@@ -76,31 +79,59 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   public void actionPerformed(final ActionEvent e)
   {
     frame = CalculatorDisplay.getInstance();
-    
+
     if (e.getSource() instanceof JButton)
-      buttonActions((JButton) e.getSource());
-    
+      try
+      {
+        buttonActions((JButton) e.getSource());
+      }
+      catch (IOException e1)
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+
     if (e.getSource() instanceof JMenuItem)
-      menuActions((JMenuItem) e.getSource());
-    
+      try
+      {
+        menuActions((JMenuItem) e.getSource());
+      }
+      catch (IOException e1)
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+
     if (e.getSource() instanceof Timer)
     {
       Timer timer = (Timer) e.getSource();
-      
+
       if (timer.getDelay() != 750)
       {
         HistoryWindow window = HistoryWindow.getInstance();
         boolean state = window.isOpen();
-      
-        if (state) 
-          if (window.getWidth() != 200) window.setSize(window.getWidth() + 10, 300);
+
+        if (state)
+          if (window.getWidth() != 200)
+            window.setSize(window.getWidth() + 10, 300);
         if (!state)
-          if (window.getWidth() != 0) window.setSize(window.getWidth() - 10, 300);
-      
-        if (window.getWidth() == 0 || window.getWidth() == 200) timer.stop();
+          if (window.getWidth() != 0)
+            window.setSize(window.getWidth() - 10, 300);
+
+        if (window.getWidth() == 0 || window.getWidth() == 200)
+          timer.stop();
       }
-      else playback.run();
-        
+      else
+        try
+        {
+          playback.run();
+        }
+        catch (IOException e1)
+        {
+          // TODO Auto-generated catch block
+          e1.printStackTrace();
+        }
+
     }
   } // actionPerformed method.
 
@@ -206,14 +237,16 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     if (text.length() > 0)
       frame.setInput(text.substring(0, text.length() - 1));
   } // append method.
-  
+
   /**
    * buttonActions - Will call the buttons actions.
    * 
    * @param button
    *          The button pressed.
+   * @throws IOException
+   *           - the IOException
    */
-  private void buttonActions(final JButton button)
+  private void buttonActions(final JButton button) throws IOException
   {
     numberActions(button);
     operationActions(button);
@@ -221,7 +254,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     historyActions(button);
     playbackActions(button);
   } // buttonActions method.
-  
+
   /**
    * clears InputField for CalculatorDisplay.
    */
@@ -298,7 +331,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
     return text;
   }
-  
+
   /**
    * historyActions - Will call the button actions for history.
    * 
@@ -351,14 +384,16 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
     return isNum;
   }
-  
+
   /**
    * logicActions - Will call the button actions for logic.
    * 
    * @param button
    *          The button pressed.
+   * @throws IOException
+   *           - the IOException
    */
-  private void logicActions(final JButton button)
+  private void logicActions(final JButton button) throws IOException
   {
     switch (button.getName().toLowerCase())
     {
@@ -393,14 +428,16 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         break;
     }
   } // logicActions method.
-  
+
   /**
    * menuActions - Will perform the menu actions.
    * 
    * @param menu
    *          The menu item selected.
+   * @throws IOException
+   *           - the IOException
    */
-  private void menuActions(final JMenuItem menu)
+  private void menuActions(final JMenuItem menu) throws IOException
   {
     if (menu.getText().equals("Print History..."))
     {
@@ -420,7 +457,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       PlaybackWindow.getInstance().setVisible(true);
   } // menuActions method.
 
-  
   /**
    * numberActions - Will call button actions for number buttons.
    * 
@@ -459,14 +495,16 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         break;
     }
   } // numberActions method.
-  
+
   /**
    * operationActions - Will call button actions for operations.
    * 
    * @param button
    *          The button pressed.
+   * @throws IOException
+   *           - the IOException
    */
-  private void operationActions(final JButton button)
+  private void operationActions(final JButton button) throws IOException
   {
     switch (button.getName().toLowerCase())
     {
@@ -577,13 +615,15 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
             + getComplexText(unitaryOperationResult));
         op1 = unitaryOperationResult;
       }
-      else if (operation.equals("RP")) {
+      else if (operation.equals("RP"))
+      {
         String str = operation + getComplexText(op1) + equalsOperator;
         op1 = new ComplexNumber(op1.getReal(), 0.0);
         str += getComplexText(op1);
         frame.setDisplay(str);
       }
-      else if (operation.equals("IP")) {
+      else if (operation.equals("IP"))
+      {
         String str = operation + getComplexText(op1) + equalsOperator;
         op1 = new ComplexNumber(0.0, op1.getImaginary());
         str += getComplexText(op1);
@@ -728,14 +768,16 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
     return (openParen != closedParen);
   }
-  
+
   /**
    * playbackActions - Will perform the playback actions.
    * 
    * @param button
    *          The button pressed.
+   * @throws IOException
+   *           - the IOException
    */
-  private void playbackActions(final JButton button)
+  private void playbackActions(final JButton button) throws IOException
   {
     switch (button.getName().toLowerCase())
     {
@@ -746,21 +788,21 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         {
           place = HistoryWindow.getInstance().getPlace();
           HistoryWindow.getInstance().nextRecording();
-          PlaybackWindow.getInstance().saveRecording(
-              HistoryWindow.getInstance().getRecording(place));
+          PlaybackWindow.getInstance()
+              .saveRecording(HistoryWindow.getInstance().getRecording(place));
         }
         else
         {
           clearInput();
           resetDisplay();
-          if (playback != null) playback.toggleFocusable(true);
+          if (playback != null)
+            playback.toggleFocusable(true);
         }
         break;
       case "play":
         /*
-         * Grab a string based on the name of recording stored in the
-         * JComboBox, create a new object of Playback with the string
-         * of total recording.
+         * Grab a string based on the name of recording stored in the JComboBox, create a new object
+         * of Playback with the string of total recording.
          */
         String input = PlaybackWindow.getInstance().getRecording();
         if (!recording.equals(input))
@@ -775,11 +817,12 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         break;
       case "pause":
         if (playback != null)
-          if (!playback.paused()) playback.pause(true);
+          if (!playback.paused())
+            playback.pause(true);
         break;
       case "close":
         PlaybackWindow.getInstance().setVisible(false);
-        if (playback != null) 
+        if (playback != null)
         {
           clearInput();
           resetDisplay();
