@@ -22,9 +22,11 @@ public class ColorSelector extends JFrame
    */
   private static final long serialVersionUID = -8657371588811888341L;
   private static ColorSelector single_instance = null;
-  private JTextField fcolorr, fcolorg, fcolorb, bcolorr, bcolorg, bcolorb;
   
   private ColorSelectorListener listener;
+  private JButton ok;
+  private JTextField fcolorr, fcolorg, fcolorb, bcolorr, bcolorg, bcolorb;
+  
   public ColorSelector() {
     listener = new ColorSelectorListener();
     
@@ -46,7 +48,7 @@ public class ColorSelector extends JFrame
     format.gridwidth = 2;
     format.gridy = 1;
     format.gridx = 0;
-    JButton ok = new JButton("OK");
+    ok = new JButton("OK");
     getContentPane().add(ok, format);
     ok.addActionListener(listener);
     
@@ -177,6 +179,12 @@ public class ColorSelector extends JFrame
     
     return output;
   }
+  
+  public void setOKColor(Color foreground, Color background) {
+    ok.setForeground(foreground);
+    ok.setBackground(background);
+  }
+  
   public static void main(String[] args)
   {
     ColorSelector.getInstance();
