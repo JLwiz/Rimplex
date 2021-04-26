@@ -174,6 +174,18 @@ public class ComplexNumber
 
     return toStringHelper(realFraction, imaginaryFraction);
   }
+  
+  /**
+   * returns the polar form of a complex number r(cos(@)+isin(@))
+   * @return String polar form
+   */
+  public String toPolar()
+  {
+    double theta = Math.atan(imaginaryNumber/realNumber);
+    double r = Math.sqrt((realNumber * realNumber) + (imaginaryNumber * imaginaryNumber));
+    String str = String.format("%.6f(cos(%.6f)+isin(%.6f)", r, theta, theta);
+    return "";
+  }
 
   /**
    * reduces the fraction of a real or imaginary number.

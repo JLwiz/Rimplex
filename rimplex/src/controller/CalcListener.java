@@ -402,7 +402,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
    */
   private void menuActions(final JMenuItem menu)
   {
-    if (menu.getText().equals("Print History..."))
+    if (menu.getText().equals("Print History"))
     {
       HistoryWindow history = HistoryWindow.getInstance();
       try
