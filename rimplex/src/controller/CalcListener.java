@@ -462,6 +462,16 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       language.write("es ES");
       language.close();
     }
+    else if (menu.getName().equals("German")) {
+      FileWriter language = new FileWriter("src/app/language.txt");
+      language.write("de DE");
+      language.close();
+    }
+    else if (menu.getName().equals("French")) {
+      FileWriter language = new FileWriter("src/app/language.txt");
+      language.write("fr FR");
+      language.close();
+    }
   } // menuActions method.
 
   /**
