@@ -278,13 +278,18 @@ public class CalculatorDisplay extends JFrame
     GermanButton.setName("German");
     JMenuItem FrenchButton = new JMenuItem("Française");
     FrenchButton.setName("French");
+    JMenuItem aboutButton = new JMenuItem("About");
+    aboutButton.setName("About");
     SpanishButton.addActionListener(listener);
     EnglishButton.addActionListener(listener);
     GermanButton.addActionListener(listener);
     FrenchButton.addActionListener(listener);
+    aboutButton.addActionListener(listener);
     JMenu LanguageMenu = new JMenu(STRINGS.getString("Language"));
     JMenu SettingsMenu = new JMenu(STRINGS.getString("Settings"));
+    JMenu helpMenu = new JMenu(STRINGS.getString("Help"));
     
+    helpMenu.add(aboutButton);
     LanguageMenu.add(EnglishButton);
     LanguageMenu.add(SpanishButton);
     LanguageMenu.add(GermanButton);
@@ -295,6 +300,7 @@ public class CalculatorDisplay extends JFrame
     // menuBar.add(optionsMenu);
     menuBar.add(fileMenu);
     menuBar.add(SettingsMenu);
+    menuBar.add(helpMenu);
     setJMenuBar(menuBar);
     // If you want to hide the menu bar, set this to false.
     menuBar.setVisible(true);

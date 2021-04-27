@@ -9,8 +9,11 @@ import java.awt.event.WindowListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JWindow;
 import javax.swing.Timer;
 
 import File.SaveHandler;
@@ -433,9 +436,11 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
    * @throws IOException
    *           - the IOException
    */
+  @SuppressWarnings("deprecation")
   private void menuActions(final JMenuItem menu) throws IOException
   {
-    if (menu.getName().equals("Print History"))
+    String name = menu.getName();
+    if (name.equals("Print History"))
     {
       HistoryWindow history = HistoryWindow.getInstance();
       try
@@ -449,28 +454,36 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       }
 
     }
-    else if (menu.getName().equals("Playback")) {
+    else if (name.equals("Playback")) {
       PlaybackWindow.getInstance().setVisible(true);
     }
-    else if (menu.getName().equals("English")) {
+    else if (name.equals("English")) {
       FileWriter language = new FileWriter("src/app/language.txt");
       language.write("en US");
       language.close();
     }
-    else if (menu.getName().equals("Spanish")) {
+    else if (name.equals("Spanish")) {
       FileWriter language = new FileWriter("src/app/language.txt");
       language.write("es ES");
       language.close();
     }
-    else if (menu.getName().equals("German")) {
+    else if (name.equals("German")) {
       FileWriter language = new FileWriter("src/app/language.txt");
       language.write("de DE");
       language.close();
     }
-    else if (menu.getName().equals("French")) {
+    else if (name.equals("French")) {
       FileWriter language = new FileWriter("src/app/language.txt");
       language.write("fr FR");
       language.close();
+    } else if (name.equals("About")) 
+    {
+      JEditorPane editor = new JEditorPane();
+      JFrame frame = new JFrame("About");
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setContentPane(editor);
+      frame.pack();
+      frame.setVisible(true);
     }
   } // menuActions method.
 
