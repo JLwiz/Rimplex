@@ -47,6 +47,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private boolean inFractions;
 
   private String recording = "";
+  private String input = null;
   private int mode = 0;
   /**
    * Default Constructor.
@@ -793,12 +794,15 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
             playback.toggleFocusable(true);
         }
         break;
+      case "open":
+        input = PlaybackWindow.getInstance().getRecording();
+        break;
       case "play":
         /*
          * Grab a string based on the name of recording stored in the JComboBox, create a new object
          * of Playback with the string of total recording.
          */
-        String input = PlaybackWindow.getInstance().getRecording();
+        if (input == null || input.trim().equals("")) return;
         if (!recording.equals(input))
         {
           clearInput();

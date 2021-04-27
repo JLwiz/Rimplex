@@ -3,6 +3,7 @@ package GUI;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,6 +12,7 @@ import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
@@ -39,8 +41,7 @@ public class PlaybackWindow extends JWindow
   private SaveHandler calcSaver;
   private boolean recording;
   private HashMap<String, String> saved;
-  private JButton close, pause, play, rec;
-  private JComboBox<String> select;
+  private JButton close, open, pause, play, rec;
   private JPanel main, side;
 
   /**
@@ -86,7 +87,19 @@ public class PlaybackWindow extends JWindow
    */
   public String getRecording()
   {
-    return saved.get(select.getSelectedItem());
+    JFileChooser chooser = new JFileChooser();
+    chooser.setDialogTitle("Choose a recording file you would like to playback.");
+    
+    int userSelection = chooser.showOpenDialog(CalculatorDisplay.getInstance());
+    
+    if (userSelection == JFileChooser.APPROVE_OPTION)
+    {
+      File selected = chooser.getSelectedFile();
+      
+      // stuff to validate file, read from, and return the equation string.
+    } else return null;
+    
+    return null;
   } // getRecording method.
 
   /**
@@ -125,7 +138,6 @@ public class PlaybackWindow extends JWindow
      */
 
     saved.put(name, record);
-    select.addItem(name);
     calcSaver.writeFile(name, record);
   } // saveRecording method.
 
@@ -143,7 +155,7 @@ public class PlaybackWindow extends JWindow
     while (keys.hasNext()) {
       String name = keys.next();
       saved.put(name, records.get(name));
-      select.addItem(name);
+      //select.addItem(name);
     }
   }
 
@@ -200,8 +212,8 @@ public class PlaybackWindow extends JWindow
     main.add(play);
     main.add(pause);
     main.add(side);
+    side.add(open);
     side.add(close);
-    side.add(select);
   } // addComponents method.
 
   /**
@@ -270,10 +282,10 @@ public class PlaybackWindow extends JWindow
   {
     calcSaver = SaveHandler.getInstance();
     close = createButton("close", "Close");
+    open = createButton("open", "Open");
     pause = createButton("pause", "");
     play = createButton("play", "");
     rec = createButton("record", "");
-    select = new JComboBox<>();
     main = new JPanel();
     side = new JPanel();
     saved = new HashMap<>();
@@ -288,7 +300,6 @@ public class PlaybackWindow extends JWindow
     side.setLayout(new GridLayout(2, 0));
 
     saved.put("DEMO", DEMO);
-    select.addItem("DEMO");
   } // setComponents method.
 
 } // PlaybackWindow class.
