@@ -9,7 +9,10 @@ import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.Locale;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.Timer;
@@ -20,6 +23,7 @@ import GUI.HistoryWindow;
 import GUI.PlaybackWindow;
 import calculations.ComplexNumber;
 import calculations.Equation;
+import html.HTMLText;
 import printing.PrintableHistory;
 import printing.PrinterController;
 import util.InputParser;
@@ -384,8 +388,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   /**
    * Sets the default language to the language selected and refreshes the JFrame.
    * 
-   * @param language - the language to change to
-   * @throws IOException - the IOException
+   * @param language
+   *          - the language to change to
+   * @throws IOException
+   *           - the IOException
    */
 
   private void languageActions(final String language) throws IOException
@@ -464,9 +470,11 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
    * @throws IOException
    *           - the IOException
    */
+  @SuppressWarnings("deprecation")
   private void menuActions(final JMenuItem menu) throws IOException
   {
-    if (menu.getName().equals("Print History"))
+    String name = menu.getName();
+    if (name.equals("Print History"))
     {
       HistoryWindow history = HistoryWindow.getInstance();
       try
@@ -478,9 +486,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       {
         e1.printStackTrace();
       }
-
     }
-    else if (menu.getName().equals("Playback"))
+    else if (name.equals("Playback"))
     {
       PlaybackWindow.getInstance().setVisible(true);
     }
@@ -488,6 +495,22 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         || menu.getText().equals("Deutsche") || menu.getText().equals("Française"))
     {
       languageActions(menu.getName());
+    }
+    else if (name.equals("About"))
+    {
+      JEditorPane editor = new JEditorPane();
+      JFrame aboutFrame = new JFrame(name);
+      ImageIcon logo = new ImageIcon(CalcListener.class.getResource("/logo/icon.png"));
+      frame.setIconImage(logo.getImage());
+      editor.setSize(200, 300);
+      editor.setEditable(false);
+      editor.setContentType("text/html");
+      String img = CalcListener.class.getResource("/resources/images/logoRimplex.png").toString();
+      editor.setText("<html><img src=\"" + img + "\" width=200 height=50>" + HTMLText.ABOUTPAGE);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setContentPane(editor);
+      frame.pack();
+      frame.setVisible(true);
     }
   } // menuActions method.
 
@@ -733,7 +756,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
     else
     {
-      if (operation.equals("^")) // acts like the number Buttons but may become a proper operator later
+      if (operation.equals("^")) // acts like the number Buttons but may become a proper operator
+                                 // later
       {
         append(operation.charAt(0));
       }

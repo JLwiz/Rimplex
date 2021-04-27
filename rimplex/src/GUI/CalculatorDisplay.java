@@ -68,7 +68,7 @@ public class CalculatorDisplay extends JFrame
     setComponents();
     setLayouts();
     addComponents();
-    ImageIcon img = new ImageIcon(this.getClass().getResource("/resources/images/iconRimplex.png"));
+    ImageIcon img = new ImageIcon(this.getClass().getResource("/logo/icon.png"));
     setIconImage(img.getImage());
     setTitle("Rimplex");
     getRootPane().setBorder(BorderFactory.createLoweredBevelBorder());
@@ -165,6 +165,8 @@ public class CalculatorDisplay extends JFrame
    * 
    * @param invalid
    *          true if there is an error present, otherwise false. (boolean)
+   * @param message
+   *          the error message to display
    */
   public void invalidStatus(final boolean invalid, final String message)
   {
@@ -291,13 +293,17 @@ public class CalculatorDisplay extends JFrame
     germanButton.setName("Ger");
     JMenuItem frenchButton = new JMenuItem("Française");
     frenchButton.setName("Fr");
+    JMenuItem aboutButton = new JMenuItem("About");
+    aboutButton.setName(aboutButton.getText());
     spanishButton.addActionListener(listener);
     englishButton.addActionListener(listener);
     germanButton.addActionListener(listener);
     frenchButton.addActionListener(listener);
     JMenu languageMenu = new JMenu(strings.getString("Language"));
     JMenu settingsMenu = new JMenu(strings.getString("Settings"));
+    JMenu helpMenu = new JMenu(strings.getString("Help"));
 
+    helpMenu.add(aboutButton);
     languageMenu.add(englishButton);
     languageMenu.add(spanishButton);
     languageMenu.add(germanButton);
@@ -308,6 +314,7 @@ public class CalculatorDisplay extends JFrame
     // menuBar.add(optionsMenu);
     menuBar.add(fileMenu);
     menuBar.add(settingsMenu);
+    menuBar.add(helpMenu);
     setJMenuBar(menuBar);
     // If you want to hide the menu bar, set this to false.
     menuBar.setVisible(true);
