@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -481,10 +483,13 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     {
       JEditorPane editor = new JEditorPane();
       JFrame frame = new JFrame("About");
+      ImageIcon logo = new ImageIcon(CalcListener.class.getResource("/logo/icon.png"));
+      frame.setIconImage(logo.getImage());
       editor.setSize(200, 300);
       editor.setEditable(false);
       editor.setContentType("text/html");
-      editor.setText(HTMLText.ABOUTPAGE);
+      String img = CalcListener.class.getResource("/resources/images/logoRimplex.png").toString();
+      editor.setText("<html><img src=\"" + img + "\" width=200 height=50>" + HTMLText.ABOUTPAGE);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setContentPane(editor);
       frame.pack();

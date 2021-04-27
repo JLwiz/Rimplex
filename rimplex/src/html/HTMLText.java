@@ -1,5 +1,7 @@
 package html;
 
+import javax.swing.text.html.HTML;
+
 /**
  * HTMLText - Holds text for html.
  * 
@@ -8,10 +10,14 @@ package html;
  */
 public final class HTMLText
 {
-  public static final String ABOUTPAGE = "<html>"
-      + "<title> Rimplex : About </title>"
-      + "  <body>"
-      + "    <img src=\"resources/images/logoRimplex.png\" alt=\"rimplex logo\" width=\"200\" height= \"100\">"
+  public static final String ABOUTPAGE = 
+//      "<html>"
+//      + "<title> Rimplex : About </title>"
+//      + "  <body>"
+//      + "    <img src="
+//      + HTML.class.getResource("resources/images/logoRimplex.png").toString()
+//      + " alt=\"rimplex logo\" width=\"200\" height= \"100\">"
+      "</img>"
       + "    <p>"
       + "      <h4>Rimplex is a complex calculator that allows users to solve mathamatical equations that<br>"
       + "      involve imaginary numbers. Users can also perform an abundance of operations including sin, cos,<br>"
