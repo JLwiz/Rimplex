@@ -257,7 +257,7 @@ public class CalculatorDisplay extends JFrame
     JMenuItem print = new JMenuItem(STRINGS.getString("PHistory"));
     print.setName("Print History");
     print.addActionListener(listener);
-    JMenuItem playback = new JMenuItem("Playback");
+    JMenuItem playback = new JMenuItem(STRINGS.getString("Playback"));
     playback.setName("Playback");
     playback.addActionListener(listener);
 //    ImageIcon importIcon = new ImageIcon(
@@ -269,10 +269,32 @@ public class CalculatorDisplay extends JFrame
     JMenu fileMenu = new JMenu(STRINGS.getString("File"));
     fileMenu.add(playback);
     fileMenu.add(print);
+    
+    JMenuItem SpanishButton = new JMenuItem("Español");
+    SpanishButton.setName("Spanish");
+    JMenuItem EnglishButton = new JMenuItem("English");
+    EnglishButton.setName("English");
+    JMenuItem GermanButton = new JMenuItem("Deutsche");
+    GermanButton.setName("German");
+    JMenuItem FrenchButton = new JMenuItem("Française");
+    FrenchButton.setName("French");
+    SpanishButton.addActionListener(listener);
+    EnglishButton.addActionListener(listener);
+    GermanButton.addActionListener(listener);
+    FrenchButton.addActionListener(listener);
+    JMenu LanguageMenu = new JMenu(STRINGS.getString("Language"));
+    JMenu SettingsMenu = new JMenu(STRINGS.getString("Settings"));
+    
+    LanguageMenu.add(EnglishButton);
+    LanguageMenu.add(SpanishButton);
+    LanguageMenu.add(GermanButton);
+    LanguageMenu.add(FrenchButton);
+    SettingsMenu.add(LanguageMenu);
 
     JMenuBar menuBar = new JMenuBar();
     // menuBar.add(optionsMenu);
     menuBar.add(fileMenu);
+    menuBar.add(SettingsMenu);
     setJMenuBar(menuBar);
     // If you want to hide the menu bar, set this to false.
     menuBar.setVisible(true);

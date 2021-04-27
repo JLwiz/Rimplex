@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -448,8 +449,19 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       }
 
     }
-    else if (menu.getText().equals("Playback"))
+    else if (menu.getName().equals("Playback")) {
       PlaybackWindow.getInstance().setVisible(true);
+    }
+    else if (menu.getName().equals("English")) {
+      FileWriter language = new FileWriter("src/app/language.txt");
+      language.write("en US");
+      language.close();
+    }
+    else if (menu.getName().equals("Spanish")) {
+      FileWriter language = new FileWriter("src/app/language.txt");
+      language.write("es ES");
+      language.close();
+    }
   } // menuActions method.
 
   /**
