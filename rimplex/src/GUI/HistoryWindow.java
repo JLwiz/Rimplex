@@ -109,6 +109,18 @@ public class HistoryWindow extends JWindow
       historyText.setText(keep);
     }
   } // addToHistory method.
+  
+  /**
+   * clearHistory - Will clear the history.
+   */
+  public void clearHistory()
+  {
+    int start = historyText.getText().indexOf("<p>") + 3;
+    int end = historyText.getText().indexOf("</p>", start);
+    historyText.setText(historyText.getText().substring(0, start) 
+        + historyText.getText().substring(end, historyText.getText().length()));
+    
+  } // clearHistory method.
 
   /**
    * getPlace - Will return the current place integer.

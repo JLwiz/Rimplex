@@ -795,6 +795,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         break;
       case "open":
         input = PlaybackWindow.getInstance().getRecording();
+        HistoryWindow.getInstance().clearHistory();
         break;
       case "play":
         /*
@@ -827,6 +828,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
           playback.toggleFocusable(true);
           PlaybackWindow.getInstance().toggleRecord(true);
           recording = "";
+          HistoryWindow.getInstance().clearHistory();
         }
         break;
       default:
