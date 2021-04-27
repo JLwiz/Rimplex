@@ -128,8 +128,9 @@ public class Equation
         case "tan":
           operator = new ComplexTangent();
           break;
-        case "sqrt":
+        case "<html>&#8730</html>":
           operator = new ComplexSquareRoot();
+          break;
         default:
           operator = null;
           break;

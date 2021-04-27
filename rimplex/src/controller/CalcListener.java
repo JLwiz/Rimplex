@@ -542,7 +542,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private void operationsProcessor(final String input, final String operation)
       throws NumberFormatException
   {
-
     JLabel display = frame.getDisplay();
     String text = input;
     if (input != null && !input.isEmpty())
@@ -601,7 +600,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         frame.setDisplay(str);
       }
       else if (operation.equals("sin") || operation.equals("cos") || operation.equals("tan")
-          || operation.equals("sqrt") || operation.equals(logOperator))
+          || operation.equals("<html>&#8730</html>") || operation.equals(logOperator))
       {
         evaluate.setOperator(operation);
         evaluate.setFirstOp(op1);

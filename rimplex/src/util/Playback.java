@@ -41,7 +41,7 @@ public class Playback
     this.recording = recording.replaceAll("<html>", "")
           .replaceAll("</html>", "").replaceAll("</i>", "").replaceAll("<i>", "")
           .replaceAll("sin", "(s").replaceAll("cos", "(c").replaceAll("tan", "(t")
-          .replaceAll("Con", "(C").replaceAll("log", "(l").replaceAll("&#8730", "(&");
+          .replaceAll("Con", "(C").replaceAll("log", "(l").replaceAll("&#8730", "&");
     play = this.recording.split("(?<==)");
     row = 0;
     paused = false;
@@ -173,12 +173,12 @@ public class Playback
     String formated = "";
     char keyChar = equation.charAt(0);
     char check = equation.charAt(1);
-    if (equation.replaceAll("[C|c|l|s|t|&]", "z").contains("z"))
+    if (equation.replaceAll("[C|c|l|s|t]", "z").contains("z"))
     {
       formated = equation.replaceAll("[C|c|l|s|t|&|z|=]", "");
       if ((keyChar == '(') && (check == 'c') || (check == 'C')
-          || (check == 'l') || (check == 's') || (check == '&')
-          || (check == 't')) formated = formated.substring(1) + check;
+          || (check == 'l') || (check == 's') || (check == 't'))
+        formated = formated.substring(1) + check;
       else formated = formated + keyChar;
     }
     else
