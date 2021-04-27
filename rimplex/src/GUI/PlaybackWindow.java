@@ -1,20 +1,15 @@
 package GUI;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.ResourceBundle;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 
@@ -43,6 +38,9 @@ public class PlaybackWindow extends JWindow
   private boolean recording;
   private JButton close, open, pause, play, rec;
   private JPanel main, side;
+  
+  private static final ResourceBundle STRINGS = ResourceBundle.getBundle("Language.Strings");
+
 
   /**
    * Constructor.
@@ -149,19 +147,6 @@ public class PlaybackWindow extends JWindow
       }
     }
     else return;
-    
-//    String name = (String) JOptionPane.showInputDialog(this,
-//        "Please provide a name for your recording.", "Save Recording", JOptionPane.QUESTION_MESSAGE,
-//        null, null, null);
-//
-//    if (name == null)
-//      return;
-
-    /*
-     * logic for saving to file.
-     */
-
-//    calcSaver.writeFile(name, record);
   } // saveRecording method.
 
   /**
@@ -281,8 +266,8 @@ public class PlaybackWindow extends JWindow
   private void createComponents() throws IOException
   {
     calcSaver = SaveHandler.getInstance();
-    close = createButton("close", "Close");
-    open = createButton("open", "Open");
+    close = createButton("Close", STRINGS.getString("Close"));
+    open = createButton("Open", STRINGS.getString("Open"));
     pause = createButton("pause", "");
     play = createButton("play", "");
     rec = createButton("record", "");
