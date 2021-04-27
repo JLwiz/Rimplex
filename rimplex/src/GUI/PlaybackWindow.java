@@ -1,12 +1,16 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -48,6 +52,7 @@ public class PlaybackWindow extends JWindow
   private PlaybackWindow() throws IOException
   {
     super(CalculatorDisplay.getInstance());
+    
     recording = false;
 
     setSize(250, 50);
@@ -261,13 +266,8 @@ public class PlaybackWindow extends JWindow
     }
 
     b.setName(name);
-    // b.setBackground(Color.BLACK);
-    // b.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-    // b.setForeground(Color.WHITE);
     b.setFont(new Font("Arial", Font.PLAIN, 10));
-    b.setOpaque(false);
     b.setContentAreaFilled(false);
-    b.setBorderPainted(false);
     b.addActionListener(CalcListener.getInstance());
 
     return b;

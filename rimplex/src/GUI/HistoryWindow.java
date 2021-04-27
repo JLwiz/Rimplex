@@ -5,8 +5,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -41,6 +44,9 @@ public class HistoryWindow extends JWindow
   private JTextPane historyText;
   private JPanel historyPanel;
   private JScrollPane scrollList;
+  
+  private static Color foreground = new Color(255, 255, 255);
+  private static Color background = new Color(0, 0, 0);
 
   private GridBagLayout layout = new GridBagLayout();
   private GridBagConstraints constraints = new GridBagConstraints();
@@ -54,6 +60,17 @@ public class HistoryWindow extends JWindow
   {
     super(CalculatorDisplay.getInstance());
 
+    try
+    {
+      int colors[] = fetchColors();
+      foreground = new Color(colors[0], colors[1], colors[2]);
+      background = new Color(colors[3], colors[4], colors[5]);
+    }
+    catch (FileNotFoundException e)
+    {
+      System.out.println("ERROR RETRIEVING THEMEING");
+    }
+    
     open = false;
     place = 0;
     setSize(new Dimension(0, 300));
@@ -222,6 +239,19 @@ public class HistoryWindow extends JWindow
     historyPanel = new JPanel();
     scrollList = new JScrollPane(historyText);
   } // createComponenets method.
+  
+  private static int[] fetchColors() throws FileNotFoundException{
+    Scanner in = new Scanner(new File("src/app/config.txt"));
+    int colors[] = new int[6];
+    for(int i = 0; i < 3; i++) {
+      colors[i] = in.nextInt();
+    }
+    for(int i = 3; i < 6; i++) {
+      colors[i] = in.nextInt();
+    }
+    in.close();
+    return colors;
+  }
 
   /**
    * getTextPane - Will return the JTextPane component.
@@ -243,9 +273,9 @@ public class HistoryWindow extends JWindow
     close.setMaximumSize(new Dimension(20, getHeight()));
     close.setMinimumSize(new Dimension(20, getHeight()));
     close.setPreferredSize(new Dimension(20, getHeight()));
-    close.setBackground(Color.BLACK);
+    close.setBackground(background);
     close.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-    close.setForeground(Color.WHITE);
+    close.setForeground(foreground);
     close.setFont(new Font("Arial", Font.BOLD, 15));
     scrollList.setWheelScrollingEnabled(true);
     historyText.setContentType("text/html");
