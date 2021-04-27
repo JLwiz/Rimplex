@@ -21,7 +21,6 @@ public class SaveHandler
   private static SaveHandler savedFileReader;
   private BufferedReader reader;
   private PrintWriter writer;
-  private File file;
 
   /**
    * Default Constructor.
@@ -31,10 +30,6 @@ public class SaveHandler
    */
   private SaveHandler() throws IOException
   {
-
-    file = new File("SavedCalculations.txt");
-    file.createNewFile();
-
   }
 
   /**
@@ -88,35 +83,40 @@ public class SaveHandler
    * 
    * @param which
    *          Open READER or WRITER
+   * @param record
+   *          what file to open.
    * @return true if successful
    * @throws IOException
    *           theIOException
    */
-  private boolean open(final int which) throws IOException
+  private boolean open(final int which, final File record) throws IOException
   {
 
     boolean canOpen = false;
 
     if (which == 0)
     {
-      if (file.exists())
+      if (record.exists())
       {
         canOpen = true;
-        reader = new BufferedReader(new FileReader(file));
+        reader = new BufferedReader(new FileReader(record));
 
       } // end if
 
     }
     else
     {
-      writer = new PrintWriter(new FileWriter(file, true));
-
-      if (file.canWrite())
+      if (record.createNewFile())
       {
-        canOpen = true;
-      }
+        writer = new PrintWriter(new FileWriter(record));
 
-    } // end else
+        if (record.canWrite())
+        {
+          canOpen = true;
+        }
+
+      }
+    }
 
     return canOpen;
 
@@ -158,68 +158,78 @@ public class SaveHandler
   }
 
   /**
-   * reads the file and gives a hashmap of keys and values.
+   * reads the file and returns the calculations stored.
    * 
-   * @return HashMap - the saved calculations
+   * @param record
+   *          - which file to read.
+   * @return String - the saved calculations, returns "" if file is invalid.
    * 
    * @throws IOException
    *           the IOException
    */
-  public HashMap<String, String> readFile() throws IOException
+  public String readFile(final File record) throws IOException
   {
 
     String line = null;
-    HashMap<String, String> saved = new HashMap<String, String>();
+    String value = "";
 
-    if (open(0))
+    if (open(0, record))
     {
 
       line = readLine();
-
-      while (line != null)
+      if (record.getName().contains("txt"))
       {
+        while (line != null)
+        {
 
-        String[] fields = line.split("\\|");
-        String key = fields[0];
-        String value = fields[1];
-        saved.put(key, value);
+          String[] fields = line.split("\\|");
+          if (fields.length == 2)
+          {
+            value = fields[1];
 
-        line = readLine();
-
+            line = readLine();
+          }
+          else
+            line = null;
+        }
       }
       close(0);
 
     }
-    return saved;
+    return value;
 
   } // method readFiles
 
   /**
-   * Adds a saved calculation and its key to the file.
+   * Adds a saved calculation and its key to a file. returns true if file was saved successfully.
    * 
    * @param key
    *          - String name of the saved recording
    * @param value
    *          - String calculations associated with the save key
+   * @return Boolean - whether the file was saved successfully
    * 
    * @throws IOException
    *           the IOException
    */
-  public void writeFile(final String key, final String value) throws IOException
+  public Boolean writeFile(final String key, final String value) throws IOException
   {
 
     String line = null;
+    Boolean saved = false;
+    File newSave = new File(key + ".txt");
 
     if (key != null && value != null)
     {
-      open(1);
+      open(1, newSave);
       line = key + "|" + value;
 
       write(line);
+      saved = true;
 
       close(1);
     }
-
+    return saved;
   }
 
 }

@@ -6,12 +6,9 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -59,7 +56,6 @@ public class PlaybackWindow extends JWindow
     createComponents();
     setComponents();
     addComponents();
-    savedRecords();
     getContentPane().add(main);
 
     setVisible(false);
@@ -84,22 +80,25 @@ public class PlaybackWindow extends JWindow
    * getRecording - Will return the recording selected.
    * 
    * @return equation selected String
+   * @throws IOException
+   *           - the IOException
    */
-  public String getRecording()
+  public String getRecording() throws IOException
   {
     JFileChooser chooser = new JFileChooser();
+    String input = null;
     chooser.setDialogTitle("Choose a recording file you would like to playback.");
-    
+
     int userSelection = chooser.showOpenDialog(CalculatorDisplay.getInstance());
-    
+
     if (userSelection == JFileChooser.APPROVE_OPTION)
     {
       File selected = chooser.getSelectedFile();
-      
+      input = calcSaver.readFile(selected);
       // stuff to validate file, read from, and return the equation string.
-    } else return null;
-    
-    return null;
+    }
+
+    return input;
   } // getRecording method.
 
   /**
@@ -142,24 +141,6 @@ public class PlaybackWindow extends JWindow
   } // saveRecording method.
 
   /**
-   * savedRecords - populates the hashMap with the recordings that have been saved.
-   * 
-   * @throws IOException
-   *           - the IOException
-   */
-
-  private void savedRecords() throws IOException
-  {
-    HashMap<String, String> records = calcSaver.readFile();
-    Iterator<String> keys = records.keySet().iterator();
-    while (keys.hasNext()) {
-      String name = keys.next();
-      saved.put(name, records.get(name));
-      //select.addItem(name);
-    }
-  }
-
-  /**
    * toggleIcon - Will change the recording icon.
    */
   public void toggleIcon()
@@ -169,8 +150,8 @@ public class PlaybackWindow extends JWindow
     recording = !recording;
     if (recording)
     {
-      icon = new ImageIcon(this.getClass().getResource("/resources/images/"
-          + "baseline_radio_button_checked_black_24dp.png"));
+      icon = new ImageIcon(this.getClass()
+          .getResource("/resources/images/" + "baseline_radio_button_checked_black_24dp.png"));
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
       icon = new ImageIcon(recimg);
@@ -179,8 +160,8 @@ public class PlaybackWindow extends JWindow
     }
     else
     {
-      icon = new ImageIcon(this.getClass().getResource("/resources/images/"
-          + "baseline_radio_button_unchecked_black_24dp.png"));
+      icon = new ImageIcon(this.getClass()
+          .getResource("/resources/images/" + "baseline_radio_button_unchecked_black_24dp.png"));
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
       play.setEnabled(true);
@@ -232,24 +213,24 @@ public class PlaybackWindow extends JWindow
     switch (name)
     {
       case "pause":
-        icon = new ImageIcon(this.getClass().getResource("/resources/images/"
-            + "baseline_pause_circle_filled_black_24dp.png"));
+        icon = new ImageIcon(this.getClass()
+            .getResource("/resources/images/" + "baseline_pause_circle_filled_black_24dp.png"));
         Image pauseimg = icon.getImage();
         pauseimg = pauseimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(pauseimg);
         b = new JButton(icon);
         break;
       case "play":
-        icon = new ImageIcon(this.getClass().getResource("/resources/images/"
-            + "baseline_play_circle_black_24dp.png"));
+        icon = new ImageIcon(this.getClass()
+            .getResource("/resources/images/" + "baseline_play_circle_black_24dp.png"));
         Image playimg = icon.getImage();
         playimg = playimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(playimg);
         b = new JButton(icon);
         break;
       case "record":
-        icon = new ImageIcon(this.getClass().getResource("/resources/images/"
-            + "baseline_radio_button_unchecked_black_24dp.png"));
+        icon = new ImageIcon(this.getClass()
+            .getResource("/resources/images/" + "baseline_radio_button_unchecked_black_24dp.png"));
         Image recimg = icon.getImage();
         recimg = recimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(recimg);
