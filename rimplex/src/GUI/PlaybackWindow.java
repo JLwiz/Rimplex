@@ -37,7 +37,6 @@ public class PlaybackWindow extends JWindow
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private SaveHandler calcSaver;
   private boolean recording;
-  private HashMap<String, String> saved;
   private JButton close, open, pause, play, rec;
   private JPanel main, side;
 
@@ -125,19 +124,39 @@ public class PlaybackWindow extends JWindow
     if (record.trim().equals(""))
       return;
 
-    String name = (String) JOptionPane.showInputDialog(this,
-        "Please provide a name for your recording.", "Save Recording", JOptionPane.QUESTION_MESSAGE,
-        null, null, null);
-
-    if (name == null)
-      return;
+    JFileChooser chooser = new JFileChooser();
+    chooser.setDialogTitle("Where would you like to save your recording?");
+    
+    int userSelection = chooser.showSaveDialog(CalculatorDisplay.getInstance());
+    
+    if (userSelection == JFileChooser.APPROVE_OPTION)
+    {
+      File selectedFile = chooser.getSelectedFile();
+      
+      try
+      {
+        String fileName = selectedFile.getCanonicalPath();
+        selectedFile = calcSaver.writeFile(fileName, record);
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    else return;
+    
+//    String name = (String) JOptionPane.showInputDialog(this,
+//        "Please provide a name for your recording.", "Save Recording", JOptionPane.QUESTION_MESSAGE,
+//        null, null, null);
+//
+//    if (name == null)
+//      return;
 
     /*
      * logic for saving to file.
      */
 
-    saved.put(name, record);
-    calcSaver.writeFile(name, record);
+//    calcSaver.writeFile(name, record);
   } // saveRecording method.
 
   /**
@@ -269,7 +288,6 @@ public class PlaybackWindow extends JWindow
     rec = createButton("record", "");
     main = new JPanel();
     side = new JPanel();
-    saved = new HashMap<>();
   } // createComponents method.
 
   /**
@@ -279,8 +297,6 @@ public class PlaybackWindow extends JWindow
   {
     main.setLayout(new GridLayout(0, 4));
     side.setLayout(new GridLayout(2, 0));
-
-    saved.put("DEMO", DEMO);
   } // setComponents method.
 
 } // PlaybackWindow class.

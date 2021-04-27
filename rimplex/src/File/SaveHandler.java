@@ -212,7 +212,7 @@ public class SaveHandler
    * @throws IOException
    *           the IOException
    */
-  public Boolean writeFile(final String key, final String value) throws IOException
+  public File writeFile(final String key, final String value) throws IOException
   {
 
     String line = null;
@@ -229,7 +229,7 @@ public class SaveHandler
 
       close(1);
     }
-    return saved;
+    return newSave;
   }
 
 }
