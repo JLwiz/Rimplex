@@ -6,14 +6,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.Timer;
 
-import File.SaveHandler;
 import GUI.ButtonPadPanel;
 import GUI.CalculatorDisplay;
 import GUI.HistoryWindow;
@@ -42,14 +42,13 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private Equation evaluate;
   private InputParser parser;
   private Playback playback = null;
-  private SaveHandler calcSaver;
   private final String leftParen = "(";
   private final String rightParen = ")";
-  private boolean inFractions;
 
   private String recording = "";
-  private String input = null;
+  private String record = null;
   private int mode = 0;
+
   /**
    * Default Constructor.
    */
@@ -57,7 +56,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   {
     evaluate = Equation.getInstance();
     parser = InputParser.getInstance();
-    this.inFractions = false;
   } // Default Constructor.
 
   /**
@@ -318,10 +316,12 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     if (mode == 0)
     {
       text = compNum.toString();
-    } else if (mode == 1)
+    }
+    else if (mode == 1)
     {
       text = compNum.toFraction();
-    } else if (mode >= 2) 
+    }
+    else if (mode >= 2)
     {
       text = compNum.toPolar();
     }
@@ -379,6 +379,37 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       }
     }
     return isNum;
+  }
+
+  /**
+   * Sets the default language to the language selected and refreshes the JFrame.
+   * 
+   * @param language - the language to change to
+   * @throws IOException - the IOException
+   */
+
+  private void languageActions(final String language) throws IOException
+  {
+    if (language.equals("En"))
+    {
+      Locale.setDefault(Locale.forLanguageTag("en-US"));
+      frame.changeLanguage();
+    }
+    else if (language.equals("Sp"))
+    {
+      Locale.setDefault(Locale.forLanguageTag("es-ES"));
+      frame.changeLanguage();
+    }
+    else if (language.equals("Ger"))
+    {
+      Locale.setDefault(Locale.forLanguageTag("de-DE"));
+      frame.changeLanguage();
+    }
+    else if (language.equals("Fr"))
+    {
+      Locale.setDefault(Locale.forLanguageTag("fr-FR"));
+      frame.changeLanguage();
+    }
   }
 
   /**
@@ -449,28 +480,14 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       }
 
     }
-    else if (menu.getName().equals("Playback")) {
+    else if (menu.getName().equals("Playback"))
+    {
       PlaybackWindow.getInstance().setVisible(true);
     }
-    else if (menu.getName().equals("English")) {
-      FileWriter language = new FileWriter("src/app/language.txt");
-      language.write("en US");
-      language.close();
-    }
-    else if (menu.getName().equals("Spanish")) {
-      FileWriter language = new FileWriter("src/app/language.txt");
-      language.write("es ES");
-      language.close();
-    }
-    else if (menu.getName().equals("German")) {
-      FileWriter language = new FileWriter("src/app/language.txt");
-      language.write("de DE");
-      language.close();
-    }
-    else if (menu.getName().equals("French")) {
-      FileWriter language = new FileWriter("src/app/language.txt");
-      language.write("fr FR");
-      language.close();
+    else if (menu.getText().equals("English") || menu.getText().equals("Español")
+        || menu.getText().equals("Deutsche") || menu.getText().equals("Française"))
+    {
+      languageActions(menu.getName());
     }
   } // menuActions method.
 
@@ -627,8 +644,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         evaluate.setOperator(operation);
         evaluate.setFirstOp(op1);
         ComplexNumber unitaryOperationResult = evaluate.solve();
-        frame.setDisplay(operation + op1.toString() + equalsOperator
-            + getComplexText(unitaryOperationResult));
+        frame.setDisplay(
+            operation + op1.toString() + equalsOperator + getComplexText(unitaryOperationResult));
         op1 = unitaryOperationResult;
       }
       else if (operation.equals("RP"))
@@ -701,8 +718,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   private void operationsSwitch(final String operation)
   {
+    String negative = " -";
     if (openParenCheck() || (frame.getInputField().getText().length() == 0
-        && operation.contentEquals("-") && !evaluate.operatorEmpty()))
+        && operation.contentEquals(negative.trim()) && !evaluate.operatorEmpty()))
     {
       if (operation.charAt(0) == '+' && frame.getInputField().getText().contains("+"))
       {
@@ -715,7 +733,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     }
     else
     {
-      if (operation == "^") // acts like the number Buttons but may become a proper operator later
+      if (operation.equals("^")) // acts like the number Buttons but may become a proper operator later
       {
         append(operation.charAt(0));
       }
@@ -816,7 +834,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         }
         break;
       case "open":
-        input = PlaybackWindow.getInstance().getRecording();
+        record = PlaybackWindow.getInstance().getRecording();
         HistoryWindow.getInstance().clearHistory();
         break;
       case "play":
@@ -824,13 +842,14 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
          * Grab a string based on the name of recording stored in the JComboBox, create a new object
          * of Playback with the string of total recording.
          */
-        if (input == null || input.trim().equals("")) return;
-        if (!recording.equals(input))
+        if (record == null || record.trim().equals(""))
+          return;
+        if (!recording.equals(record))
         {
           clearInput();
           resetDisplay();
-          playback = new Playback(input);
-          recording = input;
+          playback = new Playback(record);
+          recording = record;
         }
         playback.pause(false);
         playback.start();
