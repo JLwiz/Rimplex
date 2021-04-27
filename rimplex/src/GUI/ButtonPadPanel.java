@@ -174,11 +174,11 @@ public class ButtonPadPanel extends JPanel
     add(tanButton, numpad);
     
     numpad.gridy = topEdge + 3;
-    JButton realPartButton = createButton("RP", "realpart");
+    JButton realPartButton = createButton("Re", "realpart");
     add(realPartButton, numpad);
     
     numpad.gridy = topEdge + 4;
-    JButton imaginaryPartButton = createButton("IP", "imaginarypart");
+    JButton imaginaryPartButton = createButton("Im", "imaginarypart");
     add(imaginaryPartButton, numpad);
     
     numpad.gridx = leftEdge + 3;
