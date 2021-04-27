@@ -23,6 +23,7 @@ import GUI.HistoryWindow;
 import GUI.PlaybackWindow;
 import calculations.ComplexNumber;
 import calculations.Equation;
+import html.HTMLText;
 import printing.PrintableHistory;
 import printing.PrinterController;
 import util.InputParser;
@@ -480,6 +481,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     {
       JEditorPane editor = new JEditorPane();
       JFrame frame = new JFrame("About");
+      editor.setSize(200, 300);
+      editor.setEditable(false);
+      editor.setContentType("text/html");
+      editor.setText(HTMLText.ABOUTPAGE);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setContentPane(editor);
       frame.pack();

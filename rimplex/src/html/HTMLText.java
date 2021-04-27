@@ -8,9 +8,9 @@ package html;
  */
 public final class HTMLText
 {
-  public static final String ABOUTPAGE = "<html>\r\n"
-      + "<title> Rimplex : About </title>\r\n"
-      + "  <body>\r\n"
+  public static final String ABOUTPAGE = "<html>"
+      + "<title> Rimplex : About </title>"
+      + "  <body>"
       + "    <img src=\"resources/images/logoRimplex.png\" alt=\"rimplex logo\" width=\"200\" height= \"100\">"
       + "    <p>"
       + "      <h4>Rimplex is a complex calculator that allows users to solve mathamatical equations that<br>"
