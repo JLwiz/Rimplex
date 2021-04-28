@@ -8,7 +8,9 @@ import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -233,7 +235,7 @@ public class HistoryWindow extends JWindow
     historyPanel = new JPanel();
     scrollList = new JScrollPane(historyText);
   } // createComponenets method.
-  
+
   /**
    * gets the color configuration from the config file.
    * 
@@ -242,26 +244,21 @@ public class HistoryWindow extends JWindow
 
   private static int[] fetchColors()
   {
-    URL color = RimplexDriver.class.getResource("config.txt");
-    File config = new File(color.getFile());
-    Scanner in = null;
+    ClassLoader loader = Thread.currentThread().getContextClassLoader();
+    InputStream in = loader.getResourceAsStream("app/config.txt");
+
+    int colors[] = new int[6];
+    String colorSelection = "";
     try
     {
-      in = new Scanner(config);
+      colorSelection = new String(in.readAllBytes(), StandardCharsets.UTF_8);
     }
-    catch (FileNotFoundException e)
+    catch (IOException e)
     {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-
-    int colors[] = new int[6];
-    String colorSelection = "";
     String[] colorArray;
-    for (int i = 0; i < 2; i++)
-    {
-      colorSelection += " " + in.nextLine();
-    }
     colorSelection = colorSelection.trim();
     colorArray = colorSelection.split("\\s+");
     for (int i = 0; i < 6; i++)
