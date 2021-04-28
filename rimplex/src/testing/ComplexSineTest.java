@@ -3,12 +3,12 @@ package testing;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import calculations.ComplexLogarithm;
 import calculations.ComplexNumber;
 import calculations.ComplexSine;
 import calculations.Operations;
 
-class ComplexSineTest {
+class ComplexSineTest 
+{
 
   @Test
   void sineCalculateTest()
@@ -23,6 +23,7 @@ class ComplexSineTest {
     {
       operator.calculate(nullOp);
     });
+    
     Assertions.assertThrows(NumberFormatException.class, () -> 
     {
       operator.calculate(null);

@@ -7,7 +7,8 @@ import calculations.ComplexCosine;
 import calculations.ComplexNumber;
 import calculations.Operations;
 
-class ComplexCosineTest {
+class ComplexCosineTest 
+{
 
   @Test
   void cosineCalculateTest()

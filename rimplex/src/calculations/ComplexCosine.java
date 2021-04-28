@@ -1,8 +1,5 @@
 package calculations;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-
 /**
  * A class for calculating the cosine of a complex number.
  * 
