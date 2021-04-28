@@ -4,18 +4,34 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.geom.*;
 
+/**
+ * ComplexGraph - Visualization for complex numbers.
+ * 
+ * @author Kenneth Painter
+ * @version 04/28/2021
+ */
 public class ComplexGraph extends JPanel
 {
-  private ComplexNumber ComplexPoint;
-  double[] coords = {ComplexPoint.getReal(), ComplexPoint.getImaginary()};
-  int m = 50;
+  private ComplexNumber complexPoint;
+  private double[] coords = {complexPoint.getReal(), complexPoint.getImaginary()};
+  private int m = 50;
 
-  public ComplexGraph(ComplexNumber n)
+  /**
+   * Constructor.
+   * 
+   * @param n (Complex Number)
+   */
+  public ComplexGraph(final ComplexNumber n)
   {
-    ComplexPoint = n;
+    complexPoint = n;
   }
 
-  protected void paintComponent(Graphics graph)
+  /**
+   * paintComponent - Will paint the actual graph.
+   * 
+   * @param graph (graphics)
+   */
+  protected void paintComponent(final Graphics graph)
   {
     super.paintComponent(graph);
     
@@ -35,14 +51,19 @@ public class ComplexGraph extends JPanel
     for (int i = 0; i < coords.length; i++)
     {
       double xa = m + (i * x);
-      double ya = h - m - scale * ComplexPoint.getImaginary();
+      double ya = h - m - scale * complexPoint.getImaginary();
       g.fill(new Ellipse2D.Double(xa-2, ya-2, 4, 4));
     }
   }
 
+  /**
+   * getMax - Will return the max value.
+   * 
+   * @return max value (Double)
+   */
   private Double getMax()
   {
-    Double max =- Double.MAX_VALUE;
+    Double max =-Double.MAX_VALUE;
     for (int i = 0; i < coords.length; i++)
     {
       if (coords[i] < max)
@@ -53,7 +74,12 @@ public class ComplexGraph extends JPanel
     return max;
   }
 
-  public static void launch(ComplexNumber n)
+  /**
+   * main method for launching window.
+   * 
+   * @param n (complex number)
+   */
+  public static void launch(final ComplexNumber n)
   {
     JFrame frame =new JFrame();
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -15,7 +15,7 @@ public class HelpDisplay extends JFrame
    * 
    */
   private static final long serialVersionUID = 4967114016756453881L;
-  public static final String help =
+  private static final String help =
       "<!DOCTYPE html>" + 
       "<html>" + 
       "    <head>" + 
@@ -67,15 +67,21 @@ public class HelpDisplay extends JFrame
       "    </body>" + 
       "</html>";
   
-  public void displayHelp() {
-    try {
+  /**
+   * main method for displaying help menu.
+   */
+  public void displayHelp()
+  {
+    try
+    {
       JEditorPane pane = new JEditorPane("text/html", HelpDisplay.help);
       JScrollPane scrollpane = new JScrollPane(pane);
       add(scrollpane);
       setVisible(true);
       setSize(600, 800);
       setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    } catch (Exception e)
+    } 
+    catch (Exception e)
     {
       e.printStackTrace();
     }
