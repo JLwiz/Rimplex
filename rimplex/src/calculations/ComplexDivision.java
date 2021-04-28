@@ -1,5 +1,7 @@
 package calculations;
 
+import java.math.BigDecimal;
+
 /**
  * ComplexNumber division class.
  * 
@@ -57,6 +59,8 @@ public class ComplexDivision implements Operations
   @Override
   public ComplexNumber calculate(final ComplexNumber... op) 
   {
+
+
     ComplexNumber answer = new ComplexNumber(0.0, 0.0);
     ComplexNumber op1;
     ComplexNumber op2;
@@ -88,9 +92,10 @@ public class ComplexDivision implements Operations
 
     Double op2Real = op2.getReal();
     Double op2Imag = op2.getImaginary();
-
-    Double resultReal = (op1Real * op2Real + op1Imag * op2Imag)
+    
+    Double resultReal = (op1Real * op2Real + op1Imag * op2Imag) 
         / (op2Real * op2Real + op2Imag * op2Imag);
+    
     Double resultImag = (op1Imag * op2Real - op1Real * op2Imag)
         / (op2Real * op2Real + op2Imag * op2Imag);
 

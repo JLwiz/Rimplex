@@ -44,7 +44,7 @@ class ComplexTangentTest {
     });
     
     op = new ComplexNumber(3.0, -8.0);
-    expected = new ComplexNumber(-0.0000, -0.999999);
+    expected = new ComplexNumber(.0000001, -0.9999997);
     actual = operator.calculate(op);
     testHelper(actual, expected);
     
@@ -70,17 +70,20 @@ class ComplexTangentTest {
     ComplexNumber op = new ComplexNumber(values[0], values[1]);
     Double real = values[0];
     Double img = values[1];
-    Operations sine = new ComplexSine();
-    ComplexNumber sin = sine.calculate(op);
-    Operations cosine = new ComplexCosine();
-    ComplexNumber cos = cosine.calculate(op);
+    Double numReal = Math.sin(real) * Math.cosh(img);
+    Double numImg = Math.cos(real) * Math.sinh(img);
+    ComplexNumber numerator = new ComplexNumber(numReal, numImg);
+    Double demReal = Math.cos(real) * Math.cosh(img);
+    Double demImg = Math.sin(real) * Math.sinh(img);
+    ComplexNumber denominator = new ComplexNumber(demReal, -demImg);
+    
     Operations divide = new ComplexDivision();
-    ComplexNumber tangent = divide.calculate(sin, cos);
+    Operations tan = new ComplexTangent();
+    ComplexNumber tangent = divide.calculate(numerator, denominator);
     Double newReal = tangent.getReal();
     Double newImg = tangent.getImaginary();
-    Operations operator = new ComplexTangent();
     ComplexNumber expected = new ComplexNumber(newReal, newImg);
-    ComplexNumber actual = operator.calculate(op);
+    ComplexNumber actual = tan.calculate(op);
     testHelper(actual, expected);
   }
 
