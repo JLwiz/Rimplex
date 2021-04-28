@@ -27,8 +27,12 @@ public class Playback
   private int[] place;
   private String recording;
   private String[] play;
-  private String[] equation;
+  private String[] equationArray;
   private Timer timer = null;
+  
+  private final String sineText = "sin", cosineText = "cos", tangentText = "tan";
+  private final String ampersandText = "&";
+  private final String zText = "z", openParenthasesText = "(";
   
   /**
    * constructor.
@@ -40,8 +44,8 @@ public class Playback
   {
     this.recording = recording.replaceAll("<html>", "")
           .replaceAll("</html>", "").replaceAll("</i>", "").replaceAll("<i>", "")
-          .replaceAll("sin", "(s").replaceAll("cos", "(c").replaceAll("tan", "(t")
-          .replaceAll("Con", "(C").replaceAll("log", "(l").replaceAll("&#8730", "&");
+          .replaceAll(sineText, "(s").replaceAll(cosineText, "(c").replaceAll(tangentText, "(t")
+          .replaceAll("Con", "(C").replaceAll("log", "(l").replaceAll("&#8730", ampersandText);
     play = this.recording.split("(?<==)");
     row = 0;
     paused = false;
@@ -87,11 +91,11 @@ public class Playback
   {
     if (!paused)
     {
-      equation = play[row].trim().split("\\)\\(");
-      if (equation.length == 1 && place[row] == 0)
-        play[row] = format(equation[0]);
+      equationArray = play[row].trim().split("\\)\\(");
+      if (equationArray.length == 1 && place[row] == 0)
+        play[row] = format(equationArray[0]);
       else if (place[row] == 0)
-        play[row] = format(equation[1]);
+        play[row] = format(equationArray[1]);
       String name = "" + play[row].charAt(place[row]);
       pressButton(name);
       checkNext();
@@ -173,7 +177,7 @@ public class Playback
     String formated = "";
     char keyChar = equation.charAt(0);
     char check = equation.charAt(1);
-    if (equation.replaceAll("[C|c|l|s|t]", "z").contains("z"))
+    if (equation.replaceAll("[C|c|l|s|t]", zText).contains(zText))
     {
       formated = equation.replaceAll("[C|c|l|s|t|&|z|=]", "");
       if ((keyChar == '(') && (check == 'c') || (check == 'C')
@@ -184,7 +188,7 @@ public class Playback
     else
     {
       if (equation.charAt(0) == '(' && checkParenthesis(equation)) return equation;
-      else return "(" + equation;
+      else return openParenthasesText + equation;
     }
     return formated;
   } // format method.
@@ -231,7 +235,7 @@ public class Playback
       case "=":
         pad.pressButton("equals");
         break;
-      case "(":
+      case openParenthasesText:
         pad.pressButton("open parenthases");
         break;
       case ")":
@@ -247,15 +251,15 @@ public class Playback
         pad.pressButton("logarithm");
         break;
       case "s":
-        pad.pressButton("sin");
+        pad.pressButton(sineText);
         break;
       case "c":
-        pad.pressButton("cos");
+        pad.pressButton(cosineText);
         break;
       case "t":
-        pad.pressButton("tan");
+        pad.pressButton(tangentText);
         break;
-      case "&":
+      case ampersandText:
         pad.pressButton("squareroot");
         break;
       default:

@@ -59,6 +59,13 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private final String equals = "equals";
   private final String openParentheses = "open parentheses";
   private final String closedParentheses = "closed parentheses";
+  private final String one = "1", two = "2", three = "3", four = "4", five = "5", six = "6",
+      seven = "7", eight = "8", nine = "9", zero = "0";
+  private final String addText = "add", subtractText = "subtract", multiplyText = "multiply",
+      divideText = "divide", decimalText = "decimal", exponentText = "exponent";
+  private final String imaginaryConstant = "i";
+  private final String sineText = "sin", cosineText = "cos", tangentText = "tan";
+  private final String aboutText = "About";
   private int mode = 0;
 
   /**
@@ -186,7 +193,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         }
         catch (NullPointerException e1)
         {
-          
+
         }
         frame.getInputField().setText(frame.getInputField().getText() + copy);
         break;
@@ -197,55 +204,55 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         pad.pressButton(closedParentheses);
         break;
       case 42:
-        pad.pressButton("multiply");
+        pad.pressButton(multiplyText);
         break;
       case 43: // + add
-        pad.pressButton("add");
+        pad.pressButton(addText);
         break;
       case 45: // - minus
-        pad.pressButton("subtract");
+        pad.pressButton(subtractText);
         break;
       case 46:
-        pad.pressButton("decimal");
+        pad.pressButton(decimalText);
         break;
       case 47:
-        pad.pressButton("divide");
+        pad.pressButton(divideText);
         break;
       case 48:
-        pad.pressButton("0");
+        pad.pressButton(zero);
         break;
       case 49:
-        pad.pressButton("1");
+        pad.pressButton(one);
         break;
       case 50:
-        pad.pressButton("2");
+        pad.pressButton(two);
         break;
       case 51:
-        pad.pressButton("3");
+        pad.pressButton(three);
         break;
       case 52:
-        pad.pressButton("4");
+        pad.pressButton(four);
         break;
       case 53:
-        pad.pressButton("5");
+        pad.pressButton(five);
         break;
       case 54:
-        pad.pressButton("6");
+        pad.pressButton(six);
         break;
       case 55:
-        pad.pressButton("7");
+        pad.pressButton(seven);
         break;
       case 56:
-        pad.pressButton("8");
+        pad.pressButton(eight);
         break;
       case 57:
-        pad.pressButton("9");
+        pad.pressButton(nine);
         break;
       case 94:
-        pad.pressButton("exponent");
+        pad.pressButton(exponentText);
         break;
       case 105:
-        pad.pressButton("i");
+        pad.pressButton(imaginaryConstant);
         break;
       default: // a key was pressed that we don't allow
         break;
@@ -468,9 +475,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       case "logarithm":
       case "conjugate":
       case "squareroot":
-      case "sin":
-      case "cos":
-      case "tan":
+      case sineText:
+      case cosineText:
+      case tangentText:
       case "realpart":
       case "imaginarypart":
         if (evaluate.operatorEmpty())
@@ -523,10 +530,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     {
       languageActions(menu.getName());
     }
-    else if (name.equals("About"))
+    else if (name.equals(aboutText))
     {
       JEditorPane editor = new JEditorPane();
-      JFrame aboutFrame = new JFrame("About");
+      JFrame aboutFrame = new JFrame(aboutText);
       ImageIcon logo = new ImageIcon(CalcListener.class.getResource("/logo/icon.png"));
       aboutFrame.setIconImage(logo.getImage());
       editor.setSize(200, 300);
@@ -551,25 +558,25 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   {
     switch (button.getName().toLowerCase())
     {
-      case "0":
-      case "1":
-      case "2":
-      case "3":
-      case "4":
-      case "5":
-      case "6":
-      case "7":
-      case "8":
-      case "9":
-      case "decimal":
+      case zero:
+      case one:
+      case two:
+      case three:
+      case four:
+      case five:
+      case six:
+      case seven:
+      case eight:
+      case nine:
+      case decimalText:
       case "open parenthases":
       case "closed parenthases":
         append(button.getText().charAt(0));
         break;
-      case "i":
+      case imaginaryConstant:
         append('i');
         break;
-      case "backspace":
+      case backspace:
         append('b');
         break;
       case "sign":
@@ -592,14 +599,14 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   {
     switch (button.getName().toLowerCase())
     {
-      case "add":
-      case "divide":
-      case "multiply":
-      case "subtract":
-      case "exponent":
+      case addText:
+      case divideText:
+      case multiplyText:
+      case subtractText:
+      case exponentText:
         operationsSwitch(button.getText().trim());
         break;
-      case "equals":
+      case equals:
         operatorButton(button.getText());
         HistoryWindow.getInstance().addToHistory(frame.getDisplay().getText());
         break;
@@ -688,8 +695,9 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         str += op1;
         frame.setDisplay(str);
       }
-      else if (operation.equals("sin") || operation.equals("cos") || operation.equals("tan")
-          || operation.equals("<html>&#8730</html>") || operation.equals(logOperator))
+      else if (operation.equals(sineText) || operation.equals(cosineText)
+          || operation.equals(tangentText) || operation.equals("<html>&#8730</html>")
+          || operation.equals(logOperator))
       {
         evaluate.setOperator(operation);
         evaluate.setFirstOp(op1);
