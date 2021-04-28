@@ -4,25 +4,26 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import app.RimplexDriver;
 import controller.*;
 
+/**
+ * The ButtonPad panel to attach to our CalculatorDisplay.
+ * 
+ * @author Benjamin Huber, Storm Behrens
+ * @version 4/27/2021
+ */
 public class ButtonPadPanel extends JPanel
 {
   /**
@@ -41,6 +42,11 @@ public class ButtonPadPanel extends JPanel
 
   private ArrayList<String> buttonNames;
   private HashMap<String, JButton> buttonMap;
+  
+  private String one = "1", two = "2", three = "3", four = "4", five = "5", six = "6";
+  private String seven = "7", eight = "8", nine = "9", zero = "0";
+  private String sine = "sin", cosine = "cos", tangent = "tan";
+  private String decimal = "DEC", fraction = "FRAC", polar = "POLAR";
 
   private JButton modeButton;
   private int mode = 0;
@@ -146,7 +152,7 @@ public class ButtonPadPanel extends JPanel
 
     numpad.gridx = leftEdge + 1;
     numpad.gridy = topEdge;
-    modeButton = createButton("DEC", "mode");
+    modeButton = createButton(decimal, "mode");
     add(modeButton, numpad);
 
     numpad.gridy = topEdge + 1;
@@ -167,15 +173,15 @@ public class ButtonPadPanel extends JPanel
 
     numpad.gridx = leftEdge + 2;
     numpad.gridy = topEdge;
-    JButton sinButton = createButton("sin", "sin");
+    JButton sinButton = createButton(sine, sine);
     add(sinButton, numpad);
 
     numpad.gridy = topEdge + 1;
-    JButton cosButton = createButton("cos", "cos");
+    JButton cosButton = createButton(cosine, cosine);
     add(cosButton, numpad);
 
     numpad.gridy = topEdge + 2;
-    JButton tanButton = createButton("tan", "tan");
+    JButton tanButton = createButton(tangent, tangent);
     add(tanButton, numpad);
 
     numpad.gridy = topEdge + 3;
@@ -211,47 +217,47 @@ public class ButtonPadPanel extends JPanel
     numpad.weightx = 1;
     numpad.weighty = 1;
 
-    JButton oneButton = createButton("1", "1");
+    JButton oneButton = createButton(one, one);
     add(oneButton, numpad);
 
     numpad.gridx = leftEdge + 1;
-    JButton twoButton = createButton("2", "2");
+    JButton twoButton = createButton(two, two);
     add(twoButton, numpad);
 
     numpad.gridx = leftEdge + 2;
-    JButton threeButton = createButton("3", "3");
+    JButton threeButton = createButton(three, three);
     add(threeButton, numpad);
 
     numpad.gridx = leftEdge;
     numpad.gridy = topEdge + 1;
-    JButton fourButton = createButton("4", "4");
+    JButton fourButton = createButton(four, four);
     add(fourButton, numpad);
 
     numpad.gridx = leftEdge + 1;
-    JButton fiveButton = createButton("5", "5");
+    JButton fiveButton = createButton(five, five);
     add(fiveButton, numpad);
 
     numpad.gridx = leftEdge + 2;
-    JButton sixButton = createButton("6", "6");
+    JButton sixButton = createButton(six, six);
     add(sixButton, numpad);
 
     numpad.gridx = leftEdge;
     numpad.gridy = topEdge + 2;
-    JButton sevenButton = createButton("7", "7");
+    JButton sevenButton = createButton(seven, seven);
     add(sevenButton, numpad);
 
     numpad.gridx = leftEdge + 1;
-    JButton eightButton = createButton("8", "8");
+    JButton eightButton = createButton(eight, eight);
     add(eightButton, numpad);
 
     numpad.gridx = leftEdge + 2;
-    JButton nineButton = createButton("9", "9");
+    JButton nineButton = createButton(nine, nine);
     add(nineButton, numpad);
 
     numpad.gridx = leftEdge;
     numpad.gridy = topEdge + 3;
     numpad.gridwidth = 2;
-    JButton zeroButton = createButton("0", "0");
+    JButton zeroButton = createButton(zero, zero);
     add(zeroButton, numpad);
 
     numpad.gridx = leftEdge + 2;
@@ -428,20 +434,20 @@ public class ButtonPadPanel extends JPanel
   public int updateMode()
   {
     String text = modeButton.getText();
-    if (text.equals("POLAR"))
+    if (text.equals(polar))
     {
       mode = 1;
-      modeButton.setText("FRAC");
+      modeButton.setText(fraction);
     }
-    else if (text.equals("FRAC"))
+    else if (text.equals(fraction))
     {
       mode = 0;
-      modeButton.setText("DEC");
+      modeButton.setText(decimal);
     }
-    else if (text.equals("DEC"))
+    else if (text.equals(decimal))
     {
       mode = 2;
-      modeButton.setText("POLAR");
+      modeButton.setText(polar);
     }
     return mode;
   }

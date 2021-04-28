@@ -19,8 +19,11 @@ import GUI.PlaybackWindow;
 public class DisplayListener implements ComponentListener
 {
   
+  /**
+   * Checks to see if the component is resized.
+   */
   @Override
-  public void componentResized(ComponentEvent e)
+  public void componentResized(final ComponentEvent e)
   {
     JFrame frame;
     
@@ -42,8 +45,11 @@ public class DisplayListener implements ComponentListener
     }
   }
 
+  /**
+   * Checks to see if the component is moved.
+   */
   @Override
-  public void componentMoved(ComponentEvent e)
+  public void componentMoved(final ComponentEvent e)
   {
     JFrame frame;
     
@@ -65,13 +71,19 @@ public class DisplayListener implements ComponentListener
     }
   }
 
+  /**
+   * Unused.
+   */
   @Override
-  public void componentShown(ComponentEvent e)
+  public void componentShown(final ComponentEvent e)
   {
   } // unused.
 
+  /**
+   * Unused.
+   */
   @Override
-  public void componentHidden(ComponentEvent e)
+  public void componentHidden(final ComponentEvent e)
   { 
   } // unused.
   

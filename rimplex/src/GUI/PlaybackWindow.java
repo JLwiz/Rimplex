@@ -29,9 +29,9 @@ public class PlaybackWindow extends JWindow
   // ----------Declarations----------
 
   private static final long serialVersionUID = 2287276262000046595L;
-  private static final String DEMO = "(3+3i)+(3^3-6i)^4=(1)" + "(-441.349+38391i)×(441+3i)=(1)"
-      + "(383+3848i)÷(383+3848i)=(1)" + "sin(33)=(1)" + "cos(33)=(1)" + "tan(33)=(1)"
-      + "&#8730(334)=(1)" + "log(30)=(1)" + "Con(331)=(1)";
+  // private static final String DEMO = "(3+3i)+(3^3-6i)^4=(1)" + "(-441.349+38391i)×(441+3i)=(1)"
+  // + "(383+3848i)÷(383+3848i)=(1)" + "sin(33)=(1)" + "cos(33)=(1)" + "tan(33)=(1)"
+  // + "&#8730(334)=(1)" + "log(30)=(1)" + "Con(331)=(1)";
   private static PlaybackWindow single_instance = null;
   private static final ResourceBundle STRINGS = ResourceBundle.getBundle("Language.Strings");
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
@@ -39,9 +39,11 @@ public class PlaybackWindow extends JWindow
   private boolean recording;
   private JButton close, open, pause, play, rec;
   private JPanel main, side;
-  
-  
 
+  private final String resourceLocation = "/resources/images/";
+  private final String radioButtonFileName = "baseline_radio_button_unchecked_black_24dp.png";
+  private final String pauseText = "pause", playText = "play", recordText = "record",
+      openText = "Open", closeText = "Close";
 
   /**
    * Constructor.
@@ -51,7 +53,7 @@ public class PlaybackWindow extends JWindow
   private PlaybackWindow() throws IOException
   {
     super(CalculatorDisplay.getInstance());
-    
+
     recording = false;
 
     setSize(250, 50);
@@ -103,13 +105,16 @@ public class PlaybackWindow extends JWindow
 
     return input;
   } // getRecording method.
-  
+
   /**
    * newFrame - refreshes playback window when the frame is reset.
-   * @throws IOException - the IOExcepion
+   * 
+   * @throws IOException
+   *           - the IOExcepion
    */
-  
-  public void newFrame() throws IOException {
+
+  public void newFrame() throws IOException
+  {
     single_instance = new PlaybackWindow();
   }
 
@@ -139,13 +144,13 @@ public class PlaybackWindow extends JWindow
 
     JFileChooser chooser = new JFileChooser();
     chooser.setDialogTitle("Where would you like to save your recording?");
-    
+
     int userSelection = chooser.showSaveDialog(CalculatorDisplay.getInstance());
-    
+
     if (userSelection == JFileChooser.APPROVE_OPTION)
     {
       File selectedFile = chooser.getSelectedFile();
-      
+
       try
       {
         String fileName = selectedFile.getCanonicalPath();
@@ -156,7 +161,8 @@ public class PlaybackWindow extends JWindow
         e.printStackTrace();
       }
     }
-    else return;
+    else
+      return;
   } // saveRecording method.
 
   /**
@@ -170,7 +176,7 @@ public class PlaybackWindow extends JWindow
     if (recording)
     {
       icon = new ImageIcon(this.getClass()
-          .getResource("/resources/images/" + "baseline_radio_button_checked_black_24dp.png"));
+          .getResource(resourceLocation + "baseline_radio_button_checked_black_24dp.png"));
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
       icon = new ImageIcon(recimg);
@@ -179,8 +185,7 @@ public class PlaybackWindow extends JWindow
     }
     else
     {
-      icon = new ImageIcon(this.getClass()
-          .getResource("/resources/images/" + "baseline_radio_button_unchecked_black_24dp.png"));
+      icon = new ImageIcon(this.getClass().getResource(resourceLocation + radioButtonFileName));
       recimg = icon.getImage();
       recimg = recimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
       play.setEnabled(true);
@@ -231,25 +236,24 @@ public class PlaybackWindow extends JWindow
     ImageIcon icon;
     switch (name)
     {
-      case "pause":
+      case pauseText:
         icon = new ImageIcon(this.getClass()
-            .getResource("/resources/images/" + "baseline_pause_circle_filled_black_24dp.png"));
+            .getResource(resourceLocation + "baseline_pause_circle_filled_black_24dp.png"));
         Image pauseimg = icon.getImage();
         pauseimg = pauseimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(pauseimg);
         b = new JButton(icon);
         break;
-      case "play":
-        icon = new ImageIcon(this.getClass()
-            .getResource("/resources/images/" + "baseline_play_circle_black_24dp.png"));
+      case playText:
+        icon = new ImageIcon(
+            this.getClass().getResource(resourceLocation + "baseline_play_circle_black_24dp.png"));
         Image playimg = icon.getImage();
         playimg = playimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(playimg);
         b = new JButton(icon);
         break;
-      case "record":
-        icon = new ImageIcon(this.getClass()
-            .getResource("/resources/images/" + "baseline_radio_button_unchecked_black_24dp.png"));
+      case recordText:
+        icon = new ImageIcon(this.getClass().getResource(resourceLocation + radioButtonFileName));
         Image recimg = icon.getImage();
         recimg = recimg.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(recimg);
@@ -276,11 +280,11 @@ public class PlaybackWindow extends JWindow
   private void createComponents() throws IOException
   {
     calcSaver = SaveHandler.getInstance();
-    close = createButton("Close", STRINGS.getString("Close"));
-    open = createButton("Open", STRINGS.getString("Open"));
-    pause = createButton("pause", "");
-    play = createButton("play", "");
-    rec = createButton("record", "");
+    close = createButton(closeText, STRINGS.getString(closeText));
+    open = createButton(openText, STRINGS.getString(openText));
+    pause = createButton(pauseText, "");
+    play = createButton(playText, "");
+    rec = createButton(recordText, "");
     main = new JPanel();
     side = new JPanel();
   } // createComponents method.

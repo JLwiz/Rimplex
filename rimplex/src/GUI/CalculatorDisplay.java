@@ -53,6 +53,9 @@ public class CalculatorDisplay extends JFrame
   private JLabel inputField;
 
   private JPanel centerPanel, mainPanel, northPanel;
+  
+  private String aboutText = "About", playbackText = "Playback", htmlEndingBrackets = "</html>";
+  private String htmlBeginningBrackets = "<html>";
 
   // ----------Constructor----------
 
@@ -276,8 +279,8 @@ public class CalculatorDisplay extends JFrame
     JMenuItem print = new JMenuItem(strings.getString("PHistory"));
     print.setName("Print History");
     print.addActionListener(listener);
-    JMenuItem playback = new JMenuItem(strings.getString("Playback"));
-    playback.setName("Playback");
+    JMenuItem playback = new JMenuItem(strings.getString(playbackText));
+    playback.setName(playbackText);
     playback.addActionListener(listener);
     // ImageIcon importIcon = new ImageIcon(
     // CalculatorDisplay.class.getResource("/images/import-icon.png"));
@@ -297,8 +300,8 @@ public class CalculatorDisplay extends JFrame
     germanButton.setName("Ger");
     JMenuItem frenchButton = new JMenuItem("Française");
     frenchButton.setName("Fr");
-    JMenuItem aboutButton = new JMenuItem("About");
-    aboutButton.setName("About");
+    JMenuItem aboutButton = new JMenuItem(aboutText);
+    aboutButton.setName(aboutText);
     spanishButton.addActionListener(listener);
     englishButton.addActionListener(listener);
     germanButton.addActionListener(listener);
@@ -334,11 +337,11 @@ public class CalculatorDisplay extends JFrame
    */
   private String replaceI(final String text)
   {
-    String temp = text.replaceAll("<html>", "");
-    temp = temp.replaceAll("</html>", "");
+    String temp = text.replaceAll(htmlBeginningBrackets, "");
+    temp = temp.replaceAll(htmlEndingBrackets, "");
     temp = temp.replaceAll("<i>", "");
     temp = temp.replaceAll("</i>", "");
-    temp = "<html>" + temp + "</html>";
+    temp = htmlBeginningBrackets + temp + htmlEndingBrackets;
 
     return temp.replaceAll("i", ITALICI);
   }

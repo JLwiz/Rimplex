@@ -6,9 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-
-import GUI.PlaybackWindow;
 
 /**
  * Class to handle reading and writing of files.
@@ -216,7 +213,6 @@ public class SaveHandler
   {
 
     String line = null;
-    Boolean saved = false;
     File newSave = new File(key + ".txt");
 
     if (key != null && value != null)
@@ -225,7 +221,6 @@ public class SaveHandler
       line = key + "|" + value;
 
       write(line);
-      saved = true;
 
       close(1);
     }

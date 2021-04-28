@@ -5,14 +5,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,8 +18,6 @@ import javax.swing.JTextPane;
 import javax.swing.JWindow;
 import javax.swing.Timer;
 
-import File.SaveHandler;
-import app.RimplexDriver;
 import controller.CalcListener;
 
 /**
@@ -53,6 +47,9 @@ public class HistoryWindow extends JWindow
 
   private GridBagLayout layout = new GridBagLayout();
   private GridBagConstraints constraints = new GridBagConstraints();
+
+  private String fontType = "Arial";
+  private String endingParagraphBrackets = "</p>";
 
   // ----------Constructors----------
 
@@ -118,7 +115,8 @@ public class HistoryWindow extends JWindow
 
     if (!keep.trim().equals(""))
     {
-      keep = historyText.getText().replaceAll("</p>", keep + "<br><br></p>");
+      keep = historyText.getText().replaceAll(endingParagraphBrackets,
+          keep + "<br><br>" + endingParagraphBrackets);
       historyText.setText(keep);
     }
   } // addToHistory method.
@@ -129,7 +127,7 @@ public class HistoryWindow extends JWindow
   public void clearHistory()
   {
     int start = historyText.getText().indexOf("<p>") + 3;
-    int end = historyText.getText().indexOf("</p>", start);
+    int end = historyText.getText().indexOf(endingParagraphBrackets, start);
     historyText.setText(historyText.getText().substring(0, start)
         + historyText.getText().substring(end, historyText.getText().length()));
 
@@ -168,13 +166,16 @@ public class HistoryWindow extends JWindow
   {
     return historyPanel;
   } // getPanel method.
-  
+
   /**
    * newFrame - refreshes History window when the frame is reset.
-   * @throws IOException - the IOExcepion
+   * 
+   * @throws IOException
+   *           - the IOExcepion
    */
-  
-  public void newFrame() throws IOException {
+
+  public void newFrame() throws IOException
+  {
     single_instance = new HistoryWindow();
   }
 
@@ -301,10 +302,10 @@ public class HistoryWindow extends JWindow
     close.setBackground(background);
     close.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
     close.setForeground(foreground);
-    close.setFont(new Font("Arial", Font.BOLD, 15));
+    close.setFont(new Font(fontType, Font.BOLD, 15));
     scrollList.setWheelScrollingEnabled(true);
     historyText.setContentType("text/html");
-    historyText.setFont(new Font("Arial", Font.BOLD, 10));
+    historyText.setFont(new Font(fontType, Font.BOLD, 10));
     historyText.setEditable(false);
     historyPanel.setLayout(layout);
   } // setComponenets method.

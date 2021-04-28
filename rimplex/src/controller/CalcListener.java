@@ -55,6 +55,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   private String recording = "";
   private String record = null;
+  private String backspace = "backspace";
+  private String equals = "equals";
+  private String openParentheses = "open parentheses";
+  private String closedParentheses = "closed parentheses";
   private int mode = 0;
 
   /**
@@ -160,10 +164,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     switch (code)
     {
       case 8:
-        pad.pressButton("backspace");
+        pad.pressButton(backspace);
         break;
       case 10: // enter
-        pad.pressButton("equals");
+        pad.pressButton(equals);
         break;
       case 22:
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -187,10 +191,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         frame.getInputField().setText(frame.getInputField().getText() + copy);
         break;
       case 40:
-        pad.pressButton("open parenthases");
+        pad.pressButton(openParentheses);
         break;
       case 41:
-        pad.pressButton("closed parenthases");
+        pad.pressButton(closedParentheses);
         break;
       case 42:
         pad.pressButton("multiply");
