@@ -57,8 +57,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private String record = null;
   private final String backspace = "backspace";
   private final String equals = "equals";
-  private final String openParentheses = "open parentheses";
-  private final String closedParentheses = "closed parentheses";
+  private final String openParenthases = "open parenthases";
+  private final String closedParenthases = "closed parenthases";
   private final String one = "1", two = "2", three = "3", four = "4", five = "5", six = "6",
       seven = "7", eight = "8", nine = "9", zero = "0";
   private final String addText = "add", subtractText = "subtract", multiplyText = "multiply",
@@ -195,10 +195,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         frame.getInputField().setText(frame.getInputField().getText() + copy);
         break;
       case 40:
-        pad.pressButton(openParentheses);
+        pad.pressButton(openParenthases);
         break;
       case 41:
-        pad.pressButton(closedParentheses);
+        pad.pressButton(closedParenthases);
         break;
       case 42:
         pad.pressButton(multiplyText);
@@ -565,8 +565,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       case eight:
       case nine:
       case decimalText:
-      case "open parenthases":
-      case "closed parenthases":
+      case openParenthases:
+      case closedParenthases:
         append(button.getText().charAt(0));
         break;
       case imaginaryConstant:
