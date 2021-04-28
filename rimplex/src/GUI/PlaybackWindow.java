@@ -33,13 +33,14 @@ public class PlaybackWindow extends JWindow
       + "(383+3848i)÷(383+3848i)=(1)" + "sin(33)=(1)" + "cos(33)=(1)" + "tan(33)=(1)"
       + "&#8730(334)=(1)" + "log(30)=(1)" + "Con(331)=(1)";
   private static PlaybackWindow single_instance = null;
+  private static final ResourceBundle STRINGS = ResourceBundle.getBundle("Language.Strings");
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private SaveHandler calcSaver;
   private boolean recording;
   private JButton close, open, pause, play, rec;
   private JPanel main, side;
   
-  private static final ResourceBundle STRINGS = ResourceBundle.getBundle("Language.Strings");
+  
 
 
   /**
@@ -102,6 +103,15 @@ public class PlaybackWindow extends JWindow
 
     return input;
   } // getRecording method.
+  
+  /**
+   * newFrame - refreshes playback window when the frame is reset.
+   * @throws IOException - the IOExcepion
+   */
+  
+  public void newFrame() throws IOException {
+    single_instance = new PlaybackWindow();
+  }
 
   /**
    * recording - Will return the boolean recording.

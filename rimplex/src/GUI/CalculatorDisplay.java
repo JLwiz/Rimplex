@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import controller.CalcListener;
+import controller.DisplayListener;
 
 /**
  * GUI for the calculator.
@@ -105,6 +106,7 @@ public class CalculatorDisplay extends JFrame
   {
     this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     single_instance = new CalculatorDisplay();
+    single_instance.addComponentListener(new DisplayListener());
   }
 
   /**

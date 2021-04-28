@@ -1,5 +1,9 @@
 package controller;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -160,6 +164,27 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
         break;
       case 10: // enter
         pad.pressButton("equals");
+        break;
+      case 22:
+        Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+        String copy = "";
+        try
+        {
+          copy = (String) c.getData(DataFlavor.stringFlavor);
+        }
+        catch (UnsupportedFlavorException e1)
+        {
+
+        }
+        catch (IOException e1)
+        {
+
+        }
+        catch (NullPointerException e1)
+        {
+          
+        }
+        frame.getInputField().setText(frame.getInputField().getText() + copy);
         break;
       case 40:
         pad.pressButton("open parenthases");
@@ -419,6 +444,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       Locale.setDefault(Locale.forLanguageTag("fr-FR"));
       frame.changeLanguage();
     }
+    HistoryWindow.getInstance().newFrame();
+    PlaybackWindow.getInstance().newFrame();
   }
 
   /**
