@@ -30,10 +30,15 @@ public class ComplexSine implements Operations
     {
       throw new NumberFormatException();
     }
-    Double real = hold.getReal();
-    Double img = hold.getImaginary();
-    Double newReal = Math.sin(real) * Math.cosh(img);
-    Double newImg = Math.cos(real) * Math.sinh(img);
+    double img = hold.getImaginary();
+    double real = hold.getReal();
+    double realSine = Math.sin(real);
+    double imgCosh = Math.cosh(img);
+    double realCosine = Math.cos(real);
+    double imgSinh = Math.sinh(img);
+    
+    Double newReal = realSine * imgCosh;
+    Double newImg = realCosine * imgSinh;
     answer = new ComplexNumber(newReal, newImg);
 
     return answer;

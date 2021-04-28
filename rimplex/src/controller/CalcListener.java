@@ -650,7 +650,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     String equalsOperator = "=";
     String logOperator = "log";
 
-    if (evaluate.operatorEmpty() && text.length() > 0)
+    if (evaluate.operatorEmpty() && text.length() > 0 && !input.equals("Undefined"))
     {
       ComplexNumber op1;
       if (evaluate.getFirstOp() == null || text.length() > 0)
@@ -704,10 +704,12 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       {
         evaluate.setOperator(operation);
         evaluate.setFirstOp(op1);
-        ComplexNumber unitaryOperationResult = evaluate.solve();
+        ComplexNumber unitaryResult = evaluate.solve();
+        String complexText = getComplexText(unitaryResult);
         frame.setDisplay(
-            operation + op1.toString() + equalsOperator + getComplexText(unitaryOperationResult));
-        op1 = unitaryOperationResult;
+            operation + op1.toString() + equalsOperator + complexText);
+        op1 = unitaryResult;
+        
       }
       else if (operation.equals("Re"))
       {

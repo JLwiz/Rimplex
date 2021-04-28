@@ -15,7 +15,10 @@ import calculations.Equation;
  */
 class EquationTest
 {
- 
+  private static String plus = "+";
+  private static String minus = "-";
+  private static String divide = "÷";
+  private static String multiply = "×";
   /**
    * operandEmptyTest - Will test the operandEmpty method.
    */
@@ -39,7 +42,7 @@ class EquationTest
     Equation.getInstance().setFirstOp(null);
     assertTrue(Equation.getInstance().operatorEmpty());
     
-    Equation.getInstance().setOperator("+");
+    Equation.getInstance().setOperator(plus);
     
     assertFalse(Equation.getInstance().operatorEmpty());
   } // operatorEmptyTest test.
@@ -67,7 +70,7 @@ class EquationTest
   {
     Equation.getInstance().setFirstOp(new ComplexNumber(2.0, 2.0));
     Equation.getInstance().setSecondOp(new ComplexNumber(2.0, 2.0));
-    Equation.getInstance().setOperator("+");
+    Equation.getInstance().setOperator(plus);
     
     ComplexNumber result = Equation.getInstance().solve();
     
@@ -117,7 +120,7 @@ class EquationTest
   @Test
   void setOperatorValidTest()
   {
-    Equation.getInstance().setOperator("-");
+    Equation.getInstance().setOperator(minus);
     Equation.getInstance().setFirstOp(new ComplexNumber(2.0, 2.0));
     Equation.getInstance().setSecondOp(new ComplexNumber(2.0, 2.0));
     
@@ -145,7 +148,7 @@ class EquationTest
   {
     ComplexNumber result;
     
-    Equation.getInstance().setOperator("+");
+    Equation.getInstance().setOperator(plus);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(4.2, 6.1));
     Equation.getInstance().setSecondOp(new ComplexNumber(7.1, 10.5));
@@ -155,7 +158,7 @@ class EquationTest
     assertEquals(16.6, result.getImaginary(), 0.01);
     assertEquals(11.3, result.getReal(), 0.01);
     
-    Equation.getInstance().setOperator("+");
+    Equation.getInstance().setOperator(plus);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(6.7, -7.3));
     Equation.getInstance().setSecondOp(new ComplexNumber(8.0, 2.9));
@@ -165,7 +168,7 @@ class EquationTest
     assertEquals(-4.4, result.getImaginary(), 0.01);
     assertEquals(14.7, result.getReal(), 0.01);
     
-    Equation.getInstance().setOperator("+");
+    Equation.getInstance().setOperator(plus);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(0.5, 9.7));
     Equation.getInstance().setSecondOp(new ComplexNumber(20.3, -5.4));
@@ -185,7 +188,7 @@ class EquationTest
   {
     ComplexNumber result;
     
-    Equation.getInstance().setOperator("÷");
+    Equation.getInstance().setOperator(divide);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(4.2, 6.1));
     Equation.getInstance().setSecondOp(new ComplexNumber(7.1, 10.5));
@@ -195,7 +198,7 @@ class EquationTest
     assertEquals(-0.00491, result.getImaginary(), 0.01);
     assertEquals(0.5842, result.getReal(), 0.01);
     
-    Equation.getInstance().setOperator("÷");
+    Equation.getInstance().setOperator(divide);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(6.7, -7.3));
     Equation.getInstance().setSecondOp(new ComplexNumber(8.0, 2.9));
@@ -205,7 +208,7 @@ class EquationTest
     assertEquals(-1.07485, result.getImaginary(), 0.01);
     assertEquals(0.44785, result.getReal(), 0.01);
     
-    Equation.getInstance().setOperator("÷");
+    Equation.getInstance().setOperator(divide);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(0.5, 9.7));
     Equation.getInstance().setSecondOp(new ComplexNumber(20.3, -5.4));
@@ -224,7 +227,7 @@ class EquationTest
   {
     ComplexNumber result;
     
-    Equation.getInstance().setOperator("×");
+    Equation.getInstance().setOperator(multiply);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(4.2, 6.1));
     Equation.getInstance().setSecondOp(new ComplexNumber(7.1, 10.5));
@@ -234,7 +237,7 @@ class EquationTest
     assertEquals(87.47, result.getImaginary(), 0.1);
     assertEquals(-34.23, result.getReal(), 0.1);
     
-    Equation.getInstance().setOperator("×");
+    Equation.getInstance().setOperator(multiply);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(6.7, -7.3));
     Equation.getInstance().setSecondOp(new ComplexNumber(8.0, 2.9));
@@ -244,7 +247,7 @@ class EquationTest
     assertEquals(-38.97, result.getImaginary(), 0.1);
     assertEquals(74.77, result.getReal(), 0.1);
     
-    Equation.getInstance().setOperator("×");
+    Equation.getInstance().setOperator(multiply);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(0.5, 9.7));
     Equation.getInstance().setSecondOp(new ComplexNumber(20.3, -5.4));
@@ -262,7 +265,7 @@ class EquationTest
   @Test
   void solveSetsTest()
   {
-    Equation.getInstance().setOperator("+");
+    Equation.getInstance().setOperator(plus);
     Equation.getInstance().setFirstOp(new ComplexNumber(2.0, 2.0));
     Equation.getInstance().setSecondOp(new ComplexNumber(2.0, 2.0));
     
@@ -279,7 +282,7 @@ class EquationTest
   {
     ComplexNumber result;
     
-    Equation.getInstance().setOperator("-");
+    Equation.getInstance().setOperator(minus);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(4.2, 6.1));
     Equation.getInstance().setSecondOp(new ComplexNumber(7.1, 10.5));
@@ -289,7 +292,7 @@ class EquationTest
     assertEquals(-4.4, result.getImaginary(), 0.01);
     assertEquals(-2.9, result.getReal(), 0.01);
     
-    Equation.getInstance().setOperator("-");
+    Equation.getInstance().setOperator(minus);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(6.7, -7.3));
     Equation.getInstance().setSecondOp(new ComplexNumber(8.0, 2.9));
@@ -299,7 +302,7 @@ class EquationTest
     assertEquals(-10.2, result.getImaginary(), 0.01);
     assertEquals(-1.3, result.getReal(), 0.01);
     
-    Equation.getInstance().setOperator("-");
+    Equation.getInstance().setOperator(minus);
     
     Equation.getInstance().setFirstOp(new ComplexNumber(0.5, 9.7));
     Equation.getInstance().setSecondOp(new ComplexNumber(20.3, -5.4));

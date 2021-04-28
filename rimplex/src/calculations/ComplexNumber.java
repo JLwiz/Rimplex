@@ -17,8 +17,8 @@ import java.text.DecimalFormat;
 public class ComplexNumber
 {
   private final Double realNumber;
-  private final Double imaginaryNumber;
-  private DecimalFormat standardFormat = new DecimalFormat("#.#######");
+  private Double imaginaryNumber;
+  private DecimalFormat standardFormat;
 
   /**
    * Default Constructor for Complex Number.
@@ -47,6 +47,7 @@ public class ComplexNumber
     {
       this.imaginaryNumber = imaginaryNumber;
     }
+    standardFormat = new DecimalFormat("#.#######");
   }
 
   /**
@@ -250,9 +251,31 @@ public class ComplexNumber
 
   public String getRawString()
   {
-    return toStringHelper(Double.toString(realNumber), Double.toString(imaginaryNumber));
-  }
+    String eNum = "E";
+    DecimalFormat df = new DecimalFormat("#");
+    String imaginaryString = imaginaryNumber.toString();
+    String realString = realNumber.toString();
+    if (imaginaryString.contains(eNum))
+    {
+      int index = imaginaryNumber.toString().indexOf(eNum, 0) + 1;
+      int newLength = Integer.parseInt(imaginaryString.substring(index)) + 1;
+      df.setMaximumFractionDigits(newLength);
+      standardFormat = df;
+      imaginaryString = df.format(imaginaryNumber);
+    }
 
+    if (realString.contains(eNum))
+    {
+      int index = realString.indexOf(eNum, 0) + 1;
+      String sub = realString.substring(index);
+      int newLength = Integer.parseInt(sub) + 1;
+      df.setMaximumFractionDigits(newLength);
+      standardFormat = df;
+      realString = df.format(realNumber);
+    }
+    return toStringHelper(realString, imaginaryString);
+  }
+  
   /**
    * keeps consistent format between complex numbers in fraction and decimal format.
    * 
@@ -275,8 +298,13 @@ public class ComplexNumber
       operator += "+";
 
     }
+    String nan = "NaN";
     String back = start + real + operator + imaginary + end;
-    if (realNumber == 0 && imaginaryNumber == 0)
+    if (real.equals(nan) || imaginary.equals(nan))
+    {
+      back = "Undefined";
+    } 
+    else if (realNumber == 0 && imaginaryNumber == 0)
     {
       back = start + real + operator + imaginary + end;
     }

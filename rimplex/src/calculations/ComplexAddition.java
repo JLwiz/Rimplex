@@ -1,5 +1,6 @@
 package calculations;
 
+
 /**
  * ComplexNumber addition class.
  * 
@@ -62,6 +63,7 @@ public class ComplexAddition implements Operations
       realSum += op2.getReal();
       imgSum += op2.getImaginary();
     }
+
     return new ComplexNumber(realSum, imgSum);
   }
 
