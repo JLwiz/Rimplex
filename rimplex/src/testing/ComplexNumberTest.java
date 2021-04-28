@@ -64,4 +64,34 @@ class ComplexNumberTest
       assertEquals(imaginary, tested.getImaginary());
     }
   }
+  
+  @Test
+  void ComplexFractionTest()
+  {
+    ComplexNumber number = new ComplexNumber(3.33, 6.66);
+    assertEquals("(333/100+333/50i)", number.toFraction());
+    
+    number = new ComplexNumber(7.7584, 8.9393);
+    assertEquals("(4849/625+89393/10000i)", number.toFraction());
+
+    number = new ComplexNumber(5.3311, 4.6613);
+    assertEquals("(53311/10000+46613/10000i)", number.toFraction());
+
+    number = new ComplexNumber(3.33333, 6.66666);
+    assertEquals("(10/3+20/3i)", number.toFraction());
+
+    number = new ComplexNumber(-0.333, -0.666666);
+    assertEquals("(-1/3-2/3i)", number.toFraction());
+  }
+  
+  @Test
+  void ComplexPolarTest()
+  {
+   ComplexNumber number = new ComplexNumber(3.33, 5.1);
+   assertEquals("6.090887(cos(0.992356)+isin(0.992356))", number.toPolar());
+   
+   number = new ComplexNumber(5.112, 49.491);
+   assertEquals("49.754313(cos(1.467870)+isin(1.467870))", number.toPolar());
+  }
+  
 }
