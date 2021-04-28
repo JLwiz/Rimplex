@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -97,9 +98,10 @@ public class CalculatorDisplay extends JFrame
 
   /**
    * changeLanguage - Makes a new instance of CalculatorDisplay in the new default language.
+   * @throws IOException - the IOException
    */
 
-  public void changeLanguage()
+  public void changeLanguage() throws IOException
   {
     this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     single_instance = new CalculatorDisplay();

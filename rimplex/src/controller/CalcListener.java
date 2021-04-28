@@ -269,9 +269,12 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   /**
    * changes the mode of the calculator between fractions and decimals.
+   * 
+   * @throws IOException
+   *           - the IOException
    */
 
-  private void changeMode()
+  private void changeMode() throws IOException
   {
     mode = ButtonPadPanel.getInstance().updateMode();
   }
