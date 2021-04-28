@@ -10,8 +10,8 @@ import java.text.DecimalFormat;
  * 
  * This work complies with the JMU Honor Code.
  * 
- * @author Storm Behrens, Benjamin Huber
- * @version 03/24/2021
+ * @author Storm Behrens, Benjamin Huber, Storm Behrens
+ * @version 04/27/2021
  */
 
 public class ComplexNumber
@@ -176,7 +176,7 @@ public class ComplexNumber
   }
   
   /**
-   * returns the polar form of a complex number r(cos(@)+isin(@))
+   * Returns the polar form of a complex number r(cos(@)+isin(@)).
    * @return String polar form
    */
   public String toPolar()
@@ -188,7 +188,7 @@ public class ComplexNumber
   }
 
   /**
-   * reduces the fraction of a real or imaginary number.
+   * Reduces the fraction of a real or imaginary number.
    * 
    * @param num
    *          - the numweator for the number

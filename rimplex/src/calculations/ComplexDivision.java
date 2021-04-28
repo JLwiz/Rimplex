@@ -20,8 +20,8 @@ public class ComplexDivision implements Operations
 //  @Override
 //  public ComplexNumber calculate(final ComplexNumber op1, final ComplexNumber op2)
 //  {
-//    if (// op1 == null || Probably shouldn't let null numerators go through, but will have to do for
-//        // now.
+//    if (// op1 == null || Probably shouldn't let null numerators go through, 
+//    but will have to do for now.
 //        op2 == null || (op2.getReal() == 0.0 && op2.getImaginary() == 0.0))
 //    {
 //      // TODO: Raise ArithmeticException
@@ -49,6 +49,11 @@ public class ComplexDivision implements Operations
 //    return new ComplexNumber(resultReal, resultImag);
 //  }
 
+  /**
+   * Calculates the divisor between two complex numbers.
+   * 
+   * @return the divisor between two complex numbers
+   */
   @Override
   public ComplexNumber calculate(final ComplexNumber... op) 
   {

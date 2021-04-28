@@ -35,6 +35,12 @@ public class ComplexSubtraction implements Operations
 //    return new ComplexNumber(op1real - op2real, op1imag - op2imag);
 //  }
 
+  
+  /**
+   * Calculates the result of a subtraction method between two complex numbers.
+   * 
+   * @return the result of the subtraction.
+   */
   @Override
   public ComplexNumber calculate(final ComplexNumber... op) 
   {

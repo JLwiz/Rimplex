@@ -35,6 +35,11 @@ public class ComplexMultiplication implements Operations
 //    return new ComplexNumber(newReal, newImg);
 //  }
 
+  /**
+   * Calculates the result of a ComplexNumber multiplication operation.
+   * 
+   * @return the resulting ComplexNumber
+   */
   @Override
   public ComplexNumber calculate(final ComplexNumber... op) 
   {

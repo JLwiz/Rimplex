@@ -1,6 +1,9 @@
 package calculations;
 
 /**
+ * I don't know why this exists, wasn't involved in backend.  I believe its something to do
+ * with the way the parser works.
+ * 
  * @author Jacob Lewis
  * @version 03.24.2021
  */

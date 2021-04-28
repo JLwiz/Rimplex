@@ -8,6 +8,12 @@ package calculations;
  */
 public class ComplexExponentiation implements Operations
 {
+  
+  /**
+   * Calculates the exponent of a complex number.
+   * 
+   * @return the result of the exponent to the complex number.
+   */
   @Override
   public ComplexNumber calculate(final ComplexNumber... op) 
   {
