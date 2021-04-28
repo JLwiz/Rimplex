@@ -1,5 +1,8 @@
 package calculations;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 /**
  * A class for calculating the cosine of a complex number.
  * 
@@ -17,6 +20,7 @@ public class ComplexCosine implements Operations
   @Override
   public ComplexNumber calculate(final ComplexNumber... op)
   {
+
     ComplexNumber answer = new ComplexNumber(0.0, 0.0);
     ComplexNumber hold = answer;
     if (op != null && op.length == 1)
@@ -32,10 +36,10 @@ public class ComplexCosine implements Operations
     {
       throw new NumberFormatException();
     }
-    Double real = hold.getReal();
-    Double img = hold.getImaginary();
+    double real = hold.getReal();
+    double img = hold.getImaginary();
     Double newReal = Math.cos(real) * Math.cosh(img);
-    Double newImg = Math.sin(-real) * Math.sinh(img);
+    Double newImg = Math.sin(-1 * real) * Math.sinh(img);
     answer = new ComplexNumber(newReal, newImg);
 
     return answer;
