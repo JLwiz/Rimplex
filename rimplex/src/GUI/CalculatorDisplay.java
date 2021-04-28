@@ -55,6 +55,7 @@ public class CalculatorDisplay extends JFrame
   private JPanel centerPanel, mainPanel, northPanel;
   
   private String aboutText = "About", playbackText = "Playback", htmlEndingBrackets = "</html>";
+  private String helpText = "Display Help";
   private String htmlBeginningBrackets = "<html>";
 
   // ----------Constructor----------
@@ -302,16 +303,20 @@ public class CalculatorDisplay extends JFrame
     frenchButton.setName("Fr");
     JMenuItem aboutButton = new JMenuItem(aboutText);
     aboutButton.setName(aboutText);
+    JMenuItem helpButton = new JMenuItem(helpText);
+    helpButton.setName(helpText);
     spanishButton.addActionListener(listener);
     englishButton.addActionListener(listener);
     germanButton.addActionListener(listener);
     frenchButton.addActionListener(listener);
     aboutButton.addActionListener(listener);
+    helpButton.addActionListener(listener);
     JMenu languageMenu = new JMenu(strings.getString("Language"));
     JMenu settingsMenu = new JMenu(strings.getString("Settings"));
     JMenu helpMenu = new JMenu(strings.getString("Help"));
 
     helpMenu.add(aboutButton);
+    helpMenu.add(helpButton);
     languageMenu.add(englishButton);
     languageMenu.add(spanishButton);
     languageMenu.add(germanButton);

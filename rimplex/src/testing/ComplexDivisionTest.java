@@ -56,6 +56,29 @@ class ComplexDivisionTest
     expected = new ComplexNumber(0.58171386266889, -0.0011104941699056);
     actual = operator.calculate(op1, op2);
     testHelper(actual, expected);
+    
+    actual = operator.calculate(null);
+    expected = new ComplexNumber(0.0, 0.0);
+    testHelper(actual, expected);
+    
+    actual = operator.calculate(null, null, null);
+    testHelper(actual, expected);
+    
+    op2 = new ComplexNumber(1.0, 0.0);
+    actual = operator.calculate(op1, op2);
+    expected = new ComplexNumber(4.2, 6.1);
+    testHelper(actual, expected);
+    
+    op2 = new ComplexNumber(0.0, 1.0);
+    actual = operator.calculate(op1, op2);
+    expected = new ComplexNumber(6.1, -4.2);
+    testHelper(actual, expected);
+    
+    op2 = new ComplexNumber(0.0, 0.0);
+    actual = operator.calculate(op1, op2);
+    expected = new ComplexNumber(0.0, 0.0);
+    testHelper(actual, expected);
+    
   }
 
   @Test

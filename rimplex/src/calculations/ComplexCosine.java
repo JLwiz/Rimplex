@@ -1,5 +1,6 @@
 package calculations;
 
+
 /**
  * A class for calculating the cosine of a complex number.
  * 

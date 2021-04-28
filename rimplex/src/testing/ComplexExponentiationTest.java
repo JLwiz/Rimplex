@@ -51,6 +51,22 @@ class ComplexExponentiationTest
     expected = new ComplexNumber(0.0, -8.0);
     actual = operator.calculate(op1, op2);
     testHelper(actual, expected);
+    
+    actual = operator.calculate(null);
+    expected = new ComplexNumber(0.0, 0.0);
+    testHelper(actual, expected);
+    
+    actual = operator.calculate(null, null, null);
+    expected = new ComplexNumber(0.0, 0.0);
+    testHelper(actual, expected);
+    
+    op1 = new ComplexNumber(0.0, 2.9);
+    actual = operator.calculate(op1, op2, op1);
+    testHelper(actual, expected);
+    
+    actual = operator.calculate(null, op1);
+    expected = new ComplexNumber(Double.NaN, Double.NaN);
+    testHelper(actual, expected);
   }
   /*
   @Test

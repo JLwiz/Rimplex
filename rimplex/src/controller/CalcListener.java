@@ -28,6 +28,7 @@ import GUI.PlaybackWindow;
 import calculations.ComplexNumber;
 import calculations.Equation;
 import html.HTMLText;
+import html.HelpDisplay;
 import printing.PrintableHistory;
 import printing.PrinterController;
 import util.InputParser;
@@ -66,6 +67,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   private final String imaginaryConstant = "i";
   private final String sineText = "sin", cosineText = "cos", tangentText = "tan";
   private final String aboutText = "About";
+  private final String helpText = "Display Help";
   private int mode = 0;
 
   /**
@@ -541,6 +543,11 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       aboutFrame.setContentPane(editor);
       aboutFrame.pack();
       aboutFrame.setVisible(true);
+    }
+    else if (name.equals(helpText))
+    {
+      HelpDisplay display = new HelpDisplay();
+      display.displayHelp();
     }
   } // menuActions method.
 

@@ -69,6 +69,19 @@ class ComplexMultiplicationTest
     ComplexNumber expected = new ComplexNumber(real, img);
     ComplexNumber actual = operator.calculate(op1, op2);
     testHelper(actual, expected);
+    
+    actual = operator.calculate(null);
+    expected = new ComplexNumber(0.0, 0.0);
+    testHelper(actual, expected);
+    
+    actual = operator.calculate(op1, null);
+    expected = new ComplexNumber(Double.NaN, Double.NaN);
+    testHelper(actual, expected);
+    
+    actual = operator.calculate(op1, op2, op1);
+    expected = new ComplexNumber(0.0, 0.0);
+    testHelper(actual, expected);
+    
   }
   
 
