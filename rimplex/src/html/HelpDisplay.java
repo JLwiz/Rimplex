@@ -74,7 +74,7 @@ public class HelpDisplay extends JFrame
       add(scrollpane);
       setVisible(true);
       setSize(600, 800);
-      setDefaultCloseOperation(EXIT_ON_CLOSE);
+      setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     } catch (Exception e)
     {
       e.printStackTrace();
