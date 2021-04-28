@@ -168,6 +168,15 @@ public class HistoryWindow extends JWindow
   {
     return historyPanel;
   } // getPanel method.
+  
+  /**
+   * newFrame - refreshes History window when the frame is reset.
+   * @throws IOException - the IOExcepion
+   */
+  
+  public void newFrame() throws IOException {
+    single_instance = new HistoryWindow();
+  }
 
   /**
    * nextRecording - Will increment place by one.

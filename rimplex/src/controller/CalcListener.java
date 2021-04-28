@@ -419,6 +419,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       Locale.setDefault(Locale.forLanguageTag("fr-FR"));
       frame.changeLanguage();
     }
+    HistoryWindow.getInstance().newFrame();
+    PlaybackWindow.getInstance().newFrame();
   }
 
   /**
