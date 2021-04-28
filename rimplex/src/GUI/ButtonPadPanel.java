@@ -394,7 +394,7 @@ public class ButtonPadPanel extends JPanel
   private static int[] fetchColors()
   {
     URL color = RimplexDriver.class.getResource("config.txt");
-    File config = new File(color.getFile());
+    File config = new File(color.getFile().replaceAll("%20", " "));
     Scanner in = null;
     try
     {
