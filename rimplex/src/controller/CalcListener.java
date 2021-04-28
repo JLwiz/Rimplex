@@ -55,10 +55,10 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
 
   private String recording = "";
   private String record = null;
-  private String backspace = "backspace";
-  private String equals = "equals";
-  private String openParentheses = "open parentheses";
-  private String closedParentheses = "closed parentheses";
+  private final String backspace = "backspace";
+  private final String equals = "equals";
+  private final String openParentheses = "open parentheses";
+  private final String closedParentheses = "closed parentheses";
   private int mode = 0;
 
   /**
@@ -511,15 +511,8 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     if (name.equals("Print History"))
     {
       HistoryWindow history = HistoryWindow.getInstance();
-      try
-      {
-        PrintableHistory ph = new PrintableHistory(history.getTextArea());
-        PrinterController.print(ph, frame);
-      }
-      catch (IOException e1)
-      {
-        e1.printStackTrace();
-      }
+      PrintableHistory ph = new PrintableHistory(history.getTextArea());
+      PrinterController.print(ph, frame);
     }
     else if (name.equals("Playback"))
     {
