@@ -7,6 +7,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -37,9 +40,9 @@ public class CalculatorDisplay extends JFrame
   private static final int MINFONTSIZE = 13;
   private static final String FONT = "Arial";
   private static final String ITALICI = "<i>i</i>";
-  private static final ResourceBundle STRINGS = ResourceBundle.getBundle("Language.Strings");
 
   private static CalculatorDisplay single_instance = null;
+  private ResourceBundle strings;
   private CalcListener listener;
 
   private GridBagLayout layout = new GridBagLayout();
@@ -59,6 +62,7 @@ public class CalculatorDisplay extends JFrame
   {
     setSize(new Dimension(500, 500));
 
+    strings = ResourceBundle.getBundle("Language.Strings", Locale.getDefault());
     listener = CalcListener.getInstance();
     createComponents();
     createMenuBar();
@@ -73,7 +77,7 @@ public class CalculatorDisplay extends JFrame
     setLocationRelativeTo(null);
 
     setVisible(true);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   } // default constructor.
 
   // ----------Singleton----------
@@ -91,6 +95,17 @@ public class CalculatorDisplay extends JFrame
   } // getInstance method.
 
   // ----------Public Methods----------
+
+  /**
+   * changeLanguage - Makes a new instance of CalculatorDisplay in the new default language.
+   * @throws IOException - the IOException
+   */
+
+  public void changeLanguage() throws IOException
+  {
+    this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    single_instance = new CalculatorDisplay();
+  }
 
   /**
    * clearInputField - Will clear the text in the input field.
@@ -152,6 +167,8 @@ public class CalculatorDisplay extends JFrame
    * 
    * @param invalid
    *          true if there is an error present, otherwise false. (boolean)
+   * @param message
+   *          the error message to display
    */
   public void invalidStatus(final boolean invalid, final String message)
   {
@@ -254,59 +271,57 @@ public class CalculatorDisplay extends JFrame
    */
   private void createMenuBar()
   {
-    JMenuItem print = new JMenuItem(STRINGS.getString("PHistory"));
+    JMenuItem print = new JMenuItem(strings.getString("PHistory"));
     print.setName("Print History");
     print.addActionListener(listener);
-    JMenuItem playback = new JMenuItem(STRINGS.getString("Playback"));
+    JMenuItem playback = new JMenuItem(strings.getString("Playback"));
     playback.setName("Playback");
     playback.addActionListener(listener);
-//    ImageIcon importIcon = new ImageIcon(
-//        CalculatorDisplay.class.getResource("/images/import-icon.png"));
-//    JMenuItem open = new JMenuItem("Import File");
-//    ImageIcon saveIcon = new ImageIcon(
-//        CalculatorDisplay.class.getResource("/images/save-icon.png"));
-//    JMenuItem save = new JMenuItem("Save");
-    JMenu fileMenu = new JMenu(STRINGS.getString("File"));
+    // ImageIcon importIcon = new ImageIcon(
+    // CalculatorDisplay.class.getResource("/images/import-icon.png"));
+    // JMenuItem open = new JMenuItem("Import File");
+    // ImageIcon saveIcon = new ImageIcon(
+    // CalculatorDisplay.class.getResource("/images/save-icon.png"));
+    // JMenuItem save = new JMenuItem("Save");
+    JMenu fileMenu = new JMenu(strings.getString("File"));
     fileMenu.add(playback);
     fileMenu.add(print);
-    
-    JMenuItem SpanishButton = new JMenuItem("Español");
-    SpanishButton.setName("Spanish");
-    JMenuItem EnglishButton = new JMenuItem("English");
-    EnglishButton.setName("English");
-    JMenuItem GermanButton = new JMenuItem("Deutsche");
-    GermanButton.setName("German");
-    JMenuItem FrenchButton = new JMenuItem("Française");
-    FrenchButton.setName("French");
+
+    JMenuItem spanishButton = new JMenuItem("Español");
+    spanishButton.setName("Sp");
+    JMenuItem englishButton = new JMenuItem("English");
+    englishButton.setName("En");
+    JMenuItem germanButton = new JMenuItem("Deutsche");
+    germanButton.setName("Ger");
+    JMenuItem frenchButton = new JMenuItem("Française");
+    frenchButton.setName("Fr");
     JMenuItem aboutButton = new JMenuItem("About");
     aboutButton.setName("About");
-    SpanishButton.addActionListener(listener);
-    EnglishButton.addActionListener(listener);
-    GermanButton.addActionListener(listener);
-    FrenchButton.addActionListener(listener);
+    spanishButton.addActionListener(listener);
+    englishButton.addActionListener(listener);
+    germanButton.addActionListener(listener);
+    frenchButton.addActionListener(listener);
     aboutButton.addActionListener(listener);
-    JMenu LanguageMenu = new JMenu(STRINGS.getString("Language"));
-    JMenu SettingsMenu = new JMenu(STRINGS.getString("Settings"));
-    JMenu helpMenu = new JMenu(STRINGS.getString("Help"));
-    
+    JMenu languageMenu = new JMenu(strings.getString("Language"));
+    JMenu settingsMenu = new JMenu(strings.getString("Settings"));
+    JMenu helpMenu = new JMenu(strings.getString("Help"));
+
     helpMenu.add(aboutButton);
-    LanguageMenu.add(EnglishButton);
-    LanguageMenu.add(SpanishButton);
-    LanguageMenu.add(GermanButton);
-    LanguageMenu.add(FrenchButton);
-    SettingsMenu.add(LanguageMenu);
+    languageMenu.add(englishButton);
+    languageMenu.add(spanishButton);
+    languageMenu.add(germanButton);
+    languageMenu.add(frenchButton);
+    settingsMenu.add(languageMenu);
 
     JMenuBar menuBar = new JMenuBar();
     // menuBar.add(optionsMenu);
     menuBar.add(fileMenu);
-    menuBar.add(SettingsMenu);
+    menuBar.add(settingsMenu);
     menuBar.add(helpMenu);
     setJMenuBar(menuBar);
     // If you want to hide the menu bar, set this to false.
     menuBar.setVisible(true);
   }
-  
-
 
   /**
    * replaceI - Will replace all normal i's with italics.

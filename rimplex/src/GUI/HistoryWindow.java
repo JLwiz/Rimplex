@@ -8,6 +8,9 @@ import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -20,6 +23,7 @@ import javax.swing.JWindow;
 import javax.swing.Timer;
 
 import File.SaveHandler;
+import app.RimplexDriver;
 import controller.CalcListener;
 
 /**
@@ -35,8 +39,10 @@ public class HistoryWindow extends JWindow
 
   private static final long serialVersionUID = -6237181401018469549L;
   private static HistoryWindow single_instance = null;
+  private static Color foreground = new Color(255, 255, 255);
+  private static Color background = new Color(0, 0, 0);
 
-  private boolean open;
+  private boolean isOpen;
   private CalculatorDisplay display = CalculatorDisplay.getInstance();
   private HashMap<Integer, String> recordings;
   private int place;
@@ -44,9 +50,6 @@ public class HistoryWindow extends JWindow
   private JTextPane historyText;
   private JPanel historyPanel;
   private JScrollPane scrollList;
-  
-  private static Color foreground = new Color(255, 255, 255);
-  private static Color background = new Color(0, 0, 0);
 
   private GridBagLayout layout = new GridBagLayout();
   private GridBagConstraints constraints = new GridBagConstraints();
@@ -60,18 +63,11 @@ public class HistoryWindow extends JWindow
   {
     super(CalculatorDisplay.getInstance());
 
-    try
-    {
-      int colors[] = fetchColors();
-      foreground = new Color(colors[0], colors[1], colors[2]);
-      background = new Color(colors[3], colors[4], colors[5]);
-    }
-    catch (FileNotFoundException e)
-    {
-      System.out.println("ERROR RETRIEVING THEMEING");
-    }
-    
-    open = false;
+    int colors[] = fetchColors();
+    foreground = new Color(colors[0], colors[1], colors[2]);
+    background = new Color(colors[3], colors[4], colors[5]);
+
+    isOpen = false;
     place = 0;
     setSize(new Dimension(0, 300));
     setLocation(display.getX() + 490, display.getY() + 160);
@@ -126,7 +122,7 @@ public class HistoryWindow extends JWindow
       historyText.setText(keep);
     }
   } // addToHistory method.
-  
+
   /**
    * clearHistory - Will clear the history.
    */
@@ -134,9 +130,9 @@ public class HistoryWindow extends JWindow
   {
     int start = historyText.getText().indexOf("<p>") + 3;
     int end = historyText.getText().indexOf("</p>", start);
-    historyText.setText(historyText.getText().substring(0, start) 
+    historyText.setText(historyText.getText().substring(0, start)
         + historyText.getText().substring(end, historyText.getText().length()));
-    
+
   } // clearHistory method.
 
   /**
@@ -156,7 +152,7 @@ public class HistoryWindow extends JWindow
    *          int
    * @return equation String
    */
-  public String getRecording(int pos)
+  public String getRecording(final int pos)
   {
     if (pos < recordings.size())
       return recordings.get(pos);
@@ -194,7 +190,7 @@ public class HistoryWindow extends JWindow
 
     timer.start();
 
-    this.open = open;
+    this.isOpen = open;
   } // open method.
 
   /**
@@ -204,7 +200,7 @@ public class HistoryWindow extends JWindow
    */
   public boolean isOpen()
   {
-    return open;
+    return isOpen;
   } // state method.
 
   // ----------Private Methods----------
@@ -239,17 +235,37 @@ public class HistoryWindow extends JWindow
     historyPanel = new JPanel();
     scrollList = new JScrollPane(historyText);
   } // createComponenets method.
-  
-  private static int[] fetchColors() throws FileNotFoundException{
-    Scanner in = new Scanner(new File("src/app/config.txt"));
+
+  /**
+   * gets the color configuration from the config file.
+   * 
+   * @return int[] - an array with the color values
+   */
+
+  private static int[] fetchColors()
+  {
+    ClassLoader loader = Thread.currentThread().getContextClassLoader();
+    InputStream in = loader.getResourceAsStream("app/config.txt");
+
     int colors[] = new int[6];
-    for(int i = 0; i < 3; i++) {
-      colors[i] = in.nextInt();
+    String colorSelection = "";
+    try
+    {
+      colorSelection = new String(in.readAllBytes(), StandardCharsets.UTF_8);
     }
-    for(int i = 3; i < 6; i++) {
-      colors[i] = in.nextInt();
+    catch (IOException e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
-    in.close();
+    String[] colorArray;
+    colorSelection = colorSelection.trim();
+    colorArray = colorSelection.split("\\s+");
+    for (int i = 0; i < 6; i++)
+    {
+      colors[i] = Integer.parseInt(colorArray[i]);
+    }
+
     return colors;
   }
 
