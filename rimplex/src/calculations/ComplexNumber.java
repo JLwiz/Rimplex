@@ -266,8 +266,9 @@ public class ComplexNumber
 
     if (realString.contains(eNum))
     {
-      int index = realNumber.toString().indexOf(eNum, 0) + 1;
-      int newLength = Integer.parseInt(imaginaryString.substring(index)) + 1;
+      int index = realString.indexOf(eNum, 0) + 1;
+      String sub = realString.substring(index);
+      int newLength = Integer.parseInt(sub) + 1;
       df.setMaximumFractionDigits(newLength);
       standardFormat = df;
       realString = df.format(realNumber);
