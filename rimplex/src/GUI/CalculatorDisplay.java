@@ -296,12 +296,7 @@ public class CalculatorDisplay extends JFrame
     JMenuItem frenchButton = new JMenuItem("Française");
     frenchButton.setName("Fr");
     JMenuItem aboutButton = new JMenuItem("About");
-<<<<<<< HEAD
-    aboutButton.setName(aboutButton.getText());
-    aboutButton.addActionListener(listener);
-=======
     aboutButton.setName("About");
->>>>>>> branch 'master' of https://github.com/bernstdh/team22.git
     spanishButton.addActionListener(listener);
     englishButton.addActionListener(listener);
     germanButton.addActionListener(listener);
