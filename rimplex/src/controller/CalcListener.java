@@ -93,7 +93,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   /**
    * Determines what actions to do following an action event.
    */
-  @SuppressWarnings("unlikely-arg-type")
   @Override
   public void actionPerformed(final ActionEvent e)
   {
@@ -165,8 +164,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
   {
     ButtonPadPanel pad = ButtonPadPanel.getInstance();
     int code = e.getKeyChar();
-
-    Object source = e.getSource();
 
     switch (code)
     {
@@ -511,7 +508,6 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
    * @throws IOException
    *           - the IOException
    */
-  @SuppressWarnings("deprecation")
   private void menuActions(final JMenuItem menu) throws IOException
   {
     String name = menu.getName();
