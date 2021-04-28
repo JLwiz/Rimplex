@@ -158,7 +158,7 @@ public class ButtonPadPanel extends JPanel
     add(logButton, numpad);
 
     numpad.gridy = topEdge + 3;
-    JButton expButton = createButton("^", "exponent");
+    JButton expButton = createButton("      ^      ", "exponent");
     add(expButton, numpad);
 
     numpad.gridy = topEdge + 4;

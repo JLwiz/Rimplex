@@ -183,7 +183,7 @@ public class ComplexNumber
   {
     double theta = Math.atan(imaginaryNumber/realNumber);
     double r = Math.sqrt((realNumber * realNumber) + (imaginaryNumber * imaginaryNumber));
-    String str = String.format("%.6f(cos(%.6f)+isin(%.6f)", r, theta, theta);
+    String str = String.format("%.6f(cos(%.6f)+isin(%.6f))", r, theta, theta);
     return str;
   }
 

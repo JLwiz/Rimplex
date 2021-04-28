@@ -504,18 +504,18 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
     else if (name.equals("About"))
     {
       JEditorPane editor = new JEditorPane();
-      JFrame aboutFrame = new JFrame(name);
+      JFrame aboutFrame = new JFrame("About");
       ImageIcon logo = new ImageIcon(CalcListener.class.getResource("/logo/icon.png"));
-      frame.setIconImage(logo.getImage());
+      aboutFrame.setIconImage(logo.getImage());
       editor.setSize(200, 300);
       editor.setEditable(false);
       editor.setContentType("text/html");
       String img = CalcListener.class.getResource("/resources/images/logoRimplex.png").toString();
       editor.setText("<html><img src=\"" + img + "\" width=200 height=50>" + HTMLText.ABOUTPAGE);
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.setContentPane(editor);
-      frame.pack();
-      frame.setVisible(true);
+      aboutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+      aboutFrame.setContentPane(editor);
+      aboutFrame.pack();
+      aboutFrame.setVisible(true);
     }
   } // menuActions method.
 
@@ -575,7 +575,7 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
       case "multiply":
       case "subtract":
       case "exponent":
-        operationsSwitch(button.getText());
+        operationsSwitch(button.getText().trim());
         break;
       case "equals":
         operatorButton(button.getText());
@@ -676,14 +676,14 @@ public class CalcListener implements ActionListener, KeyListener, WindowListener
             operation + op1.toString() + equalsOperator + getComplexText(unitaryOperationResult));
         op1 = unitaryOperationResult;
       }
-      else if (operation.equals("RP"))
+      else if (operation.equals("Re"))
       {
         String str = operation + getComplexText(op1) + equalsOperator;
         op1 = new ComplexNumber(op1.getReal(), 0.0);
         str += getComplexText(op1);
         frame.setDisplay(str);
       }
-      else if (operation.equals("IP"))
+      else if (operation.equals("Im"))
       {
         String str = operation + getComplexText(op1) + equalsOperator;
         op1 = new ComplexNumber(0.0, op1.getImaginary());
